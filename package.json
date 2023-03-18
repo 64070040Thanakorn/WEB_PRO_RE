@@ -5,11 +5,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@jridgewell/sourcemap-codec": "^1.4.14",
     "gsap": "^3.11.5",
     "pinia": "^2.0.32",
+    "pnpm": "^7.29.3",
     "primeicons": "^6.0.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
