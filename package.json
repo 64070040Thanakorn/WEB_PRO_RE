@@ -10,6 +10,7 @@
   "dependencies": {
     "gsap": "^3.11.5",
     "pinia": "^2.0.32",
+    "primeicons": "^6.0.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

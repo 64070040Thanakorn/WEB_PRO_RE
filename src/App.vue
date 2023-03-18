@@ -1,6 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+
+defineProps({
+  enter: String,
+})
+
 </script>
 
 <template>
@@ -14,11 +19,21 @@ import HelloWorld from "./components/HelloWorld.vue";
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
-      <div class="bg-red-500 fadeSlideTo">to</div>
-      <div class="bg-green-500 fadeSlideFrom">from</div>
-      <div class="bg-blue-500 fadeSlideFromTo">fromTo</div>
+      
+      <transition
+        appear
+        @enter="enter"
+      >
+        <p>Gsap Test</p>
+      </transition>
+
+      <div class="flex">
+        <i class="pi pi-check mt-1"></i>
+        <p class="ml-3">Prime Icon TEST</p>
+      </div>
     </div>
   </header>
 
   <RouterView />
 </template>
+

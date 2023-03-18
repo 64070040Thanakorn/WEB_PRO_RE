@@ -4,8 +4,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-import './assets/main.css'
-import '/src/gsap.js'
+import './gsap/index.js'
+import './styles/main.css'
+import 'primeicons/primeicons.css';
 
 
 const app = createApp(App)
