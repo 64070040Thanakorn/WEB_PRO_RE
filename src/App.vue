@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import { RouterView } from "vue-router";
+import Navbar from "./components/Navbar.vue";
 
 defineProps({
   enter: String,
@@ -9,31 +9,14 @@ defineProps({
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div>
-      <HelloWorld class="underline" msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-      
-      <transition
-        appear
-        @enter="enter"
-      >
-        <p>Gsap Test</p>
-      </transition>
-
-      <div class="flex">
-        <i class="pi pi-check mt-1"></i>
-        <p class="ml-3">Prime Icon TEST</p>
-      </div>
-    </div>
-  </header>
-
-  <RouterView />
+    <Navbar />
+    <RouterView />
 </template>
 
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sansita:wght@400;700&display=swap');
+  *{
+    font-family: 'Mitr', sans-serif;
+  }
+</style>
