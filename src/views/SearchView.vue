@@ -34,8 +34,8 @@
     </section>
     <section>
         <div class="flex z-0">
-            <div class="lg:basis-2/12 2xl:basis-3/12 bg-white shadow-md shadow-black/10 mx-auto">
-                <div class="flex flex-col p-8 overflow-y-auto h-full fixed top-0 lg:w-[16.67%] 2xl:w-[25%]">
+            <div class="lg:basis-2/12 2xl:basis-3/12 bg-white shadow-md shadow-black/10 mx-auto sticky">
+                <div class="flex flex-col p-8 overflow-y-auto h-full fixed top-0 lg:w-[16.67%] 2xl:w-[25%] scrollbar">
                     <div class="gap-4 flex flex-col dropdown">
                         <button class="flex justify-between items-center" @click="IsActive = !IsActive">
                             <p class="text-lg font-md">หมวดหมู่วิชา</p>
@@ -227,4 +227,33 @@ export default {
     /* position: absolute; */
     display: none;
 }
+
+.scrollbar::-webkit-scrollbar {
+    background-color:#fff;
+    width:16px
+}
+
+/* background of the scrollbar except button or resizer */
+.scrollbar::-webkit-scrollbar-track {
+    background-color:#fff
+}
+.scrollbar::-webkit-scrollbar-track:hover {
+    background-color:#f4f4f4
+}
+
+/* scrollbar itself */
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+    border:5px solid #fff
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
+}
+
+/* set button(top and bottom of the scrollbar) */
+.scrollbar::-webkit-scrollbar-button {display:none}
+
+/* div box */
 </style>
