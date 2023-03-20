@@ -9,6 +9,7 @@ specifiers:
   pnpm: ^7.29.3
   postcss: ^8.4.21
   primeicons: ^6.0.1
+  primevue: ^3.25.0
   tailwindcss: ^3.2.7
   vite: ^4.1.4
   vue: ^3.2.47
@@ -20,6 +21,7 @@ dependencies:
   pinia: 2.0.33_vue@3.2.47
   pnpm: 7.29.3
   primeicons: 6.0.1
+  primevue: 3.25.0_lksi2hrxe57qe2yasjpvmju34y
   vue: 3.2.47
   vue-router: 4.1.6_vue@3.2.47
 
@@ -794,6 +796,16 @@ packages:
 
   /primeicons/6.0.1:
     resolution: {integrity: sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA==}
+    dev: false
+
+  /primevue/3.25.0_lksi2hrxe57qe2yasjpvmju34y:
+    resolution: {integrity: sha512-IvidtpFqRsvha8BjwwZWZLQDeCmTDlRnheg8P5QpiJ1bEYEwmIk4iYOQwzchY7Ue/5ewg2VM7BNsCWa6CQoKuA==}
+    peerDependencies:
+      primeicons: ^5.0.0 || ^6.0.0
+      vue: ^3.0.0
+    dependencies:
+      primeicons: 6.0.1
+      vue: 3.2.47
     dev: false
 
   /queue-microtask/1.2.3:

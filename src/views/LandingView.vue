@@ -1,7 +1,3 @@
-<script setup>
-  import Footer from '../components/Footer.vue';
-</script>
-
 <template>
   <section>
     <div class="flex justify-center bg-black w-screen h-[1000px]">
