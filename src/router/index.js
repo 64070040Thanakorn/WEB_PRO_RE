@@ -9,6 +9,21 @@ const router = createRouter({
       name: 'home',
       component: Landing
     },
+    {
+      path: '/about',
+      name: 'about',
+      component: null
+    },
+    {
+      path: '/portfoilo',
+      name: 'portfoilo',
+      component: null
+    },
+    {
+      path: '/location',
+      name: 'location',
+      component: null
+    },
   ]
 })
 

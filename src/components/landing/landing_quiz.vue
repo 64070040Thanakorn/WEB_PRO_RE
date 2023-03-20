@@ -1,15 +1,30 @@
 <script setup>
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import { onMounted } from 'vue';
 
+gsap.registerPlugin(ScrollTrigger);
+
 onMounted(() => {
-  gsap.fromTo('.slide', {opacity:0,x: -15}, {x:0,opacity: 1, duration: 1.2, stagger: .1, delay:.5})
+  gsap.fromTo('.slide', {
+    opacity:0,x: -15
+  }, {
+    x:0,opacity: 1,
+    duration: 1.2,
+    stagger: .1,
+    delay:.5,
+    scrollTrigger: {
+      trigger: ".box",
+      toggleActions: "play none none reset"
+    }
+  })
+
   gsap.fromTo('.showing', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:1.5})
 
 })
 </script>
 <template>
-    <section>
+  <section>
     <div id="quiz" class="flex items-center bg-landing-02 w-screen h-[475px]">
       <div class="slide ml-[15rem]">
         <div class="flex text-white space-x-6">

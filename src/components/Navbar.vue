@@ -7,25 +7,25 @@ let nav_site = [
     "id": "nav_course",
     "title": "คอร์เรียน",
     "dropdown": true,
-    "path": null
+    "path": "/"
   },
   {
     "id": "portfolio",
     "title": "ผลงาน",
     "dropdown": false,
-    "path": null
+    "path": "/portfolio"
   },
   {
     "id": "about",
     "title": "เกี่ยวกับเรา",
     "dropdown": false,
-    "path": null
+    "path": "/about"
   },
   {
     "id": "location",
     "title": "ที่อยู่",
     "dropdown": false,
-    "path": null
+    "path": "/location"
   }
 ]
 const tl = gsap.timeline({repeat:0});
@@ -47,8 +47,10 @@ onMounted(() => {
       <div>
         <ul class="flex">
           <li class="nav_site flex items-center space-x-2 px-8 font-extralight" v-for="nav in nav_site">
+            
               <h5>{{ nav.title }}</h5>
               <i class="pi pi-angle-down" style="font-size: 0.75rem" v-if="nav.dropdown"></i>
+              
           </li>
         </ul>
       </div>

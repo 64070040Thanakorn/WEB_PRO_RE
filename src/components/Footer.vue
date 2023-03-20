@@ -8,7 +8,7 @@
         </div>
         <div class="space-y-5">
           <h4 class="text-[20px]">คอร์ส</h4>
-          <ul class="text-[#B0B0B0] grid grid-rows-8 grid-flow-col gap-4">
+          <ul class="text-[#B0B0B0] grid grid-rows-10 grid-flow-col gap-2 gap-x-36">
             <li>Python</li>
             <li>JavaScript</li>
             <li>HTML & CSS</li>
