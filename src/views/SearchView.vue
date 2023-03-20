@@ -34,14 +34,14 @@
     </section>
     <section>
         <div class="flex z-0">
-            <div class="lg:basis-2/12 2xl:basis-3/12 bg-white shadow-md shadow-black/10 mx-auto sticky">
+            <div class="lg:basis-2/12 2xl:basis-3/12 bg-white shadow-md shadow-black/10 mx-auto">
                 <div class="flex flex-col p-8 overflow-y-auto h-full fixed top-0 lg:w-[16.67%] 2xl:w-[25%] scrollbar">
                     <div class="gap-4 flex flex-col dropdown">
-                        <button class="flex justify-between items-center" @click="IsActive = !IsActive">
+                        <button class="flex justify-between items-center" @click="IsActiveCate = !IsActiveCate">
                             <p class="text-lg font-md">หมวดหมู่วิชา</p>
-                            <i class="pi" :class="{ 'pi-chevron-down': !IsActive, 'pi-chevron-up': IsActive }"></i>
+                            <i class="pi" :class="{ 'pi-chevron-down': !IsActiveCate, 'pi-chevron-up': IsActiveCate }"></i>
                         </button>
-                        <div :class="{ 'dropdown-content': IsActive }">
+                        <div :class="{ 'dropdown-content': IsActiveCate }">
                             <div class="flex flex-col gap-2 text-sm">
                                 <a href="" class="font-light hover:font-normal">All</a>
                                 <a href="" class="font-light hover:font-normal">Python</a>
@@ -72,102 +72,127 @@
                             </div>
                             <p class="texl-lg font-light text-[#676767] underline">ล้างกรอง</p>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <p class="text-lg font-md">ระดับ</p>
-                            <div class="ml-3 gap-2 flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="level" value="level"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">Beginner</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="level" value="level"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">Intermediate</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="level" value="level"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">Advanced</span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2">
-                            <p class="text-lg font-md">ราคา</p>
-                            <div class="ml-3 gap-2 flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="price" value="price"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">ฟรี</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="price" value="price"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">1-1000 บาท</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="price" value="price"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">1001-3000 บาท</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="price" value="price"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">มากกว่า 3000 บาท</span>
+                        <div class="flex flex-col gap-2 dropdown">
+                            <button class="flex justify-between items-center" @click="IsActiveLevel = !IsActiveLevel">
+                                <p class="text-lg font-md">ระดับ</p>
+                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveLevel, 'pi-chevron-up': IsActiveLevel }"></i>
+                            </button>
+                            <div :class="{ 'dropdown-content': IsActiveLevel }">
+                                <div class="ml-3 gap-2 flex flex-col">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="level" value="level"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">Beginner</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="level" value="level"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">Intermediate</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="level" value="level"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">Advanced</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2">
-                            <p class="text-lg font-md">จำนวนคน</p>
-                            <div class="ml-3 gap-2 flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="amount" value="amount"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">เต็ม</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="amount" value="amount"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">ไม่เต็ม</span>
+                        <div class="flex flex-col gap-2 dropdown">
+                            <button class="flex justify-between items-center" @click="IsActivePrice = !IsActivePrice">
+                                <p class="text-lg font-md">ราคา</p>
+                                <i class="pi" :class="{ 'pi-chevron-down': !IsActivePrice, 'pi-chevron-up': IsActivePrice }"></i>
+                            </button>
+                            <div :class="{ 'dropdown-content': IsActivePrice }">
+                                <div class="ml-3 gap-2 flex flex-col">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="price" value="price"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">ฟรี</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="price" value="price"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">1-1000 บาท</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="price" value="price"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">1001-3000 บาท</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="price" value="price"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">มากกว่า 3000 บาท</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2">
-                            <p class="text-lg font-md">ใบ Certificate</p>
-                            <div class="ml-3 gap-2 flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="cer" value="cer"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">มี</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="cer" value="cer"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">ไม่มี</span>
+                        <div class="flex flex-col gap-2 dropdown">
+                            <button class="flex justify-between items-center" @click="IsActiveAmount = !IsActiveAmount">
+                                <p class="text-lg font-md">จำนวนคน</p>
+                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveAmount, 'pi-chevron-up': IsActiveAmount }"></i>
+                            </button>
+                            <div :class="{ 'dropdown-content': IsActiveAmount }">
+                                <div class="ml-3 gap-2 flex flex-col">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="amount" value="amount"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">เต็ม</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="amount" value="amount"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">ไม่เต็ม</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2">
-                            <p class="text-lg font-md">บทเรียน</p>
-                            <div class="ml-3 gap-2 flex flex-col">
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="lesson" value="lesson"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">0-4 บท</span>
+                        <div class="flex flex-col gap-2 dropdown">
+                            <button class="flex justify-between items-center" @click="IsActiveCer = !IsActiveCer">
+                                <p class="text-lg font-md">ใบ Certificate</p>
+                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveCer, 'pi-chevron-up': IsActiveCer }"></i>
+                            </button>
+                            <div :class="{ 'dropdown-content': IsActiveCer }">
+                                <div class="ml-3 gap-2 flex flex-col">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="cer" value="cer"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">มี</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="cer" value="cer"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">ไม่มี</span>
+                                    </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="lesson" value="lesson"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">5-15 บท</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="lesson" value="lesson"
-                                        class="p-2 border-2 border-black inline-block" />
-                                    <span class="font-light">16+ บท</span>
+                            </div>
+                        </div>
+                        <hr class="border-[1.2px]" />
+                        <div class="flex flex-col gap-2 dropdown">
+                            <button class="flex justify-between items-center" @click="IsActiveLesson = !IsActiveLesson">
+                                <p class="text-lg font-md">บทเรียน</p>
+                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveLesson, 'pi-chevron-up': IsActiveLesson }"></i>
+                            </button>
+                            <div :class="{ 'dropdown-content': IsActiveLesson }">
+                                <div class="ml-3 gap-2 flex flex-col">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="lesson" value="lesson"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">0 - 4 บท</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="lesson" value="lesson"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">5 - 15 บท</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="lesson" value="lesson"
+                                            class="p-2 border-2 border-black inline-block" />
+                                        <span class="font-light">16+ บท</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -201,16 +226,19 @@
             </div>
         </div>
     </section>
-    <section>
-        <Footer />
-    </section>
+    <Footer />
 </template>
 
 <script>
 export default {
     data() {
         return {
-            IsActive: false,
+            IsActiveCate: false,
+            IsActiveLevel: false,
+            IsActivePrice: false,
+            IsActiveAmount: false,
+            IsActiveCer: false,
+            IsActiveLesson: false,
             value1: "test",
             items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         };
@@ -218,6 +246,12 @@ export default {
 };
 </script>
 <style>
+.sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -228,12 +262,12 @@ export default {
     display: none;
 }
 
+/* scroll bar */
 .scrollbar::-webkit-scrollbar {
     background-color:#fff;
     width:16px
 }
 
-/* background of the scrollbar except button or resizer */
 .scrollbar::-webkit-scrollbar-track {
     background-color:#fff
 }
@@ -241,7 +275,6 @@ export default {
     background-color:#f4f4f4
 }
 
-/* scrollbar itself */
 .scrollbar::-webkit-scrollbar-thumb {
     background-color:#babac0;
     border-radius:16px;
@@ -252,8 +285,6 @@ export default {
     border:4px solid #f4f4f4
 }
 
-/* set button(top and bottom of the scrollbar) */
 .scrollbar::-webkit-scrollbar-button {display:none}
 
-/* div box */
 </style>
