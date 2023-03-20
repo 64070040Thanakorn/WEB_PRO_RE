@@ -1,27 +1,66 @@
+<script setup>
+import { gsap } from 'gsap';
+import { onMounted } from 'vue';
+
+let nav_site = [
+  {
+    "id": "nav_course",
+    "title": "คอร์เรียน",
+    "dropdown": true,
+    "path": null
+  },
+  {
+    "id": "portfolio",
+    "title": "ผลงาน",
+    "dropdown": false,
+    "path": null
+  },
+  {
+    "id": "about",
+    "title": "เกี่ยวกับเรา",
+    "dropdown": false,
+    "path": null
+  },
+  {
+    "id": "location",
+    "title": "ที่อยู่",
+    "dropdown": false,
+    "path": null
+  }
+]
+const tl = gsap.timeline({repeat:0});
+
+onMounted(() => {
+  tl.fromTo('.nav_site', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1})
+  gsap.fromTo('.nav_logo', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.5})
+  gsap.fromTo('.nav_login', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.5})
+  gsap.fromTo('.nav_register', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.7})
+
+  
+})
+</script>
+
 <template>
   <div class="navbar container">
     <div class="flex justify-between items-center px-48 w-screen h-[80px]">
 
       <div>
         <ul class="flex">
-          <li class="px-8 font-extralight">
-            คอร์สเรียน
-            <i class="pi pi-angle-down" style="font-size: 0.75rem"></i>
+          <li class="nav_site flex items-center space-x-2 px-8 font-extralight" v-for="nav in nav_site">
+              <h5>{{ nav.title }}</h5>
+              <i class="pi pi-angle-down" style="font-size: 0.75rem" v-if="nav.dropdown"></i>
           </li>
-          <li class="px-8 font-extralight">ผลงาน</li>
-          <li class="px-8 font-extralight">เกี่ยวกับเรา</li>
-          <li class="px-8 font-extralight">ที่อยู่</li>
         </ul>
       </div>
 
-      <div class="navbar-brand border-4 border-[#EBC919] px-8">
+      <div id="logo" class="nav_logo navbar-brand border-4 border-[#EBC919] px-8">
         <h1>GREATER</h1>
       </div>
 
       <div>
         <ul class="flex">
-          <li class="flex items-center px-8 font-extralight">เข้าสู่ระบบ</li>
-          <li class="border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</li>
+          <li id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</li>
+          <li id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</li>
         </ul>
       </div>
 

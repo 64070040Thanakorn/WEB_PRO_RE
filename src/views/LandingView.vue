@@ -1,13 +1,31 @@
-<script setup>
-  import Footer from '../components/Footer.vue';
+<script>
+import Footer from '../components/Footer.vue';
+import Landing_Card from '../components/landing_card.vue';
+import Quiz from '../components/quiz.vue';
+import Total from '../components/total.vue';
+
+export default {
+  name: "Landing",
+  components: {
+    Footer,
+    Landing_Card,
+    Quiz,
+    Total
+  },
+  data(){
+    return{
+
+    };
+  },
+}
 </script>
 
 <template>
   <section>
-    <div class="flex justify-center bg-black w-screen h-[1000px]">
+    <div class="flex justify-center bg-landing-01 w-screen h-[1080px]">
       <div class="flex items-center space-x-48 text-white">
         <div class="slogan">
-          <p class="font-extralight">NON STOP<br>
+          <p class="anim-typewriter font-extralight">NON STOP<br>
             LEARNING</p>
         </div>
         <div class="description space-y-8">
@@ -22,64 +40,39 @@
   </section>
   
   <section>
-    <div class="flex justify-center items-center bg-white w-screen h-[250px]">
-      <div id="total" class="flex justify-center items-center space-x-36">
-        <div>
-          <h1>4.5</h1>
-          <p>80k รีวิว</p>
-        </div>
-        <div class="bg-[#EBC919] w-[4px] h-[60px]"></div>
-        <div>
-          <h1>30k</h1>
-          <p>ลงทะเบียน</p>
-        </div>
-        <div class="bg-[#EBC919] w-[4px] h-[60px]"></div>
-        <div>
-          <h1>2k+</h1>
-          <p>เรียนแล้ว</p>
-        </div>
-        <div class="bg-[#EBC919] w-[4px] h-[60px]"></div>
-        <div>
-          <h1>100+</h1>
-          <p>คอร์ส</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
     <div id="hot" class="bg-[#FF834E] w-screen h-[950px]">
       <div class="py-6 mx-6">
         <h1>คอร์สเรียนยอดฮิต</h1>
         <p class="w-[710px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id maximus felis. Fusce massa urna, luctus sed mi quis, pretium sodales magna. Pellentesque gravida malesuada nibh</p>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <div id="quiz" class="flex items-center bg-black w-screen h-[475px]">
-      <div class="ml-[15rem]">
-        <div class="flex text-white space-x-6">
-          <div class="bg-[#EBC919] w-[5px] h-[165px]"></div>
-          <div>
-            <h5 class="text-[48px]">ไม่รู้จะเรียนอะไรดี?</h5>
-            <p class="text-[32px] leading-tight">มาลองตอบคำถาม ง่ายๆเพียงไม่กี่ข้อ <br>เพื่อหาคำแนะนำสำหรับเริ่มต้น สำหรับหาคอร์สเรียน สำหรับตัวคุณ</p>
-          </div>
+      <div class="flex justify-center">
+        <div class="grid grid-cols-3 gap-6 justify-center">
+          <Landing_Card />
+          <Landing_Card />
+          <Landing_Card />
+          <Landing_Card />
+          <Landing_Card />
+          <Landing_Card />
         </div>
-        <button class="bg-[#E99F30] rounded-md text-white px-12 py-2 ml-16 mt-3">ตอบคำถาม</button>
+      </div>
+      <div class="flex justify-center my-8">
+        <button class="bg-black text-white py-2 px-8 rounded-md">ดูคอร์สเรียนเพิ่มเติม</button>
       </div>
     </div>
   </section>
 
+  <Total />
+  <Quiz />
+
   <section>
-    <div class="w-screen h-[835px]">
+    <div class="bg-white w-screen h-[835px]">
       <div class="flex justify-center">
-        <h1 class="text-[64px] text-black mt-6">ติดต่อเรา</h1>
+        <h1 class="text-[64px] text-black my-12">ติดต่อเรา</h1>
       </div>
       <div class="flex justify-center space-x-32">
         <div class="mapouter">
           <div class="gmap_canvas">
-            <iframe width="830" height="480" id="gmap_canvas" src="https://maps.google.com/maps?q=kmitl&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            <!-- <iframe width="830" height="480" id="gmap_canvas" src="https://maps.google.com/maps?q=kmitl&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
           </div>
         </div>
         <div class="space-y-10">
