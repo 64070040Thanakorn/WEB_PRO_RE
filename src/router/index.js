@@ -15,6 +15,20 @@ const router = createRouter({
       name: 'search',
       component: Search,
     },
+      path: '/about',
+      name: 'about',
+      component: null
+    },
+    {
+      path: '/portfoilo',
+      name: 'portfoilo',
+      component: null
+    },
+    {
+      path: '/location',
+      name: 'location',
+      component: null
+    },
   ]
 })
 

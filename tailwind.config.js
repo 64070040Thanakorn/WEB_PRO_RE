@@ -5,17 +5,15 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    color: {
-      orange: {
-        "1" : "#EBC919",
-      }
-    },
     extend: {
       backgroundImage: {
-        'ladning-img': "url('./assets/landing_img.png')",
+        'landing-01': "url('../assets/landing/landing_01.png')",
+        'landing-02': "url('../assets/landing/landing_02.png')",
+        'pattern-01': "url('../assets/pattern/pattern_01.png')"
+
       },
       gridTemplateRows: {
-        '8': 'repeat(8, minmax(0, 1fr))',
+        '10': 'repeat(10, minmax(0, 1fr))',
       }
     },
   },
