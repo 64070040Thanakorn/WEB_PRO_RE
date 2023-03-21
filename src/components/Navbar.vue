@@ -33,8 +33,9 @@ const tl = gsap.timeline({repeat:0});
 onMounted(() => {
   tl.fromTo('.nav_site', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1})
   gsap.fromTo('.nav_logo', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.5})
-  gsap.fromTo('.nav_login', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.5})
-  gsap.fromTo('.nav_register', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.7})
+  gsap.fromTo('.nav_search', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.6})
+  gsap.fromTo('.nav_login', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.7})
+  gsap.fromTo('.nav_register', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.8})
 
   
 })
@@ -61,6 +62,7 @@ onMounted(() => {
 
       <div>
         <ul class="flex">
+          <li id="search" class="nav_search pi pi-search flex items-center"></li>
           <li id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</li>
           <li id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</li>
         </ul>
