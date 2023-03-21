@@ -42,8 +42,8 @@ onMounted(() => {
 
 <template>
   <div class="navbar container z-50">
+    <div class="absolute top-0 left-0 h-56 w-screen bg-gradient-to-b from-black to-white-0% p-5"></div>  
     <div class="flex justify-between items-center px-48 w-screen h-[80px]">
-
       <div>
         <ul class="flex">
           <li class="nav_site flex items-center space-x-2 px-8 font-extralight" v-for="nav in nav_site">
@@ -54,7 +54,7 @@ onMounted(() => {
       </div>
 
       <RouterLink to="/" id="logo" class="nav_logo navbar-brand border-4 border-[#EBC919] px-8">
-        <h1>GREATER</h1>
+        <h1>GRATERER</h1>
       </RouterLink>
 
       <div>

@@ -2,7 +2,6 @@
     <section>
         <div class="relative z-10">
             <img src="../assets/search_view_img.png" class="w-full min-h-[500px]" alt="" />
-            <div class="absolute top-0 left-0 h-[35%] w-full bg-gradient-to-b from-black to-white-0% p-5"></div>
             <div
                 class="absolute top-1/3 left-1/2 traslate-y-[-50%] translate-x-[-50%] text-white w-full gap-8 flex flex-col">
                 <p class="flex justify-center text-6xl font-medium">
