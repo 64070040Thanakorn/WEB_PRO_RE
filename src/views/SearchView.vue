@@ -5,7 +5,7 @@
             <div class="absolute top-0 left-0 h-[35%] w-full bg-gradient-to-b from-black to-white-0% p-5"></div>
             <div
                 class="absolute top-1/3 left-1/2 traslate-y-[-50%] translate-x-[-50%] text-white w-full gap-8 flex flex-col">
-                <p class="flex justify-center text-6xl font-semibold">
+                <p class="flex justify-center text-6xl font-medium">
                     หาคอร์สเรียนที่เหมาะกับคุณ
                 </p>
                 <div class="flex justify-center text-center">
@@ -18,7 +18,7 @@
                         <!--  !!!!!! icon หน้าโง่ไม่อยู่ใน input, primevue มีแต่กูใช้มะได้ !!!!!!-->
 
                         <!-- <i class="pi pi-search" /> -->
-                        <InputText v-model="value1" class="py-2 px-5 rounded-[30px] w-full" placeholder="ค้นหา..." />
+                        <InputText v-model="searchValue" class="py-2 px-5 rounded-[30px] w-full" placeholder="ค้นหา..." />
                     </span>
                 </div>
                 <div class="flex justify-around items-center w-[50%] mx-auto text-[12px]">
@@ -34,7 +34,7 @@
     </section>
     <section>
         <div class="flex z-0">
-            <div class="lg:basis-2/12 2xl:basis-3/12 bg-white shadow-md shadow-black/10 mx-auto">
+            <div class="w-[25%] bg-white shadow-md shadow-black/10 mx-auto">
                 <div class="flex flex-col p-8 overflow-y-auto h-full absolute w-full scrollbar">
                     <div class="gap-4 flex flex-col dropdown">
                         <button type='button' class="flex justify-between items-center" @click="IsActiveCate = !IsActiveCate">
@@ -199,7 +199,7 @@
                     </div>
                 </div>
             </div>
-            <div class="lg:basis-10/12 2xl:basis-9/12 mb-20">
+            <div class="w-[75%] mb-20">
                 <div class="flex flex-col relative">
                     <img src="../assets/search_view_sub.png" class="w-full min-h-[500px]" alt="" />
                     <div class="absolute top-0 left-0 px-20 py-12 flex flex-col gap-8">
@@ -244,7 +244,7 @@ export default {
             IsActiveAmount: true,
             IsActiveCer: true,
             IsActiveLesson: true,
-            value1: "test",
+            searchValue: null,
             beginner: null,
             intermediate: null,
             advanced: null,
