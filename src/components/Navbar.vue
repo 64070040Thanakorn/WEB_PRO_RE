@@ -42,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="navbar container">
+  <div class="navbar container z-50">
     <div class="flex justify-between items-center px-48 w-screen h-[80px]">
 
       <div>

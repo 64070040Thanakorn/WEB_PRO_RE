@@ -1,5 +1,4 @@
 <script setup>
-import Footer from '../components/Footer.vue';
 import Quiz from '../components/landing/landing_quiz.vue';
 import Total from '../components/landing/landing_total.vue';
 import Landing_Card from '../components/mini_card.vue';
