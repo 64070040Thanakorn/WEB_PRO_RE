@@ -44,7 +44,7 @@ onMounted(() => {
 export default {
   data() {
     return {
-      isActive: this.isActive,
+
     }
   },
   computed: {
