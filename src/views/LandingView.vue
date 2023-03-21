@@ -24,7 +24,7 @@ onMounted(() => {
 
 <template>
   <section>
-    <div class="flex justify-center bg-landing-01 w-screen h-[1080px]">
+    <div class="flex justify-center bg-landing-01 bg-no-repeat bg-cover w-full h-[1080px]">
       <div class="flex justify-start mt-72 space-x-36 text-white">
         <div class="slogan w-[600px]">
           <p class="animated-text slogan_word font-extralight">
@@ -44,7 +44,7 @@ onMounted(() => {
   <Total />
   
   <section>
-    <div id="hot" class="bg-pattern-01 w-screen h-[950px]">
+    <div id="hot" class="bg-pattern-01 w-full h-[950px]">
       <div class="py-6 mx-6">
         <h1>คอร์สเรียนยอดฮิต</h1>
         <p class="w-[710px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id maximus felis. Fusce massa urna, luctus sed mi quis, pretium sodales magna. Pellentesque gravida malesuada nibh</p>
@@ -63,7 +63,7 @@ onMounted(() => {
   <Quiz />
 
   <section>
-    <div class="bg-white w-screen h-[835px]">
+    <div class="bg-white w-full h-[835px]">
       <div class="flex justify-center">
         <h1 class="text-[64px] text-black my-12">ติดต่อเรา</h1>
       </div>

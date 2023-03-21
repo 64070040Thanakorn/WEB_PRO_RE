@@ -38,12 +38,31 @@ onMounted(() => {
   gsap.fromTo('.nav_register', {opacity:0,y: -15}, {y:0,opacity: 1, duration: 1.2, stagger: .1, delay:.8})
 
 })
-</script>
 
+</script>
+<script>
+export default {
+  data() {
+    return {
+      isActive: this.isActive,
+    }
+  },
+  computed: {
+    isActive() {
+      if (this.$route.name === 'home' || this.$route.name === 'search') {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
+}
+</script>
 <template>
-  <div class="navbar container z-50">
-    <div class="absolute top-0 left-0 h-56 w-screen bg-gradient-to-b from-black to-white-0% p-5"></div>  
-    <div class="flex justify-between items-center px-48 w-screen h-[80px]">
+  <div class="navbar z-50 w-full" :class="{'absolute': isActive, 'bg-black': !isActive}">
+    <div :class="{'absolute top-0 left-0 h-56 w-full bg-gradient-to-b from-black to-white-0% p-5': isActive} "></div>
+    <div class="flex justify-between items-center px-48 h-[80px]">
       <div>
         <ul class="flex">
           <li class="nav_site flex items-center space-x-2 px-8 font-extralight" v-for="nav in nav_site">
@@ -73,7 +92,6 @@ onMounted(() => {
     --text-color: #ffffff;
   }
   .navbar{
-    position: absolute;
     color: var(--text-color);
     font-family: 'Mitr', sans-serif;
     font-size: 18px;

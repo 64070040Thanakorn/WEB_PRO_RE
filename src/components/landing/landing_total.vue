@@ -1,6 +1,6 @@
 <template>
   <section>
-      <div class="flex justify-center items-center bg-white w-screen h-[250px]">
+      <div class="flex justify-center items-center bg-white w-full h-[250px]">
         <div id="total" class="flex justify-center items-center space-x-36">
           <div>
             <h1 class="data">4.5</h1>

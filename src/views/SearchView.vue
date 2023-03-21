@@ -1,32 +1,32 @@
 <template>
     <section>
         <div class="relative z-10">
-            <img src="../assets/search_view_img.png" class="w-full min-h-[500px]" alt="" />
-            <div
-                class="absolute top-1/3 left-1/2 traslate-y-[-50%] translate-x-[-50%] text-white w-full gap-8 flex flex-col">
-                <p class="flex justify-center text-6xl font-medium">
-                    หาคอร์สเรียนที่เหมาะกับคุณ
-                </p>
-                <div class="flex justify-center text-center">
-                    <p class="w-[70%] text-sm">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat">
+                <div class="top-1/3 left-1/2 traslate-y-[-50%] translate-x-[-50%] text-white w-full gap-8 flex flex-col">
+                    <p class="flex justify-center text-6xl font-medium">
+                        หาคอร์สเรียนที่เหมาะกับคุณ
                     </p>
-                </div>
-                <div class="flex justify-center text-black">
-                    <span class="p-input-icon-left w-[50%]">
-                        <!--  !!!!!! icon หน้าโง่ไม่อยู่ใน input, primevue มีแต่กูใช้มะได้ !!!!!!-->
+                    <div class="flex justify-center text-center">
+                        <p class="w-[70%] text-sm">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </p>
+                    </div>
+                    <div class="flex justify-center text-black">
+                        <span class="p-input-icon-left w-[50%]">
+                            <!--  !!!!!! icon หน้าโง่ไม่อยู่ใน input, primevue มีแต่กูใช้มะได้ !!!!!!-->
 
-                        <!-- <i class="pi pi-search" /> -->
-                        <InputText v-model="searchValue" class="py-2 px-5 rounded-[30px] w-full" placeholder="ค้นหา..." />
-                    </span>
-                </div>
-                <div class="flex justify-around items-center w-[50%] mx-auto text-[12px]">
-                    <span class="underline">การค้นหาที่ยอดนิยม</span>
-                    <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Python</button>
-                    <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">C</button>
-                    <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Java</button>
-                    <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">PHP</button>
-                    <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Sql</button>
+                            <!-- <i class="pi pi-search" /> -->
+                            <InputText v-model="searchValue" class="py-2 px-5 rounded-[30px] w-full" placeholder="ค้นหา..." />
+                        </span>
+                    </div>
+                    <div class="flex justify-around items-center w-[50%] mx-auto text-[12px]">
+                        <span class="underline">การค้นหาที่ยอดนิยม</span>
+                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Python</button>
+                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">C</button>
+                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Java</button>
+                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">PHP</button>
+                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Sql</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                                 <a href="" class="font-light hover:font-normal">Swift</a>
                             </div>
                         </div>
-                        <hr class="border-[1.2px] mb-8" :class="{'mb-[25rem]': !IsActiveCate, 'mb-[1.75rem]': IsActiveCate}"/>
+                        <hr class="border-[1.2px] mb-8" :class="{'mb-[27rem]': !IsActiveCate, 'mb-[3.75rem]': IsActiveCate}"/>
                     </div>
                     <div class="flex flex-col gap-4 mt-8 mb-8">
                         <div class="flex justify-between items-center">
@@ -200,25 +200,26 @@
             </div>
             <div class="w-[75%] mb-20">
                 <div class="flex flex-col relative">
-                    <img src="../assets/search_view_sub.png" class="w-full min-h-[500px]" alt="" />
-                    <div class="absolute top-0 left-0 px-20 py-12 flex flex-col gap-8">
-                        <p class="text-md text-[#EBC919]">
-                            หมวดหมู่ <span class="text-black">/ Python</span>
-                        </p>
-                        <p class="text-4xl font-medium">Python</p>
-                        <p class="text-lg">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
-                            facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
-                            inventore in commodi alias cumque perferendis ducimus reiciendis ratione
-                            dolore.
-                        </p>
-                        <RouterLink class="bg-black p-20 w-[35%]" to="">
-                            <div></div>
-                        </RouterLink>
+                    <div class="bg-search-02 w-full h-[530px]">
+                        <div class="absolute top-0 left-0 px-20 py-12 flex flex-col gap-8">
+                            <p class="text-md text-[#EBC919]">
+                                หมวดหมู่ <span class="text-black">/ Python</span>
+                            </p>
+                            <p class="text-4xl font-medium">Python</p>
+                            <p class="text-lg">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
+                                facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
+                                inventore in commodi alias cumque perferendis ducimus reiciendis ratione
+                                dolore.
+                            </p>
+                            <RouterLink class="bg-black p-20 w-[35%]" to="">
+                                <div></div>
+                            </RouterLink>
+                        </div>
                     </div>
                 </div>
                 <div class="grid grid-cols-4 justify-items-center px-20 py-12 gap-6">
-                    <RouterLink to="" v-for="item in items.slice(0, 8)">
+                    <RouterLink to="" v-for="item in items.slice(0, 12)">
                         <div class="flex bg-black border-2 p-20 w-[300px] h-[400px] text-white"></div>
                     </RouterLink>
                 </div>
@@ -258,12 +259,12 @@ export default {
             lesson0To4: null,
             lesson5To15: null,
             lesson16: null,
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
         };
     },
     computed: {
         pageAmount() {
-            return Math.ceil(this.items.length/8)
+            return Math.ceil(this.items.length/12)
         }
     },
     methods: {

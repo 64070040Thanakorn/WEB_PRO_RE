@@ -1,6 +1,6 @@
 <template>
   <section id="footer">
-    <div class="w-screen h-[480px] bg-[#0B0B0B] text-white">
+    <div class="w-full h-[480px] bg-[#0B0B0B] text-white">
       <div class="flex justify-between mx-20 pt-10">
         <div class="space-y-5">
           <h4 class="text-[20px]">เกี่ยวกับเรา</h4>

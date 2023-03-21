@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 <template>
   <section>
-    <div id="quiz" class="flex items-center bg-landing-02 w-screen h-[475px]">
+    <div id="quiz" class="flex items-center bg-landing-02 bg-no-repeat bg-cover w-full h-[475px]">
       <div class="slide ml-[15rem]">
         <div class="flex text-white space-x-6">
           <div class="bg-[#EBC919] w-[5px] h-[165px]"></div>
