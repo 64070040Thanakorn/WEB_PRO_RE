@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="mini_card" class="">
     <div class="bg-black rounded-t-md w-[510px] h-[33px] flex items-center px-3">
       <div class="flex space-x-2">
         <div class="bg-[#FF4E4E] rounded-full w-[15px] h-[15px]"></div>
