@@ -108,14 +108,14 @@ export default {
 <template>
     <section>
         <div class="relative z-10">
-            <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat">
-                <div class="top-1/3 left-1/2 traslate-y-[-50%] translate-x-[-50%] text-white w-full gap-8 flex flex-col">
+            <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat flex items-center">
+                <div class="text-white w-full gap-8 flex flex-col">
                     <p class="flex justify-center text-6xl font-medium">
                         หาคอร์สเรียนที่เหมาะกับคุณ
                     </p>
                     <div class="flex justify-center text-center">
                         <p class="w-[70%] text-sm">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            แหล่งรวมคอร์สเรียนมากกว่าหนึ่งร้อยคอร์สเรียน มาไว้ให้คุณที่นี้แล้ว <br> ค้นหาคอร์สที่คุณสนใจด้านล่างนี้เลย
                         </p>
                     </div>
                     <div class="flex justify-center text-black">
