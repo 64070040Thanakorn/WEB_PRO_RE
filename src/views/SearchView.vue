@@ -150,7 +150,7 @@ export default {
         </div>
     </section>
     <section>
-        <div class="flex z-0">
+        <div class="flex">
             <div class="w-[15%] bg-white shadow-md shadow-black/10 mx-auto">
                 <div class="flex flex-col p-8 overflow-y-auto h-full w-full scrollbar">
                     <!-- upper side-bar -->
@@ -337,7 +337,7 @@ export default {
                 </div>
             </div>
             <div class="w-[85%] mb-20">
-                <div class="flex flex-col relative">
+                <div class="flex flex-col">
                     <div class="bg-search-02 w-full h-[650px]">
                         <div class="top-0 left-0 px-20 py-12 flex flex-col gap-8">
                             <p class="text-md text-[#EBC919]">
