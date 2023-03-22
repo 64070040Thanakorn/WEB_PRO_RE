@@ -55,34 +55,20 @@ export default {
                 gsap.to(header, {
                     rotate: 180
                 })
-
-                if (!(header === '.cate-icon')) {
-                    TweenMax.to(content, 0.3, {
-                        y: -20,
-                        autoAlpha: 0,
-                        display: 'none',
-                    })
-                    if (bottom) {
-                        TweenMax.to(bottom, 0.3, {
-                            y: value
-                        })
-
-                        gsap.to(bottom, {
-                            delay: 0.3,
-                            duration: 0,
-                            y: 0,
-                        })
-                    }
-                }
-                else {
-                    TweenMax.to(content, 0.3, {
-                        y: -50,
-                        autoAlpha: 0,
-                        display: 'invisible',
-                    })
-
-                    TweenMax.to(bottom, 0.3, {
+                TweenMax.to(content, 0.1, {
+                    y: -20,
+                    autoAlpha: 0,
+                    display: 'none',
+                })
+                if (bottom) {
+                    TweenMax.to(bottom, 0.1, {
                         y: value
+                    })
+
+                    gsap.to(bottom, {
+                        delay: 0.1,
+                        duration: 0,
+                        y: 0,
                     })
                 }
 
@@ -93,27 +79,14 @@ export default {
                     rotate: 0,
                 })
 
-                if (!(header === '.cate-icon')) {
-                    TweenMax.to(content, 0.3, {
-                        y: 0,
-                        autoAlpha: 1,
-                        display: 'block',
-                    })
+                TweenMax.to(content, 0.1, {
+                    y: 0,
+                    autoAlpha: 1,
+                    display: 'block',
+                })
 
-                    if (bottom) {
-                        TweenMax.to(bottom, 0.3, {
-                            y: 0
-                        })
-                    }
-                }
-                else {
-                    TweenMax.to(content, 0.3, {
-                        y: 0,
-                        autoAlpha: 1,
-                        display: 'visible',
-                    })
-
-                    TweenMax.to(bottom, 0.3, {
+                if (bottom) {
+                    TweenMax.to(bottom, 0.1, {
                         y: 0
                     })
                 }
@@ -174,12 +147,11 @@ export default {
             <div class="w-[25%] bg-white shadow-md shadow-black/10 mx-auto">
                 <div class="flex flex-col p-8 overflow-y-auto h-full absolute w-full scrollbar">
                     <!-- upper side-bar -->
-                    <div class="gap-4 flex flex-col dropdown">
-                        <button type="button" class="flex justify-between items-center"
-                            @click="showHide('.cate-icon', '.cate-content', '.cate-bottom', isActiveCate, -370), isActiveCate = !isActiveCate">
+                    <div class="gap-4 flex flex-col dropdown mb-[5rem]">
+                        <div class="flex justify-between items-center">
                             <p class="text-lg font-normal">หมวดหมู่วิชา</p>
-                            <i class="pi pi-chevron-up cate-icon"></i>
-                        </button>
+                            <!-- <i class="pi pi-chevron-up cate-icon"></i> -->
+                        </div>
                         <div class="cate-content">
                             <div class="flex flex-col gap-2 text-sm">
                                 <a href="" class="font-light hover:font-normal">All</a>
@@ -197,7 +169,7 @@ export default {
                                 <a href="" class="font-light hover:font-normal">Swift</a>
                             </div>
                         </div>
-                        <hr class="border-[1.2px] mb-8 cate-bottom mb-[2.75rem]"/>
+                        <!-- <hr class="border-[1.2px] mb-8 cate-bottom mb-[2.75rem]" /> -->
                     </div>
                     <div class="flex flex-col gap-4 mt-8 mb-8">
                         <div class="flex justify-between items-center">
