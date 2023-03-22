@@ -8,7 +8,6 @@ import router from './router'
 import Footer from './components/Footer.vue'
 
 import 'primeicons/primeicons.css'
-import './gsap/index.js'
 import './styles/main.css'
 
 
