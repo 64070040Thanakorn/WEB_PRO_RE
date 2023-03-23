@@ -44,7 +44,6 @@ onMounted(() => {
 export default {
   data() {
     return {
-
     }
   },
   computed: {
