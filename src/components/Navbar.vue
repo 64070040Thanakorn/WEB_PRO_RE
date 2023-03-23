@@ -1,6 +1,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { onMounted } from 'vue';
+import Login from '../components/auth/login.vue';
 
 let nav_site = [
   {
@@ -43,24 +44,21 @@ onMounted(() => {
 <script>
 export default {
   data() {
-    return {
-
-    }
-  },
+  return {
+    activeClass: 'active',
+    errorClass: 'text-danger'
+  }
+},
   computed: {
     isActive() {
-      if (this.$route.name === 'home' || this.$route.name === 'search') {
-        return true;
-      }
-      else {
-        return false;
-      }
+      return this.$route.name === 'home' || this.$route.name === 'search' ? true : false;
     }
   }
 }
 </script>
 <template>
-  <div class="navbar z-50 w-full" :class="{'absolute': isActive, 'bg-black': !isActive}">
+  <Login @click="" :class="[isActive ? activeClass : '', 'hidden' ]"/>
+  <div class="navbar w-full" :class="{'absolute': isActive, 'bg-black': !isActive}">
     <div :class="{'absolute top-0 left-0 h-56 w-full bg-gradient-to-b from-black to-white-0% p-5': isActive} "></div>
     <div class="flex justify-between items-center px-48 h-[80px]">
       <div>
@@ -83,7 +81,6 @@ export default {
           <li id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</li>
         </ul>
       </div>
-
     </div>
   </div>
 </template>
