@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import Quiz from '../components/landing/landing_quiz.vue';
 import Total from '../components/landing/landing_total.vue';
 import Landing_Card from '../components/mini_card.vue';
@@ -40,9 +40,9 @@ onMounted(() => {
       </div>
     </div>
   </section>
-  
+
   <Total />
-  
+
   <section>
     <div id="hot" class="bg-pattern-01 w-full h-[950px]">
       <div class="py-6 mx-6">
