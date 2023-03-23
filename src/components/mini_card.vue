@@ -1,5 +1,5 @@
 <template>
-  <div id="mini_card" class="bg-white shadow-md shadow-black/10">
+  <div id="mini_card" class="bg-white shadow-md shadow-black/10 hover:scale-[1.05]">
     <div class="bg-black rounded-t-md w-[510px] h-[33px] flex items-center px-3">
       <div class="flex space-x-2">
         <div class="bg-[#FF4E4E] rounded-full w-[15px] h-[15px]"></div>

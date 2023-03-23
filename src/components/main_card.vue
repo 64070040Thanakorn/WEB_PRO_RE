@@ -1,5 +1,5 @@
 <template>
-    <div class="container w-[20rem] h-[27rem] bg-white shadow-md shadow-black/10 p-4">
+    <div class="container w-[20rem] h-[27rem] bg-white shadow-lg shadow-black/25 p-4 hover:shadow-md hover:scale-[1.05]">
         <div class="flex flex-col">
             <div class="flex flex-col gap-1">
                 <div class="flex gap-1">
@@ -34,7 +34,7 @@
             <div class="flex flex-col mt-24 gap-2">
                 <p class="flex justify-end text-[#5CA949]">ฟรี</p>
                 <RouterLink to="">
-                    <div class="bg-black text-white py-2 rounded-[3px] text-center">ดูคอร์สเรียน</div>
+                    <div class="bg-black text-white py-2 rounded-[3px] text-center hover:bg-[#2E2E2E]">ดูคอร์สเรียน</div>
                 </RouterLink>
             </div>
         </div>

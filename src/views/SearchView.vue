@@ -178,6 +178,8 @@ export default {
                         </div>
                         <hr class="border-[1.2px]" />
                     </div>
+
+                    <!-- lower side-bar -->
                     <div class="mt-8 mb-8">
                         <div class="flex flex-col">
                             <div class="flex items-center">
@@ -206,25 +208,24 @@ export default {
                                 <div class="level-content">
                                     <div class="ml-3 gap-2 flex flex-col">
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="level" value="beginner"
+                                            <input id="beginner" type="checkbox" name="level" value="beginner"
                                                 class="p-2 border-2 border-black inline-block" v-model="beginner" />
-                                            <span class="font-light">Beginner</span>
+                                            <label for="beginner" class="font-light">Beginner</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="level" value="intermediate"
+                                            <input id="intermediate" type="checkbox" name="level" value="intermediate"
                                                 class="p-2 border-2 border-black inline-block" v-model="intermediate" />
-                                            <span class="font-light">Intermediate</span>
+                                            <label for="intermediate" class="font-light">Intermediate</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="level" value="advanced"
+                                            <input id="advanced" type="checkbox" name="level" value="advanced"
                                                 class="p-2 border-2 border-black inline-block" v-model="advanced" />
-                                            <span class="font-light">Advanced</span>
+                                            <label for="advanced" class="font-light">Advanced</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- lower-side-bar -->
                             <div class="flex flex-col gap-2 dropdown level-bottom">
                                 <hr class="border-[1.2px]" />
                                 <button type="button" class="flex justify-between items-center"
@@ -235,24 +236,24 @@ export default {
                                 <div class="price-content">
                                     <div class="ml-3 gap-2 flex flex-col">
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="price" value="price"
+                                            <input id="priceFree" type="checkbox" name="priceFree" value="priceFree"
                                                 class="p-2 border-2 border-black inline-block" v-model="priceFree" />
-                                            <span class="font-light">ฟรี</span>
+                                            <label for="priceFree" class="font-light">ฟรี</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="price" value="price"
+                                            <input id="price1To1000" type="checkbox" name="price1To1000" value="price1To1000"
                                                 class="p-2 border-2 border-black inline-block" v-model="price1To1000" />
-                                            <span class="font-light">1-1000 บาท</span>
+                                            <label for="price1To1000" class="font-light">1-1000 บาท</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="price" value="price"
+                                            <input id="price1001To3000" type="checkbox" name="price1001To3000" value="price1001To3000"
                                                 class="p-2 border-2 border-black inline-block" v-model="price1001To3000" />
-                                            <span class="font-light">1001-3000 บาท</span>
+                                            <label for="price1001To3000" class="font-light">1001-3000 บาท</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="price" value="price"
+                                            <input id="price3000" type="checkbox" name="price3000" value="price3000"
                                                 class="p-2 border-2 border-black inline-block" v-model="price3000" />
-                                            <span class="font-light">มากกว่า 3000 บาท</span>
+                                            <label for="price3000" class="font-light">มากกว่า 3000 บาท</label>
                                         </div>
                                     </div>
                                 </div>
@@ -268,14 +269,14 @@ export default {
                                 <div class="amount-content">
                                     <div class="ml-3 gap-2 flex flex-col">
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="amount" value="amount"
+                                            <input id="amountFull" type="checkbox" name="amountFull" value="amountFull"
                                                 class="p-2 border-2 border-black inline-block" v-model="amountFull" />
-                                            <span class="font-light">เต็ม</span>
+                                            <label for="amountFull" class="font-light">เต็ม</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="amount" value="amount"
+                                            <input id="amountNotFull" type="checkbox" name="amountNotFull" value="amountNotFull"
                                                 class="p-2 border-2 border-black inline-block" v-model="amountNotFull" />
-                                            <span class="font-light">ไม่เต็ม</span>
+                                            <label for="amountNotFull" class="font-light">ไม่เต็ม</label>
                                         </div>
                                     </div>
                                 </div>
@@ -291,14 +292,14 @@ export default {
                                 <div class="cer-content">
                                     <div class="ml-3 gap-2 flex flex-col">
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="cer" value="cer"
+                                            <input id="cerHave" type="checkbox" name="cerHave" value="cerHave"
                                                 class="p-2 border-2 border-black inline-block" v-model="cerHave" />
-                                            <span class="font-light">มี</span>
+                                            <label for="cerHave" class="font-light">มี</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="cer" value="cer"
+                                            <input id="cerNot" type="checkbox" name="cerNot" value="cerNot"
                                                 class="p-2 border-2 border-black inline-block" v-model="cerNot" />
-                                            <span class="font-light">ไม่มี</span>
+                                            <label for="cerNot" class="font-light">ไม่มี</label>
                                         </div>
                                     </div>
                                 </div>
@@ -314,19 +315,19 @@ export default {
                                 <div class="lesson-content">
                                     <div class="ml-3 gap-2 flex flex-col">
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="lesson" value="lesson"
+                                            <input id="lesson0To4" type="checkbox" name="lesson0To4" value="lesson0To4"
                                                 class="p-2 border-2 border-black inline-block" v-model="lesson0To4" />
-                                            <span class="font-light">0 - 4 บท</span>
+                                            <label for="lesson0To4" class="font-light">0 - 4 บท</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="lesson" value="lesson"
+                                            <input id="lesson5To15" type="checkbox" name="lesson5To15" value="lesson5To15"
                                                 class="p-2 border-2 border-black inline-block" v-model="lesson5To15" />
-                                            <span class="font-light">5 - 15 บท</span>
+                                            <label for="lesson5To15" class="font-light">5 - 15 บท</label>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="lesson" value="lesson"
+                                            <input id="lesson16" type="checkbox" name="lesson16" value="lesson16"
                                                 class="p-2 border-2 border-black inline-block" v-model="lesson16" />
-                                            <span class="font-light">16+ บท</span>
+                                            <label for="lesson16" class="font-light">16+ บท</label>
                                         </div>
                                     </div>
                                 </div>
@@ -337,28 +338,27 @@ export default {
                 </div>
             </div>
             <div class="w-[85%] mb-20">
-                <div class="flex flex-col">
-                    <div class="bg-search-02 w-full h-[650px]">
-                        <div class="top-0 left-0 px-20 py-12 flex flex-col gap-8">
-                            <p class="text-md text-[#EBC919]">
+                <div class="bg-search-02 h-[650px] px-20 py-12">
+                    <div class="space-y-8">
+                        <p class="text-md text-[#EBC919]">
                                 หมวดหมู่ <span class="text-black">/ Python</span>
-                            </p>
-                            <p class="text-4xl font-medium">Python</p>
+                        </p>
+                        <p class="text-4xl font-medium">Python</p>
                             <p class="text-lg">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
                                 facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
                                 inventore in commodi alias cumque perferendis ducimus reiciendis ratione
                                 dolore.
-                            </p>
-                            <h1 class="text-2xl font-medium">คอร์สเรียนที่แนะนำ</h1>
-                            <RouterLink id="recommend_card" class="scale-[0.9] translate-x-[-4vw]" to="">
+                        </p>
+                        <h1 class="text-2xl font-medium">คอร์สเรียนที่แนะนำ</h1>
+                        <div class="flex justify-start">
+                            <RouterLink id="recommend_card" class="" to="">
                                 <recommend_card/>
                             </RouterLink>
                         </div>
-
                     </div>
                 </div>
-                <div class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 space-x-1">
+                <div class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1">
                     <div v-for="item in items.slice(0, 12)">
                         <main_card/>
                     </div>
