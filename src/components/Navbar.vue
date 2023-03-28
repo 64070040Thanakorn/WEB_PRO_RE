@@ -52,11 +52,37 @@ export default {
       errorClass: 'text-danger',
       isActive_Login: false,
       isActive_Register: false,
+      isActive_auth: false,
     }
   },
   methods: {
-    childMessageReceived(){
-      console.log('message from login')
+    closing_auth(){
+      this.AuthShowup()
+      if(this.isActive_Login){
+        this.isActive_Login = !this.isActive_Login
+        console.log("closing : login")
+      }
+      if(this.isActive_Register){
+        this.isActive_Register = !this.isActive_Register
+          console.log("closing : register")
+      }
+    },
+    AuthShowup(el) {
+      this.isActive_auth = !this.isActive_auth
+      switch(el) {
+        case "login":
+          console.log('opening : login')
+          this.isActive_Login = !this.isActive_Login
+
+          break;
+        case "register":
+          console.log('opening: register')
+          this.isActive_Register = !this.isActive_Register
+
+          break;
+        default:
+          return 0
+      }
     }
   },
   computed: {
@@ -68,8 +94,14 @@ export default {
 </script>
 
 <template>
-  <Register :class="{'': isActive_Register, 'hidden': !isActive_Register}" />
-  <Login @messageFromChild="childMessageReceived" class="hidden"/>
+  <div :class="[isActive_auth ? '':'hidden']" class="w-full z-[2] fixed">
+    <div class="absolute left-1/2 translate-x-[-50%] w-full h-screen flex justify-center items-center">
+      <div @click="closing_auth" class="bg-black w-full h-full absolute opacity-80 fixed fixed"></div>
+      <Register @messageFromChild="closing_auth" :class="[isActive_Register ? '':'hidden']"/>
+      <Login @messageFromChild="closing_auth" :class="[isActive_Login ? '':'hidden']"/>
+    </div>
+  </div>
+  
   <div class="navbar w-full" :class="{'absolute': isActive, 'bg-black': !isActive}">
     <div :class="{'absolute top-0 left-0 h-56 w-full bg-gradient-to-b from-black to-white-0% p-5': isActive} "></div>
     <div class="flex justify-between items-center px-48 h-[80px]">
@@ -89,8 +121,8 @@ export default {
       <div>
         <ul class="flex">
           <RouterLink to="/search" id="search" class="nav_search pi pi-search flex items-center"></RouterLink>
-          <button @click="!this.isActive_Login" id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</button>
-          <button @click="!this.isActive_Register" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</button>
+          <button @click="AuthShowup('login')" id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</button>
+          <button @click="AuthShowup('register')" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</button>
         </ul>
       </div>
     </div>
