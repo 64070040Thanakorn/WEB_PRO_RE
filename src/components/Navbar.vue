@@ -94,7 +94,7 @@ export default {
 </script>
 
 <template>
-  <div :class="[isActive_auth ? '':'hidden']" class="w-full z-[2] fixed">
+  <div :class="[isActive_auth ? '':'hidden']" class="w-full z-[50] fixed">
     <div class="absolute left-1/2 translate-x-[-50%] w-full h-screen flex justify-center items-center">
       <div @click="closing_auth" class="bg-black w-full h-full absolute opacity-80 fixed fixed"></div>
       <Register @messageFromChild="closing_auth" :class="[isActive_Register ? '':'hidden']"/>
@@ -102,7 +102,7 @@ export default {
     </div>
   </div>
   
-  <div class="navbar w-full" :class="{'absolute': isActive, 'bg-black': !isActive}">
+  <div class="navbar w-full z-20" :class="{'absolute': isActive, 'bg-black': !isActive}">
     <div :class="{'absolute top-0 left-0 h-56 w-full bg-gradient-to-b from-black to-white-0% p-5': isActive} "></div>
     <div class="flex justify-between items-center px-48 h-[80px]">
       <div>
