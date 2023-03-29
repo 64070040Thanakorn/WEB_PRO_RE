@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Landing from '../views/LandingView.vue'
 import Search from '../views/SearchView.vue'
 
+import user from './user'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,6 +32,7 @@ const router = createRouter({
       name: 'location',
       component: null
     },
+    ...user,
   ]
 })
 
