@@ -2,7 +2,7 @@ import dashboardView from '../views/profile/dashboard.vue'
 
 export default [
   {
-    path: '/dashboard',
+    path: '/:id/dashboard',
     name: 'dashboard',
     component: dashboardView
   },

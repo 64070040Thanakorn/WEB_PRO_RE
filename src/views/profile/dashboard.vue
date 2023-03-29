@@ -1,3 +1,30 @@
+<script>
+import userService from '../../service/userService';
+
+export default {
+  name: 'dashboard',
+  data(){
+    return{
+      user: { data: {  } },
+      error: '',
+      test: '',
+    }
+  },
+  async created(){
+    try{
+      this.user = await userService.getUser();
+    } catch(err){
+      this.error = err.message;
+    }
+  },
+  watch:{
+    user(b,f){
+      console.log(b)
+    }
+  }
+}
+</script>
+
 <template>
   <section>
     <div class="mx-32 my-20">
@@ -44,23 +71,23 @@
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col">
                   <label for="" class="text-black">ชื่อ</label>
-                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com">
+                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com" v-model="user.data.first_name">
                 </div>
                 <div class="flex flex-col">
                   <label for="" class="text-black">นามสกุล</label>
-                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com">
+                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com" :value="user.data.last_name">
                 </div>
                 <div class="flex flex-col">
                   <label for="" class="text-black">อีเมล</label>
-                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com">
+                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com" :value="user.data.email">
                 </div>
                 <div class="flex flex-col">
                   <label for="" class="text-black">รหัสผ่าน</label>
-                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com">
+                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com" :value="user.data.password">
                 </div>
                 <div class="flex flex-col">
                   <label for="" class="text-black">เบอร์โทร</label>
-                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com">
+                  <input class="border rounded-md pl-5 py-3 w-[90%]" type="email" placeholder="example@gmail.com" :value="user.data.tel">
                 </div>
               </div>
             </form>

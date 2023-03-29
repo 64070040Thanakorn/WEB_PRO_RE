@@ -34,7 +34,7 @@ onMounted(() => {
             เรียนรู้ไปด้วยกันกับเรา GREATER “ไม่เคยหยุดนิ่ง”<br>
             โดย สถาบันพระจอมเกล้าคุณทหารลาดกระบัง
           </p>
-          <button id="btn" class="border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">ลงทะเบียนเลยวันนี้</button>
+          <button id="btn" class="transition-all duration-200 border-2 rounded-md hover:bg-[#EBC919]/80  border-[#EBC919] py-2 px-6 font-extralight">ลงทะเบียนเลยวันนี้</button>
         </div>
       </div>
     </div>
