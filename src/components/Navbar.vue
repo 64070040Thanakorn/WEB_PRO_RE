@@ -48,8 +48,6 @@ export default {
   name: "Navbar",
   data() {
     return {
-      activeClass: 'active',
-      errorClass: 'text-danger',
       isActive_Login: false,
       isActive_Register: false,
       isActive_auth: false,

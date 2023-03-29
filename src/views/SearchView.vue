@@ -1,249 +1,22 @@
-<template>
-    <section>
-        <div class="relative z-10">
-            <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat">
-                <div class="top-1/3 left-1/2 traslate-y-[-50%] translate-x-[-50%] text-white w-full gap-8 flex flex-col">
-                    <p class="flex justify-center text-6xl font-medium">
-                        หาคอร์สเรียนที่เหมาะกับคุณ
-                    </p>
-                    <div class="flex justify-center text-center">
-                        <p class="w-[70%] text-sm">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </p>
-                    </div>
-                    <div class="flex justify-center text-black">
-                        <span class="p-input-icon-left w-[50%]">
-                            <!--  !!!!!! icon หน้าโง่ไม่อยู่ใน input, primevue มีแต่กูใช้มะได้ !!!!!!-->
-
-                            <!-- <i class="pi pi-search" /> -->
-                            <InputText v-model="searchValue" class="py-2 px-5 rounded-[30px] w-full" placeholder="ค้นหา..." />
-                        </span>
-                    </div>
-                    <div class="flex justify-around items-center w-[50%] mx-auto text-[12px]">
-                        <span class="underline">การค้นหาที่ยอดนิยม</span>
-                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Python</button>
-                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">C</button>
-                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Java</button>
-                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">PHP</button>
-                        <button type='button' class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">Sql</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="flex z-0">
-            <div class="w-[25%] bg-white shadow-md shadow-black/10 mx-auto">
-                <div class="flex flex-col p-8 overflow-y-auto h-full absolute w-full scrollbar">
-                    <div class="gap-4 flex flex-col dropdown">
-                        <button type='button' class="flex justify-between items-center" @click="IsActiveCate = !IsActiveCate">
-                            <p class="text-lg font-normal">หมวดหมู่วิชา</p>
-                            <i class="pi" :class="{ 'pi-chevron-down': !IsActiveCate, 'pi-chevron-up': IsActiveCate }"></i>
-                        </button>
-                        <div :class="{ 'hidden': !IsActiveCate }">
-                            <div class="flex flex-col gap-2 text-sm">
-                                <a href="" class="font-light hover:font-normal">All</a>
-                                <a href="" class="font-light hover:font-normal">Python</a>
-                                <a href="" class="font-light hover:font-normal">JavaScript</a>
-                                <a href="" class="font-light hover:font-normal">HTML & CSS</a>
-                                <a href="" class="font-light hover:font-normal">SQL</a>
-                                <a href="" class="font-light hover:font-normal">Java</a>
-                                <a href="" class="font-light hover:font-normal">C++</a>
-                                <a href="" class="font-light hover:font-normal">C#</a>
-                                <a href="" class="font-light hover:font-normal">Bash</a>
-                                <a href="" class="font-light hover:font-normal">C</a>
-                                <a href="" class="font-light hover:font-normal">PHP</a>
-                                <a href="" class="font-light hover:font-normal">R</a>
-                                <a href="" class="font-light hover:font-normal">Swift</a>
-                            </div>
-                        </div>
-                        <hr class="border-[1.2px] mb-8" :class="{'mb-[27rem]': !IsActiveCate, 'mb-[3.75rem]': IsActiveCate}"/>
-                    </div>
-                    <div class="flex flex-col gap-4 mt-8 mb-8">
-                        <div class="flex justify-between items-center">
-                            <h3 class="2xl:text-3xl lg:text-2xl font-normal">Python</h3>
-                            <p class="2xl:text-sm lg:text-xs font-light">30 ผลลัพท์</p>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex gap-2 items-center">
-                                <i class="pi pi-sliders-h text-xl"></i>
-                                <p class="text-xl font-light">กรอง</p>
-                            </div>
-                            <button type="button" class="texl-lg font-light text-[#676767] underline" @click="clearFilter()">ล้างกรอง</button>
-                        </div>
-                        <div class="flex flex-col gap-2 dropdown">
-                            <button type='button' class="flex justify-between items-center" @click="IsActiveLevel = !IsActiveLevel">
-                                <p class="text-lg font-normal">ระดับ</p>
-                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveLevel, 'pi-chevron-up': IsActiveLevel }"></i>
-                            </button>
-                            <div :class="{ 'hidden': !IsActiveLevel }">
-                                <div class="ml-3 gap-2 flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="level" value="beginner"
-                                            class="p-2 border-2 border-black inline-block" v-model="beginner"/>
-                                        <span class="font-light">Beginner</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="level" value="intermediate"
-                                            class="p-2 border-2 border-black inline-block" v-model="intermediate"/>
-                                        <span class="font-light">Intermediate</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="level" value="advanced"
-                                            class="p-2 border-2 border-black inline-block" v-model="advanced"/>
-                                        <span class="font-light">Advanced</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2 dropdown">
-                            <button type='button' class="flex justify-between items-center" @click="IsActivePrice = !IsActivePrice">
-                                <p class="text-lg font-normal">ราคา</p>
-                                <i class="pi" :class="{ 'pi-chevron-down': !IsActivePrice, 'pi-chevron-up': IsActivePrice }"></i>
-                            </button>
-                            <div :class="{ 'hidden': !IsActivePrice }">
-                                <div class="ml-3 gap-2 flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="price" value="price"
-                                            class="p-2 border-2 border-black inline-block" v-model="priceFree"/>
-                                        <span class="font-light">ฟรี</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="price" value="price"
-                                            class="p-2 border-2 border-black inline-block" v-model="price1To1000"/>
-                                        <span class="font-light">1-1000 บาท</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="price" value="price"
-                                            class="p-2 border-2 border-black inline-block" v-model="price1001To3000"/>
-                                        <span class="font-light">1001-3000 บาท</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="price" value="price"
-                                            class="p-2 border-2 border-black inline-block" v-model="price3000"/>
-                                        <span class="font-light">มากกว่า 3000 บาท</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2 dropdown">
-                            <button type='button' class="flex justify-between items-center" @click="IsActiveAmount = !IsActiveAmount">
-                                <p class="text-lg font-normal">จำนวนคน</p>
-                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveAmount, 'pi-chevron-up': IsActiveAmount }"></i>
-                            </button>
-                            <div :class="{ 'hidden': !IsActiveAmount }">
-                                <div class="ml-3 gap-2 flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="amount" value="amount"
-                                            class="p-2 border-2 border-black inline-block" v-model="amountFull"/>
-                                        <span class="font-light">เต็ม</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="amount" value="amount"
-                                            class="p-2 border-2 border-black inline-block" v-model="amountNotFull"/>
-                                        <span class="font-light">ไม่เต็ม</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2 dropdown">
-                            <button type='button' class="flex justify-between items-center" @click="IsActiveCer = !IsActiveCer">
-                                <p class="text-lg font-normal">ใบ Certificate</p>
-                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveCer, 'pi-chevron-up': IsActiveCer }"></i>
-                            </button>
-                            <div :class="{ 'hidden': !IsActiveCer }">
-                                <div class="ml-3 gap-2 flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="cer" value="cer"
-                                            class="p-2 border-2 border-black inline-block" v-model="cerHave"/>
-                                        <span class="font-light">มี</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="cer" value="cer"
-                                            class="p-2 border-2 border-black inline-block" v-model="cerNot"/>
-                                        <span class="font-light">ไม่มี</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="border-[1.2px]" />
-                        <div class="flex flex-col gap-2 dropdown">
-                            <button type='button' class="flex justify-between items-center" @click="IsActiveLesson = !IsActiveLesson">
-                                <p class="text-lg font-normal">บทเรียน</p>
-                                <i class="pi" :class="{ 'pi-chevron-down': !IsActiveLesson, 'pi-chevron-up': IsActiveLesson }"></i>
-                            </button>
-                            <div :class="{ 'hidden': !IsActiveLesson }">
-                                <div class="ml-3 gap-2 flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="lesson" value="lesson"
-                                            class="p-2 border-2 border-black inline-block" v-model="lesson0To4"/>
-                                        <span class="font-light">0 - 4 บท</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="lesson" value="lesson"
-                                            class="p-2 border-2 border-black inline-block" v-model="lesson5To15"/>
-                                        <span class="font-light">5 - 15 บท</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input type="checkbox" name="lesson" value="lesson"
-                                            class="p-2 border-2 border-black inline-block" v-model="lesson16"/>
-                                        <span class="font-light">16+ บท</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="w-[75%] mb-20">
-                <div class="flex flex-col relative">
-                    <div class="bg-search-02 w-full h-[530px]">
-                        <div class="absolute top-0 left-0 px-20 py-12 flex flex-col gap-8">
-                            <p class="text-md text-[#EBC919]">
-                                หมวดหมู่ <span class="text-black">/ Python</span>
-                            </p>
-                            <p class="text-4xl font-medium">Python</p>
-                            <p class="text-lg">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
-                                facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
-                                inventore in commodi alias cumque perferendis ducimus reiciendis ratione
-                                dolore.
-                            </p>
-                            <RouterLink class="bg-black p-20 w-[35%]" to="">
-                                <div></div>
-                            </RouterLink>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-4 justify-items-center px-20 py-12 gap-6">
-                    <RouterLink to="" v-for="item in items.slice(0, 12)">
-                        <div class="flex bg-black border-2 p-20 w-[300px] h-[400px] text-white"></div>
-                    </RouterLink>
-                </div>
-                <div class="flex justify-center gap-4">
-                    <RouterLink to="" v-for="value in pageAmount">
-                        <span class="font-light hover:font-normal">{{ value }}</span>
-                    </RouterLink>
-                </div>
-            </div>
-        </div>
-    </section>
-    <Footer />
-</template>
+<script setup>
+import { gsap } from "gsap";
+import { TweenMax } from "gsap/gsap-core";
+import recommend_card from '../components/mini_card.vue';
+import main_card from "../components/main_card.vue";
+</script>
 
 <script>
+
+
 export default {
     data() {
         return {
-            IsActiveCate: true,
-            IsActiveLevel: true,
-            IsActivePrice: true,
-            IsActiveAmount: true,
-            IsActiveCer: true,
-            IsActiveLesson: true,
+            isActiveCate: true,
+            isActiveLevel: true,
+            isActivePrice: true,
+            isActiveAmount: true,
+            isActiveCer: true,
+            isActiveLesson: true,
             searchValue: null,
             beginner: null,
             intermediate: null,
@@ -264,31 +37,344 @@ export default {
     },
     computed: {
         pageAmount() {
-            return Math.ceil(this.items.length/12)
-        }
+            return Math.ceil(this.items.length / 12);
+        },
     },
     methods: {
         clearFilter() {
-            this.beginner = null
-            this.intermediate = null
-            this.advanced = null
-            this.priceFree = null
-            this.price1To1000 = null
-            this.price1001To3000 = null
-            this.price3000 = null
-            this.amountFull = null
-            this.amountNotFull = null
-            this.cerHave = null
-            this.cerNot = null
-            this.lesson0To4 = null
-            this.lesson5To15 = null
-            this.lesson16 = null
-        }
-    }
-};
-</script>
-<style>
+            this.beginner = null;
+            this.intermediate = null;
+            this.advanced = null;
+            this.priceFree = null;
+            this.price1To1000 = null;
+            this.price1001To3000 = null;
+            this.price3000 = null;
+            this.amountFull = null;
+            this.amountNotFull = null;
+            this.cerHave = null;
+            this.cerNot = null;
+            this.lesson0To4 = null;
+            this.lesson5To15 = null;
+            this.lesson16 = null;
+        },
+        showHide(header, content, bottom, bool, value) {
+            if (bool) {
+                gsap.to(header, {
+                    rotate: 180
+                })
+                TweenMax.to(content, 0.1, {
+                    y: -20,
+                    autoAlpha: 0,
+                    display: 'none',
+                })
+                if (bottom) {
+                    TweenMax.to(bottom, 0.1, {
+                        y: value
+                    })
 
+                    gsap.to(bottom, {
+                        delay: 0.1,
+                        duration: 0,
+                        y: 0,
+                    })
+                }
+
+            }
+            else {
+
+                gsap.to(header, {
+                    rotate: 0,
+                })
+
+                TweenMax.to(content, 0.1, {
+                    y: 0,
+                    autoAlpha: 1,
+                    display: 'block',
+                })
+
+                if (bottom) {
+                    TweenMax.to(bottom, 0.1, {
+                        y: 0
+                    })
+                }
+
+
+            }
+        },
+    },
+};
+
+</script>
+<template>
+    <section>
+        <div class="relative z-10">
+            <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat flex items-center">
+                <div class="text-white w-full gap-8 flex flex-col">
+                    <p class="flex justify-center text-6xl font-medium">
+                        หาคอร์สเรียนที่เหมาะกับคุณ
+                    </p>
+                    <div class="flex justify-center text-center">
+                        <p class="w-[70%] text-sm">
+                            แหล่งรวมคอร์สเรียนมากกว่าหนึ่งร้อยคอร์สเรียน มาไว้ให้คุณที่นี้แล้ว <br> ค้นหาคอร์สที่คุณสนใจด้านล่างนี้เลย
+                        </p>
+                    </div>
+                    <div class="flex justify-center text-black">
+                        <span class="p-input-icon-left w-[50%]">
+                            <!--  !!!!!! icon หน้าโง่ไม่อยู่ใน input, primevue มีแต่กูใช้มะได้ !!!!!!-->
+
+                            <!-- <i class="pi pi-search" /> -->
+                            <InputText v-model="searchValue" class="py-2 px-5 rounded-[30px] w-full"
+                                placeholder="ค้นหา..." />
+                        </span>
+                    </div>
+                    <div class="flex justify-around items-center w-[50%] mx-auto text-[12px]">
+                        <span class="underline">การค้นหาที่ยอดนิยม</span>
+                        <button type="button" class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">
+                            Python
+                        </button>
+                        <button type="button" class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">
+                            C
+                        </button>
+                        <button type="button" class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">
+                            Java
+                        </button>
+                        <button type="button" class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">
+                            PHP
+                        </button>
+                        <button type="button" class="bg-[#1D1D1D]/[.7] py-2 px-8 rounded-[20px]">
+                            Sql
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="flex">
+            <div class="w-[15%] bg-white shadow-md shadow-black/10 mx-auto">
+                <div class="flex flex-col p-8 overflow-y-auto h-full w-full scrollbar">
+                    <!-- upper side-bar -->
+                    <div class="gap-4 flex flex-col dropdown mb-[10rem]">
+                        <div class="flex justify-between items-center">
+                            <p class="text-2xl font-medium">หมวดหมู่วิชา</p>
+                            <!-- <i class="pi pi-chevron-up cate-icon"></i> -->
+                        </div>
+                        <div class="cate-content">
+                            <ul class="flex flex-col gap-2 text-normal ml-4 list-disc">
+                                <li class="font-light hover:font-normal">All</li>
+                                <li class="font-light hover:font-normal">Python</li>
+                                <li class="font-light hover:font-normal">JavaScript</li>
+                                <li class="font-light hover:font-normal">HTML & CSS</li>
+                                <li class="font-light hover:font-normal">SQL</li>
+                                <li class="font-light hover:font-normal">Java</li>
+                                <li class="font-light hover:font-normal">C++</li>
+                                <li class="font-light hover:font-normal">C#</li>
+                                <li class="font-light hover:font-normal">Bash</li>
+                                <li class="font-light hover:font-normal">C</li>
+                                <li class="font-light hover:font-normal">PHP</li>
+                                <li class="font-light hover:font-normal">R</li>
+                                <li class="font-light hover:font-normal">Swift</li>
+                            </ul>
+                        </div>
+                        <hr class="border-[1.2px]" />
+                    </div>
+
+                    <!-- lower side-bar -->
+                    <div class="mt-8 mb-8">
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <h3 class="text-2xl font-normal">Python Course</h3>
+                            </div>
+                            <p class="text-xs underline font-light text-[#676767]">30 ผลลัพท์</p>
+                            <hr class="mt-2 border-[1.5px] border-black">
+                        </div>
+                        <div class="flex flex-col gap-4 mt-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex gap-2 items-center">
+                                    <i class="pi pi-sliders-h text-xl"></i>
+                                    <p class="text-xl font-light">กรอง</p>
+                                </div>
+                                <button type="button" class="texl-lg font-light text-red-500 underline"
+                                    @click="clearFilter()">
+                                    ล้างกรอง
+                                </button>
+                            </div>
+                            <div class="flex flex-col gap-2 dropdown">
+                                <button type="button" class="flex justify-between items-center"
+                                    @click="showHide('.level-icon', '.level-content', '.level-bottom', isActiveLevel, -90), isActiveLevel = !isActiveLevel">
+                                    <p class="text-lg font-normal">ระดับ</p>
+                                    <i class="pi pi-chevron-up level-icon"></i>
+                                </button>
+                                <div class="level-content">
+                                    <div class="ml-3 gap-2 flex flex-col">
+                                        <div class="flex items-center gap-2">
+                                            <input id="beginner" type="checkbox" name="level" value="beginner"
+                                                class="p-2 border-2 border-black inline-block" v-model="beginner" />
+                                            <label for="beginner" class="font-light">Beginner</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="intermediate" type="checkbox" name="level" value="intermediate"
+                                                class="p-2 border-2 border-black inline-block" v-model="intermediate" />
+                                            <label for="intermediate" class="font-light">Intermediate</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="advanced" type="checkbox" name="level" value="advanced"
+                                                class="p-2 border-2 border-black inline-block" v-model="advanced" />
+                                            <label for="advanced" class="font-light">Advanced</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2 dropdown level-bottom">
+                                <hr class="border-[1.2px]" />
+                                <button type="button" class="flex justify-between items-center"
+                                    @click="showHide('.price-icon', '.price-content', '.price-bottom', isActivePrice, -120), isActivePrice = !isActivePrice">
+                                    <p class="text-lg font-normal">ราคา</p>
+                                    <i class="pi pi-chevron-up price-icon"></i>
+                                </button>
+                                <div class="price-content">
+                                    <div class="ml-3 gap-2 flex flex-col">
+                                        <div class="flex items-center gap-2">
+                                            <input id="priceFree" type="checkbox" name="priceFree" value="priceFree"
+                                                class="p-2 border-2 border-black inline-block" v-model="priceFree" />
+                                            <label for="priceFree" class="font-light">ฟรี</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="price1To1000" type="checkbox" name="price1To1000" value="price1To1000"
+                                                class="p-2 border-2 border-black inline-block" v-model="price1To1000" />
+                                            <label for="price1To1000" class="font-light">1-1000 บาท</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="price1001To3000" type="checkbox" name="price1001To3000" value="price1001To3000"
+                                                class="p-2 border-2 border-black inline-block" v-model="price1001To3000" />
+                                            <label for="price1001To3000" class="font-light">1001-3000 บาท</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="price3000" type="checkbox" name="price3000" value="price3000"
+                                                class="p-2 border-2 border-black inline-block" v-model="price3000" />
+                                            <label for="price3000" class="font-light">มากกว่า 3000 บาท</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2 dropdown price-bottom level-bottom">
+                                <hr class="border-[1.2px]" />
+                                <button type="button" class="flex justify-between items-center"
+                                    @click="showHide('.amount-icon', '.amount-content', '.amount-bottom', isActiveAmount, -60), isActiveAmount = !isActiveAmount">
+                                    <p class="text-lg font-normal">จำนวนคน</p>
+                                    <i class="pi pi-chevron-up amount-icon"></i>
+                                </button>
+                                <div class="amount-content">
+                                    <div class="ml-3 gap-2 flex flex-col">
+                                        <div class="flex items-center gap-2">
+                                            <input id="amountFull" type="checkbox" name="amountFull" value="amountFull"
+                                                class="p-2 border-2 border-black inline-block" v-model="amountFull" />
+                                            <label for="amountFull" class="font-light">เต็ม</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="amountNotFull" type="checkbox" name="amountNotFull" value="amountNotFull"
+                                                class="p-2 border-2 border-black inline-block" v-model="amountNotFull" />
+                                            <label for="amountNotFull" class="font-light">ไม่เต็ม</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2 dropdown amount-bottom price-bottom level-bottom">
+                                <hr class="border-[1.2px]" />
+                                <button type="button" class="flex justify-between items-center"
+                                    @click="showHide('.cer-icon', '.cer-content', '.cer-bottom', isActiveCer, -60), isActiveCer = !isActiveCer">
+                                    <p class="text-lg font-normal">ใบ Certificate</p>
+                                    <i class="pi pi-chevron-up cer-icon"></i>
+                                </button>
+                                <div class="cer-content">
+                                    <div class="ml-3 gap-2 flex flex-col">
+                                        <div class="flex items-center gap-2">
+                                            <input id="cerHave" type="checkbox" name="cerHave" value="cerHave"
+                                                class="p-2 border-2 border-black inline-block" v-model="cerHave" />
+                                            <label for="cerHave" class="font-light">มี</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="cerNot" type="checkbox" name="cerNot" value="cerNot"
+                                                class="p-2 border-2 border-black inline-block" v-model="cerNot" />
+                                            <label for="cerNot" class="font-light">ไม่มี</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2 dropdown level-bottom price-bottom amount-bottom cer-bottom">
+                                <hr class="border-[1.2px]" />
+                                <button type="button" class="flex justify-between items-center"
+                                    @click="showHide('.lesson-icon', '.lesson-content', null, isActiveLesson, -60), isActiveLesson = !isActiveLesson">
+                                    <p class="text-lg font-normal">บทเรียน</p>
+                                    <i class="pi pi-chevron-up lesson-icon"></i>
+                                </button>
+                                <div class="lesson-content">
+                                    <div class="ml-3 gap-2 flex flex-col">
+                                        <div class="flex items-center gap-2">
+                                            <input id="lesson0To4" type="checkbox" name="lesson0To4" value="lesson0To4"
+                                                class="p-2 border-2 border-black inline-block" v-model="lesson0To4" />
+                                            <label for="lesson0To4" class="font-light">0 - 4 บท</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="lesson5To15" type="checkbox" name="lesson5To15" value="lesson5To15"
+                                                class="p-2 border-2 border-black inline-block" v-model="lesson5To15" />
+                                            <label for="lesson5To15" class="font-light">5 - 15 บท</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input id="lesson16" type="checkbox" name="lesson16" value="lesson16"
+                                                class="p-2 border-2 border-black inline-block" v-model="lesson16" />
+                                            <label for="lesson16" class="font-light">16+ บท</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="level-bottom price-bottom amount-bottom cer-bottom lesson-bottom"></div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[85%] mb-20">
+                <div class="bg-search-02 h-[650px] px-20 py-12">
+                    <div class="space-y-8">
+                        <p class="text-md text-[#EBC919]">
+                                หมวดหมู่ <span class="text-black">/ Python</span>
+                        </p>
+                        <p class="text-4xl font-medium">Python</p>
+                            <p class="text-lg">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
+                                facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
+                                inventore in commodi alias cumque perferendis ducimus reiciendis ratione
+                                dolore.
+                        </p>
+                        <h1 class="text-2xl font-medium">คอร์สเรียนที่แนะนำ</h1>
+                        <div class="flex justify-start">
+                            <RouterLink id="recommend_card" class="" to="">
+                                <recommend_card/>
+                            </RouterLink>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1">
+                    <div v-for="item in items.slice(0, 12)">
+                        <main_card/>
+                    </div>
+                </div>
+                <div class="flex justify-center gap-4">
+                    <RouterLink to="" v-for="value in pageAmount">
+                        <span class="font-light hover:font-normal">{{ value }}</span>
+                    </RouterLink>
+                </div>
+            </div>
+        </div>
+    </section>
+    <Footer />
+</template>
+
+<style>
 .dropdown {
     position: relative;
     display: inline-block;
@@ -296,27 +382,30 @@ export default {
 
 /* scroll bar */
 .scrollbar::-webkit-scrollbar {
-    background-color:#fff;
-    width:16px
+    background-color: #fff;
+    width: 16px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-    background-color:#fff
+    background-color: #fff;
 }
+
 .scrollbar::-webkit-scrollbar-track:hover {
-    background-color:#f4f4f4
+    background-color: #f4f4f4;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    background-color:#babac0;
-    border-radius:16px;
-    border:5px solid #fff
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 5px solid #fff;
 }
+
 .scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color:#a0a0a5;
-    border:4px solid #f4f4f4
+    background-color: #a0a0a5;
+    border: 4px solid #f4f4f4;
 }
 
-.scrollbar::-webkit-scrollbar-button {display:none}
-
+.scrollbar::-webkit-scrollbar-button {
+    display: none;
+}
 </style>
