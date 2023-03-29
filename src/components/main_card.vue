@@ -3,7 +3,7 @@
         <div class="flex flex-col">
             <div class="flex flex-col gap-1">
                 <div class="flex gap-1">
-                    <p class="bg-[#FEB8B8] rounded-[15px] text-xs px-4 py-[0.2rem] text-white">Beginner</p>
+                    <p class="bg-[#FEB8B8] rounded-[15px] text-xs px-4 py-[0.2rem] text-white">ระดับเริ่มต้น</p>
                     <p class="bg-[#46AECF] rounded-[15px] text-xs px-4 py-[0.2rem] text-white">ใบ Certificate</p>
                 </div>
                 <h1 class="text-2xl font-normal">Python for beginner</h1>

@@ -210,17 +210,17 @@ export default {
                                         <div class="flex items-center gap-2">
                                             <input id="beginner" type="checkbox" name="level" value="beginner"
                                                 class="p-2 border-2 border-black inline-block" v-model="beginner" />
-                                            <label for="beginner" class="font-light">Beginner</label>
+                                            <label for="beginner" class="font-light">ระดับเริ่มต้น</label>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <input id="intermediate" type="checkbox" name="level" value="intermediate"
                                                 class="p-2 border-2 border-black inline-block" v-model="intermediate" />
-                                            <label for="intermediate" class="font-light">Intermediate</label>
+                                            <label for="intermediate" class="font-light">ระดับกลาง</label>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <input id="advanced" type="checkbox" name="level" value="advanced"
                                                 class="p-2 border-2 border-black inline-block" v-model="advanced" />
-                                            <label for="advanced" class="font-light">Advanced</label>
+                                            <label for="advanced" class="font-light">ระดับสูง</label>
                                         </div>
                                     </div>
                                 </div>
