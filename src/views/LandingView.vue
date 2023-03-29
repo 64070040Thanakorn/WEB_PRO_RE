@@ -27,15 +27,14 @@ onMounted(() => {
     <div class="flex justify-center bg-landing-01 bg-no-repeat bg-cover w-full h-[1080px]">
       <div class="flex justify-start mt-72 space-x-36 text-white">
         <div class="slogan w-[600px]">
-          <p class="animated-text slogan_word font-extralight">
-          </p>
+          <p class="animated-text slogan_word font-extralight">asd</p>
         </div>
         <div class="description space-y-8 mt-20">
           <p class="indent-8 font-extralight">
             เรียนรู้ไปด้วยกันกับเรา GREATER “ไม่เคยหยุดนิ่ง”<br>
             โดย สถาบันพระจอมเกล้าคุณทหารลาดกระบัง
           </p>
-          <button id="btn" class="border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">ลงทะเบียนเลยวันนี้</button>
+          <button id="btn" class="transition-all duration-200 border-2 rounded-md hover:bg-[#EBC919]/80  border-[#EBC919] py-2 px-6 font-extralight">ลงทะเบียนเลยวันนี้</button>
         </div>
       </div>
     </div>

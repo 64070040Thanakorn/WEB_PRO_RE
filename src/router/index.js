@@ -3,6 +3,8 @@ import Landing from '../views/LandingView.vue'
 import Search from '../views/SearchView.vue'
 import Quiz from '../views/QuizView.vue'
 
+import user from './user'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -36,6 +38,7 @@ const router = createRouter({
       name: 'quiz',
       component: Quiz
     },
+    ...user,
   ]
 })
 
