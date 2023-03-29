@@ -34,7 +34,7 @@ onMounted(() => {
             <p class="text-[32px] leading-tight">มาลองตอบคำถาม ง่ายๆเพียงไม่กี่ข้อ <br>เพื่อหาคำแนะนำสำหรับเริ่มต้น สำหรับหาคอร์สเรียน สำหรับตัวคุณ</p>
           </div>
         </div>
-        <button class="showing bg-[#E99F30] rounded-md text-white px-12 py-2 ml-16 mt-3">ตอบคำถาม</button>
+        <RouterLink to="/quiz" class="showing bg-[#E99F30] rounded-md text-white px-12 py-2 ml-16 mt-3">ตอบคำถาม</RouterLink>
       </div>
     </div>
   </section>
