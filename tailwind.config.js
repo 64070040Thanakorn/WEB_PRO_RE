@@ -15,6 +15,11 @@ module.exports = {
       },
       gridTemplateRows: {
         '10': 'repeat(10, minmax(0, 1fr))',
+      },
+      colors: {
+        'gray': {
+          '01': '#717171',
+        }
       }
     },
   },

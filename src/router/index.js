@@ -4,6 +4,7 @@ import Search from '../views/SearchView.vue'
 import Quiz from '../views/QuizView.vue'
 
 import user from './user'
+import course from './course'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,7 @@ const router = createRouter({
       component: Quiz
     },
     ...user,
+    ...course,
   ]
 })
 
