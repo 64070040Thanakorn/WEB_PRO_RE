@@ -1,3 +1,26 @@
+<script setup>
+import main_card from '../components/main_card.vue';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { onMounted } from 'vue';
+
+gsap.registerPlugin(ScrollTrigger);
+
+onMounted(() => {
+  gsap.fromTo('.slide', {
+    opacity:0,x: -15
+  }, {
+    x:0,opacity: 1,
+    duration: 1.2,
+    stagger: .1,
+    delay:.5,
+    scrollTrigger: {
+      trigger: ".box",
+      toggleActions: "play none none reset"
+    }
+  })
+});
+</script>
 <template>
     <div class="px-72 pt-20 pb-40 splitBg">
         <div class="mx-12 space-y-10">
@@ -7,7 +30,8 @@
                     <p class="px-4 py-2 bg-pink-500 rounded-full">Game Development</p>
                 </div>
                 <h1 class="text-[36px]">Python for beginner</h1>
-                <p class="text-[14px] font-light text-gray-01 limit2Line">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                <p class="text-[14px] font-light text-gray-01 limit2Line">Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit.
                     Nulla tristique gravida erat ac accumsan. Orci varius natoque penatibus et magnis dis parturient montes,
                     nascetur ridiculus mus. Donec eget venenatis dui, non facilisis turpis. lorem</p>
                 <div class="flex">
@@ -53,12 +77,28 @@
                 penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eget venenatis dui, non facilisis
                 turpis.
             </p>
-            <div class="border-2 border-black p-72 mt-16"></div>
+            <div class="border-2 border-black p-72 mt-16">
+            </div>
         </div>
     </div>
-    <div class="py-72 bg-black">
+    <div class="w-full h-[572px] bg-no-repeat bg-cover bg-course-01 flex justify-start items-center pl-32">
+        <div class="border-l-[0.8rem] border-orange-01 pl-6 slide">
+            <p class="text-white text-[48px]">
+                เรียนแบบ <span class="text-orange-01">“ลงมือทำจริง” </span><br>มากกว่าการเรียนท่องจำทั่วไป
+            </p>
+            <p class="text-gray-01 text-[20px]">โดยประสบการ์ณของคนสอนมากกว่า 40 ปี<br>
+                12 ปีที่เนปาล 2 ปีที่แม่น้ำไน โดยไม่มีอะไรกินเลย 10 ปี <br>ที่ประเทศไทย ผ่านการฝึกความมีระเบียบ ความมีวินัย<br>
+                ความตรงต่อเวลา</p>
+        </div>
     </div>
-    <div class="py-32 bg-white"></div>
+    <div class="py-20">
+        <p class="flex justify-center text-[48px]">ต้องการอะไรอย่างอื่นอีกไหม?</p>
+        <div class="flex gap-x-7 justify-center mt-8">
+            <div v-for="item in 3">
+                <main_card />
+            </div>
+        </div>
+    </div>
     <Footer />
 </template>
 

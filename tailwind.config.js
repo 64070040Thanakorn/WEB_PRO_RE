@@ -11,7 +11,8 @@ module.exports = {
         'landing-02': "url('../assets/landing/landing_02.png')",
         'pattern-01': "url('../assets/pattern/pattern_01.png')",
         'search-01': "url('../assets/search/search_01.png')",
-        'search-02': "url('../assets/search/search_02.png')"
+        'search-02': "url('../assets/search/search_02.png')",
+        'course-01': "url('../assets/course/course_01.png')"
       },
       gridTemplateRows: {
         '10': 'repeat(10, minmax(0, 1fr))',
@@ -19,6 +20,9 @@ module.exports = {
       colors: {
         'gray': {
           '01': '#717171',
+        },
+        'orange': {
+          '01': '#E99F30',
         }
       }
     },
