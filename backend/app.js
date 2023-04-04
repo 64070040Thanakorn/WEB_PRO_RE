@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors());  
 
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/auth')
 
 app.use(userRouter.router)
 
