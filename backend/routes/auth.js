@@ -48,8 +48,7 @@ router.post("/login", async(req, res, next) => {
       where: { email: email },
     })
     if(user){
-      await bcrypt.compare(password, user.password)
-        .then(() => {
+      if (await bcrypt.compare(password, user.password)) {
           user.password = undefined
           const token = jwt.sign(
             {user_id: user.id, email},
@@ -60,10 +59,10 @@ router.post("/login", async(req, res, next) => {
           )
           user.token = token;
           res.send(user)
-        })
-        .catch((err) => {
-          res.sendStatus(403)
-        })
+      }
+      else {
+        res.status(409).send("Password not correct!")
+      }
     };
   } catch(err) {
     next(err);
