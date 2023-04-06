@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "push": "npx prisma db push"
+    "push": "npx prisma db push",
+    "migrate": "npx prisma migrate dev --name init"
   },
   "author": "",
   "license": "ISC",
