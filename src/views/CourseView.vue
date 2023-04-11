@@ -63,22 +63,145 @@ onMounted(() => {
                 </div>
 
             </div>
-            <div class="bg-white px-32 py-12 border-2 border-black"></div>
+            <div class="bg-white py-8 border-2 border-black flex justify-around">
+            <div class="flex items-center space-x-2">
+                <div>
+                    <img src="..\assets\icon\level.png" alt="">
+                </div>
+                <div>
+                    <p class="text-sm font-light">ระดับความสามารถ</p>
+                    <p class="text-2xl">เริ่มต้น</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div>
+                    <img src="..\assets\icon\certificate.png" alt="">
+                </div>
+                <div>
+                    <p class="text-sm font-light">ระยะเวลา</p>
+                    <p class="text-2xl">15 คาบเรียน</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div>
+                    <img src="..\assets\icon\recieve.png" alt="">
+                </div>
+                <div>
+                    <p class="text-sm font-light">พร้อมใบ Certificate เมื่อเรียนจบ</p>
+                    <p class="text-2xl">มีในคอร์สเรียนนี้</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div>
+                    <img src="..\assets\icon\rule.png" alt="">
+                </div>
+                <div>
+                    <p class="text-sm font-light">ข้อกำหนดเบื้องต้น</p>
+                    <p class="text-2xl">ไม่มี</p>
+                </div>
+            </div>
+            </div>
         </div>
         <div class="mt-20">
-            <p class="text-[36px]">เกี่ยวกับคอร์ส</p>
-            <p class="text-gray-01 font-light text-[14px] mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nulla
-                tristique gravida erat ac accumsan. Orci
-                varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eget venenatis dui,
-                non facilisis turpis.
-
-                <br><br>it amet, consectetur adipiscing elit. Nulla tristique gravida erat ac accumsan. Orci varius natoque
-                penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec eget venenatis dui, non facilisis
-                turpis.
-            </p>
-            <div class="border-2 border-black p-72 mt-16">
+            <div>
+                <div class="flex space-x-8 border-b-2 border-black">
+                <div class="text-[#E99F30] text-xl border-b-4 px-2 border-orange-01">
+                    <p>เกี่ยวกับคอร์ส</p>
+                </div>
+                <div class="text-xl">
+                    <p>ข้อกำหนดเบื้องต้น</p>
+                </div>
+                <div class="text-xl">
+                    <p>เอกสารประกอบ</p>
+                </div>
+                </div>
+                <p class="py-4">
+                คำอธิบายคอร์สออนไลน์<br />
+                เพราะ PAT 1 ยาก เราจึงต้องเตรียมตัวก่อนสอบจริง คะแนน PAT 1 100 คะแนน
+                ก็ทำให้คะแนนรวมของเราเลือกคณะได้มากมาย <br />
+                แค่เรารู้เนื้อหาที่จะออกสอบ ก็สามารถกำหนดคะแนนตัวเองได้แล้ว
+                คอร์สนี้แบ่งเนื้อหาออกเป็น 4 กลุ่ม เรียงตามความน่าจะเก็บ ดังนี้ <br />
+                1. ง่าย/ออกเยอะ<br />
+                2. ง่าย/ออกน้อย<br />
+                3. ยาก/ออกเยอะ<br />
+                4. ยาก/ออกน้อย<br />
+                <br />
+                ประโยชน์ที่ผู้เรียนจะได้รับ<br />
+                1. สรุปเนื้อหาคณิตศาสตร์ระดับ ม.4 ม.5 ม.6 ที่ออกข้อสอบ PAT 1<br />
+                2. วิเคราะห์ข้อสอบและแนะนำวิธีทำข้อสอบ PAT 1<br />
+                3. สอนเทคนิคการทำข้อสอบ PAT 1 เพื่อให้ได้คะแนนสูงสุด<br />
+                <br />
+                ใครควรเรียนคอร์สออนไลน์นี้<br />
+                1. นักเรียนที่กำลังศึกษาอยู่ในระดับชั้น ม.4 ม.5 ม.6<br />
+                2. นักเรียนที่เตรียมสอบเข้ามหาวิทยาลัย<br />
+                3. นิสิต นักศึกษา ที่ต้องการสอบเข้ามหาวิทยาลัยใหม่<br />
+                <br />
+                ผู้เรียนต้องมีความรู้อะไรมาก่อน<br />
+                ไม่จำเป็นต้องมีความรู้พื้นฐานมาก่อน เพราะคอร์สนี้จะสอนเทคนิคพิชิตคะแนน PAT 1
+                อ่อนแค่ไหนก็เรียนได้
+                </p>
             </div>
+            <!-- <div>
+                <p class="text-[#E99F30] text-xl my-8">เนื้อหาของคอร์สนี้</p>
+                <table class="border-collapse border border-black flex flex-col">
+                    <thead class="border-collapse border bg-[#E99F30] text-white text-lg px-4 py-1">
+                        <tr>
+                            บทที่ 1: จำนวนจริง
+                        </tr>
+                    </thead>
+                    <tbody class="px-4 py-2 text-[#717171]">
+                        <tr>1.1  จำนวนจริง ตอนที่ 1</tr>
+                        <tr>1.2  จำนวนจริง ตอนที่ 2</tr>
+                        <tr>1.3  จำนวนไม่จริง</tr>
+                        <tr>1.4  จำนวนปลอม</tr>
+                    </tbody>
+                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
+                        <tr>
+                            บทที่ 2: จำนวนจริง
+                        </tr>
+                    </thead>
+                    <tbody class="px-4 py-2 text-[#717171]">
+                        <tr>2.1  จำนวนจริง ตอนที่ 1</tr>
+                        <tr>2.2  จำนวนจริง ตอนที่ 2</tr>
+                        <tr>2.3  จำนวนไม่จริง</tr>
+                        <tr>2.4  จำนวนปลอม</tr>
+                    </tbody>
+                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
+                        <tr>
+                            บทที่ 3: จำนวนจริง
+                        </tr>
+                    </thead>
+                    <tbody class="px-4 py-2 text-[#717171]">
+                        <tr>3.1  จำนวนจริง ตอนที่ 1</tr>
+                        <tr>3.2  จำนวนจริง ตอนที่ 2</tr>
+                        <tr>3.3  จำนวนไม่จริง</tr>
+                        <tr>3.4  จำนวนปลอม</tr>
+                    </tbody>
+                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
+                        <tr>
+                            บทที่ 4: จำนวนจริง
+                        </tr>
+                    </thead>
+                    <tbody class="px-4 py-2 text-[#717171]">
+                        <tr>4.1  จำนวนจริง ตอนที่ 1</tr>
+                        <tr>4.2  จำนวนจริง ตอนที่ 2</tr>
+                        <tr>4.3  จำนวนไม่จริง</tr>
+                        <tr>4.4  จำนวนปลอม</tr>
+                    </tbody>
+                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
+                        <tr>
+                            บทที่ 5: จำนวนจริง
+                        </tr>
+                    </thead>
+                    <tbody class="px-4 py-2 text-[#717171]">
+                        <tr>5.1  จำนวนจริง ตอนที่ 1</tr>
+                        <tr>5.2  จำนวนจริง ตอนที่ 2</tr>
+                        <tr>5.3  จำนวนไม่จริง</tr>
+                        <tr>5.4  จำนวนปลอม</tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <div class="border-2 border-black p-72 mt-16"></div>
         </div>
     </div>
     <div class="w-full h-[572px] bg-no-repeat bg-cover bg-course-01 flex justify-start items-center pl-32">
