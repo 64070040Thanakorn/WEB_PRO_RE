@@ -30,11 +30,11 @@ onMounted(() => {
         <div class="text-white border-l-[0.5rem] border-orange-01 pl-8">
           <div>
             <h5 class="text-[48px]">ไม่รู้จะเรียนอะไรดี?</h5>
-            <p class="text-[32px] text-gray-01 leading-tight">มาลองตอบคำถาม ง่ายๆเพียงไม่กี่ข้อ <br>เพื่อหาคำแนะนำสำหรับเริ่มต้น สำหรับหาคอร์สเรียน <br>สำหรับตัวคุณ</p>
+            <p class="text-[20px] text-gray-01 leading-tight">มาลองตอบคำถาม ง่ายๆเพียงไม่กี่ข้อ <br>เพื่อหาคำแนะนำสำหรับเริ่มต้น สำหรับหาคอร์สเรียน <br>สำหรับตัวคุณ</p>
           </div>
         </div>
         <br>
-        <RouterLink to="/quiz" class="showing bg-orange-01 rounded-md text-white px-12 py-2 ml-8 text-[20px]">ตอบคำถาม</RouterLink>
+        <RouterLink to="/quiz" class="showing bg-orange-01 hover:bg-orange-hover rounded-md text-white px-12 py-2 ml-8 text-[20px]">ตอบคำถาม</RouterLink>
       </div>
     </div>
   </section>
