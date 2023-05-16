@@ -6,12 +6,21 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
-  try {
-    res.status(200).send("OK")
-  }
-  catch (err) {
-    res.status(500).send(err)
+router.get("/:user_id", async (req, res, next) => {
+  const { user_id } = req.params
+  console.log(req.params);
+  try{
+    const exist = await prisma.users.findFirst({
+      where:{
+        user_id: user_id
+      }
+    })
+
+
+    res.json(exist)
+  } catch(err){
+    console.log(err);
+    next(err)
   }
 })
 
@@ -44,8 +53,12 @@ router.post("/register", async (req,res,next) => {
     );
     user.password = undefined
     user.token = token
-    res.json(user)
+    res.json({
+      user: user.user_id,
+      token: user.token
+    })
   } catch(err) {
+    console.log(err);
     next(err);
   };
 });
@@ -67,7 +80,10 @@ router.post("/login", async(req, res, next) => {
             }
           )
           user.token = token;
-          res.send(user)
+          res.json({
+            user: user.user_id,
+            token: user.token
+          })
       }
       else {
         res.status(409).send("Password not correct!")

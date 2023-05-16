@@ -1,13 +1,4 @@
-<script>
-export default{
-  name: 'login',
-  methods: {
-    callbackToParent(){
-      this.$emit('messageFromChild')
-    }
-  }
-}
-</script>
+
 
 <template>
     <div id="card" class="flex justify-center w-[420px] h-[550px] bg-white rounded-md border">
@@ -18,18 +9,18 @@ export default{
             <i @click="callbackToParent" class="pi pi-times cursor-pointer" style="font-size: 1.5rem"></i>
           </div>
           <div>
-            <form action="">
+            <div>
               <div class="flex flex-col space-y-3">
                 <div class="flex flex-col">
                   <label for="">อีเมล</label>
-                  <input type="email" class="border w-full rounded-md py-1 px-2">
+                  <input type="email" class="border w-full rounded-md py-1 px-2" v-model="email">
                 </div>
                 <div class="flex-col">
                   <label for="">รหัสผ่าน</label>
-                  <input type="password" class="border w-full rounded-md py-1 px-2">
+                  <input type="password" class="border w-full rounded-md py-1 px-2" v-model="password">
                 </div>
                 <div class="flex justify-center">
-                  <button class="bg-[#E99F30] rounded-full px-20 py-2 text-white">ลงทะเบียน</button>
+                  <button @click="submit()" class="bg-[#E99F30] rounded-full px-20 py-2 text-white">เข้าสู่ระบบ</button>
                 </div>
                 <div class="flex items-center space-x-2">
                   <div class="w-full h-[2px] bg-[#D9D9D9]"></div>
@@ -50,7 +41,7 @@ export default{
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
         <div class="flex justify-center items space-x-2">
@@ -60,3 +51,39 @@ export default{
       </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios';
+ 
+export default{
+  data() {
+    return {
+      email: 'nora@gmail.com',
+      password: 'nora123123',
+      isOpen: false,
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.isOpen = !this.isOpen;
+    },
+    submit(){
+      const data = {
+        email: this.email,
+        password: this.password
+      }
+      axios.post('http://localhost:3000/api/auth/login', data)
+        .then(res => {
+            localStorage.setItem('user', res.data.user)
+            localStorage.setItem('token', res.data.token)
+            this.$emit('auth-change')
+            this.$router.push({path: '/'})
+        })
+        .catch(error => {
+          this.error = error.response.data
+          console.log(error.response.data)
+        })
+    }
+  }
+}
+</script>

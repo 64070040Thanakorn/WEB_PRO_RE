@@ -1,14 +1,3 @@
-<script>
-export default{
-  name: 'register',
-  methods: {
-    callbackToParent(){
-      this.$emit('messageFromChild')
-    }
-  }
-}
-</script>
-
 <template>
   <div id="card" class="flex justify-center w-[420px] h-[550px] bg-white rounded-md border">
     <div class="flex flex-col justify-between h-full px-10 py-5">
@@ -16,32 +5,32 @@ export default{
           <h1 class="text-4xl">สมัครสมาชิก 🖐</h1>
           <i @click="callbackToParent" class="pi pi-times cursor-pointer" style="font-size: 1.5rem"></i>
       </div>
-      <form action="">
+      <div>
         <div class="flex flex-col space-y-2">
           <div class="flex flex-col">
-            <label for="">ชื่อ</label>
-            <input type="text" class="border w-full rounded-md py-1 px-2">
+            <label for="">ชื่อ {{ fname }}</label>
+            <input type="text" class="border w-full rounded-md py-1 px-2" v-model="fname" />
           </div>
           <div class="flex flex-col">
             <label for="">นามสกุล</label>
-            <input type="text" class="border w-full rounded-md py-1 px-2">
+            <input type="text" class="border w-full rounded-md py-1 px-2" v-model="lname">
           </div>
           <div class="flex flex-col">
             <label for="">อีเมล</label>
-            <input type="email" class="border w-full rounded-md py-1 px-2">
+            <input type="email" class="border w-full rounded-md py-1 px-2" v-model="email">
             </div>
           <div class="flex space-x-3">
             <div class="flex flex-col">
-            <label for="">รหัสผ่าน</label>
-            <input type="password" class="border w-full rounded-md py-1 px-2">
-          </div>
+              <label for="">รหัสผ่าน</label>
+              <input type="password" class="border w-full rounded-md py-1 px-2" v-model="password">
+            </div>
             <div class="flex flex-col">
               <label for="">ยืนยันรหัสผ่าน</label>
-              <input type="password" class="border w-full rounded-md py-1 px-2">
+              <input type="password" class="border w-full rounded-md py-1 px-2" v-model="confirm_password">
             </div>
           </div>
           <div class="flex justify-center">
-            <button class="bg-[#E99F30] rounded-full px-20 py-2 text-white">ลงทะเบียน</button>
+            <button @click="submit()" class="bg-[#E99F30] rounded-full px-20 py-2 text-white">ลงทะเบียน</button>
           </div>
           <div class="flex items-center space-x-2">
             <div class="w-full h-[2px] bg-[#D9D9D9]"></div>
@@ -62,7 +51,7 @@ export default{
             </button>
           </div>
         </div>
-      </form>
+      </div>
       <div class="flex justify-center items space-x-2">
         <p class="text-[#767676]">ยังไม่เป็นสมาชิก?</p>
         <p class="text-[#AAAAAA]">ลงทะเบียนที่นี้</p>
@@ -70,3 +59,58 @@ export default{
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      fname: 'nora',
+      lname: 'nora',
+      email: 'nora@gmail.com',
+      password: 'nora123123',
+      confirm_password: 'nora123123',
+      isOpen: false,
+    };
+  },
+  // validations: {
+  //   fname: {
+  //     required
+  //   },
+  //   lname: {
+  //   },
+  //   email: {
+  //   },
+  //   password: {
+  //   },
+  //   confirm_password: {
+  //   },
+  // },
+  methods: {
+    toggleModal() {
+      this.isOpen = !this.isOpen;
+    },
+    submit(){
+      const data = {
+        first_name: this.fname,
+        last_name: this.lname,
+        email: this.email,
+        password: this.password
+      }
+      console.log(data);
+      axios.post('http://localhost:3000/api/auth/register', data)
+        .then(res => {
+            localStorage.setItem('user', res.data.user)
+            localStorage.setItem('token', res.data.token)
+            this.$emit('auth-change')
+            this.$router.push({path: '/'})
+        })
+        .catch(error => {
+          this.error = error.response.data
+          console.log(error.response.data)
+        })
+    }
+  },
+}
+</script>

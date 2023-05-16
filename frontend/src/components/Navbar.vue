@@ -44,44 +44,70 @@ onMounted(() => {
 </script>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "Navbar",
+  components: {
+    Login,
+    Register,
+  },
   data() {
     return {
+      user: null,
       isActive_Login: false,
       isActive_Register: false,
       isActive_auth: false,
+      isOpen: false,
     }
+  },
+  mounted() {
+    this.onAuthChange();
   },
   methods: {
     closing_auth(){
-      this.AuthShowup()
       if(this.isActive_Login){
+        this.isOpen = !this.isOpen
         this.isActive_Login = !this.isActive_Login
         console.log("closing : login")
       }
       if(this.isActive_Register){
+        this.isOpen = !this.isOpen
         this.isActive_Register = !this.isActive_Register
           console.log("closing : register")
       }
     },
-    AuthShowup(el) {
-      this.isActive_auth = !this.isActive_auth
+    toggleModal(el) {
+      this.isOpen = !this.isOpen
       switch(el) {
         case "login":
           console.log('opening : login')
           this.isActive_Login = !this.isActive_Login
+        console.log(this.isOpen, this.isActive_Login);
 
           break;
         case "register":
           console.log('opening: register')
           this.isActive_Register = !this.isActive_Register
+          console.log(this.isOpen, this.isActive_Register);
 
           break;
         default:
+          console.log('nothing..');
           return 0
       }
-    }
+    },
+    onAuthChange(){
+      const token = localStorage.getItem('token')
+      if(token){
+        this.getUser()
+      }
+    },
+    getUser() {
+      axios.get(`http://localhost:3000/api/auth/${localStorage.getItem('user')}`).then(res => {
+        this.user = res.data
+      })
+    },
   },
   computed: {
     isActive() {
@@ -92,11 +118,11 @@ export default {
 </script>
 
 <template>
-  <div :class="[isActive_auth ? '':'hidden']" class="w-full z-[50] fixed">
+  <div v-if="isOpen" class="w-full z-[50] fixed">
     <div class="absolute left-1/2 translate-x-[-50%] w-full h-screen flex justify-center items-center">
       <div @click="closing_auth" class="bg-black w-full h-full absolute opacity-80 fixed fixed"></div>
-      <Register @messageFromChild="closing_auth" :class="[isActive_Register ? '':'hidden']"/>
-      <Login @messageFromChild="closing_auth" :class="[isActive_Login ? '':'hidden']"/>
+      <Register v-if="isActive_Register"  @click="toggleModal('register')" @auth-change="onAuthChange"/>
+      <Login v-if="isActive_Login" @click="toggleModal('login')"/>
     </div>
   </div>
   
@@ -119,8 +145,17 @@ export default {
       <div>
         <ul class="flex">
           <RouterLink to="/search" id="search" class="nav_search pi pi-search flex items-center"></RouterLink>
-          <button @click="AuthShowup('login')" id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</button>
-          <button @click="AuthShowup('register')" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</button>
+          <div v-if="user">
+            <div class="px-8">
+              <RouterLink to="/profile" class="px-8">{{ user.first_name }}</RouterLink>
+            </div>
+          </div>
+          <div v-else>
+            <div class="flex">
+              <button @click="toggleModal('login')" id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</button>
+              <button @click="toggleModal('register')" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</button>
+            </div>
+          </div>
         </ul>
       </div>
     </div>
