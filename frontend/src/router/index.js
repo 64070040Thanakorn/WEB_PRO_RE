@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Landing from '../views/LandingView.vue'
 import Search from '../views/SearchView.vue'
 import Quiz from '../views/QuizView.vue'
+import Courseview from '../views/CourseView.vue'
 
 import user from './user'
 
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/quiz',
       name: 'quiz',
       component: Quiz
+    },
+    {
+      path: '/courseview',
+      name: 'courseview',
+      component: Courseview
     },
     ...user,
   ]

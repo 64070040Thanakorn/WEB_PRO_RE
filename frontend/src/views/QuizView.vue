@@ -8,7 +8,7 @@ import Result from '../components/quiz/result.vue'
 
 <template>
     <section class="flex h-[93vh]">
-        <!-- side nav -->
+
         <div class="px-6 py-12 bg-white shadow-md shadow-black/10">
             <div class="flex items-center space-x-1">
                 <i class="pi pi-angle-left text-4xl"></i>
