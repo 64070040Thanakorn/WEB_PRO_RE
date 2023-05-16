@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Users {
+  user_id    String     @id @default(uuid())
+  first_name String
+  last_name  String
+  password   String
+  email      String     @unique
+  image      String?
+  info       String?
+  phone      String?
+  address    String?
+  role       Role       @default(Student)
+  comment    Comments[]
+  enroll     Enroll[]   @relation("StudentEnrollments")
+}
+
+model Course {
+  course_id    String     @id @default(uuid())
+  title        String
+  category_id  String
+  description  String?
+  info         String?
+  price        Int
+  level        String
+  certificate  Boolean
+  create_date  DateTime   @default(now())
+  end_date     DateTime
+  professor_id String
+  start_date   DateTime
+  status       Boolean
+  thumbnail    String?
+  comments     Comments[]
+  category     Category   @relation(fields: [category_id], references: [category_id], onDelete: Cascade)
+  enrolled     Enroll[]   @relation("CourseEnrollments")
+}
+
+model Category {
+  category_id   String   @id @default(uuid())
+  category_name String
+  Course        Course[]
+}
+
+model Comments {
+  comment_id   String   @id @default(uuid())
+  content      String
+  user_id      String
+  course_id    String
+  comment_date DateTime @default(now())
+  course       Course   @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
+  user         Users    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}
+
+model Enroll {
+  user_id     String
+  course_id   String
+  enroll_date DateTime @default(now())
+  course      Course   @relation("CourseEnrollments", fields: [course_id], references: [course_id], onDelete: Cascade)
+  users       Users    @relation("StudentEnrollments", fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  @@id([user_id, course_id])
+}
+
+model Payment {
+  id String   @id @default(uuid())
+}
+
+model Payment_history {
+  id String   @id @default(uuid())
+  purchase_order String
+  purchase_date String
+}
+
+enum Role {
+  Student
+  Admin
+}
