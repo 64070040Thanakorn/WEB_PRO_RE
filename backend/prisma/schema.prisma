@@ -76,7 +76,8 @@ model Payment {
 model Payment_history {
   id String   @id @default(uuid())
   purchase_order String
-  purchase_date String
+  status    String
+  createdAt DateTime @default(now())
 }
 
 enum Role {
