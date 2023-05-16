@@ -6,10 +6,19 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 const router = express.Router();
 
+router.get("/", async (req, res, next) => {
+  try {
+    res.status(200).send("OK")
+  }
+  catch (err) {
+    res.status(500).send(err)
+  }
+})
+
 router.post("/register", async (req,res,next) => {
   try{
     const { first_name, last_name, email, password } = req.body;
-    const exist = await prisma.user.findFirst({
+    const exist = await prisma.users.findFirst({
       where:{
         email: email
       }
@@ -18,7 +27,7 @@ router.post("/register", async (req,res,next) => {
       return res.status(409).send("Email already exist.")
     }
     const encrytedPassword = await bcrypt.hash(password, 10)
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data:{
         first_name: first_name,
         last_name: last_name,
@@ -27,7 +36,7 @@ router.post("/register", async (req,res,next) => {
       }
     });
     const token = jwt.sign(
-      {user_id: user.id, email},
+      {user_id: user.user_id, email},
       process.env.TOKEN_KEY,
       {
         expiresIn: "2h"
@@ -44,7 +53,7 @@ router.post("/register", async (req,res,next) => {
 router.post("/login", async(req, res, next) => {
   try{
     const { email, password } = req.body
-    const user = await prisma.user.findFirst({
+    const user = await prisma.users.findFirst({
       where: { email: email },
     })
     if(user){
@@ -72,15 +81,15 @@ router.post("/login", async(req, res, next) => {
 router.delete("/:id/deleteAcc", async(req, res, next) => {
   try{
     await prisma.$transaction(async(tx) => {
-      const findAcc = await prisma.user.findUnique({
+      const findAcc = await prisma.users.findUnique({
         where:{
-          id: parseInt(req.params.id)
+          user_id: req.params.id
         }
       })
       if(findAcc){
-        const user = await prisma.user.delete({
+        const user = await prisma.users.delete({
           where:{
-            id: parseInt(req.params.id)
+            user_id: req.params.id
           }
         })
         res.send(`delete account id ${req.params.id}`)
@@ -95,7 +104,7 @@ router.delete("/:id/deleteAcc", async(req, res, next) => {
 
 router.delete("/deleteAllAcc", async(req, res, next) => {
   try{
-    const findAcc = await prisma.user.deleteMany({})
+    const findAcc = await prisma.users.deleteMany({})
     res.send("Delete all account")
   } catch(err){
     next(err)

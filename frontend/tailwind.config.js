@@ -23,6 +23,7 @@ module.exports = {
         },
         'orange': {
           '01': '#E99F30',
+          'hover': '#cf8c29',
         }
       }
     },

@@ -5,42 +5,43 @@ generator client {
 datasource db {
   provider          = "mysql"
   url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Users {
-  user_id    String     @id @default(uuid())
-  first_name String
-  last_name  String
-  password   String
-  email      String     @unique
-  image      String?
-  info       String?
-  phone      String?
-  address    String?
-  role       Role       @default(Student)
-  comment    Comments[]
-  enroll     Enroll[]   @relation("StudentEnrollments")
+  user_id         String            @id @default(uuid())
+  first_name      String
+  last_name       String
+  password        String
+  email           String            @unique
+  user_image      String?
+  info            String?
+  phone           String?
+  address         String?
+  role            Role              @default(Student)
+  comment         Comments[]        @relation("user_comment")
+  payment         Payment[]         @relation("payment")
+  paymetn_history Payment_history[] @relation("payment_history")
+  enroll          Enroll[]          @relation("student_enrollments")
 }
 
 model Course {
-  course_id    String     @id @default(uuid())
+  course_id    String            @id @default(uuid())
   title        String
   category_id  String
   description  String?
-  info         String?
+  info         String?           @db.Text
   price        Int
   level        String
   certificate  Boolean
-  create_date  DateTime   @default(now())
-  end_date     DateTime
-  professor_id String
+  lesson       Int
   start_date   DateTime
-  status       Boolean
-  thumbnail    String?
+  end_date     DateTime
+  createAt     DateTime          @default(now())
+  course_image String?
+  category     Category          @relation(fields: [category_id], references: [category_id], onDelete: Cascade)
   comments     Comments[]
-  category     Category   @relation(fields: [category_id], references: [category_id], onDelete: Cascade)
-  enrolled     Enroll[]   @relation("CourseEnrollments")
+  payment      Payment_history[] @relation("payment_course")
+  enrolled     Enroll[]          @relation("course_enrollments")
 }
 
 model Category {
@@ -55,29 +56,44 @@ model Comments {
   user_id      String
   course_id    String
   comment_date DateTime @default(now())
-  course       Course   @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
-  user         Users    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  course Course @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
+  user   Users  @relation("user_comment", fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model Enroll {
   user_id     String
   course_id   String
   enroll_date DateTime @default(now())
-  course      Course   @relation("CourseEnrollments", fields: [course_id], references: [course_id], onDelete: Cascade)
-  users       Users    @relation("StudentEnrollments", fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  course Course @relation("course_enrollments", fields: [course_id], references: [course_id], onDelete: Cascade)
+  users  Users  @relation("student_enrollments", fields: [user_id], references: [user_id], onDelete: Cascade)
 
   @@id([user_id, course_id])
 }
 
 model Payment {
-  id String   @id @default(uuid())
+  cc_id         String   @id @default(uuid())
+  user_id       String
+  cc_number     String
+  cc_ccv        String
+  cc_expiry     String
+  cc_first_name String
+  cc_last_name  String
+  cc_type       String
+  address       String
+  createdAt     DateTime @default(now())
+  users         Users    @relation("payment", fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model Payment_history {
-  id String   @id @default(uuid())
-  purchase_order String
-  status    String
-  createdAt DateTime @default(now())
+  payment_history_id String   @id @default(uuid())
+  user_id            String
+  course_id          String
+  summary            Int
+  createdAt          DateTime @default(now())
+  users              Users    @relation("payment_history", fields: [user_id], references: [user_id], onDelete: Cascade)
+  course             Course   @relation("payment_course", fields: [course_id], references: [course_id], onDelete: Cascade)
 }
 
 enum Role {
