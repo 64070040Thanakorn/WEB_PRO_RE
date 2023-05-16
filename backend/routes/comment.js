@@ -5,7 +5,8 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 
-router.get("/:product_id", async(req, res, next) => {
+router.get("/", async(req, res, next) => {
+  res.send("ok")
   // code
 });
 

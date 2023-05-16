@@ -22,7 +22,7 @@ onMounted(() => {
       stagger: 0.1,
       delay: 0.5,
       scrollTrigger: {
-        trigger: ".box",
+        // trigger: ".box",
         toggleActions: "play none none reset",
       },
     }
@@ -32,9 +32,16 @@ onMounted(() => {
 
 <script>
 export default {
+  beforeCreate() {
+    this.axios.get(`http://localhost:3000/api/course/randomCourse/3`).then((response) => {
+        this.course_item = response.data
+        console.log(response.data)
+      })
+  },
   data() {
     return {
       showComponent: true,
+      course_item: null,
     };
   },
   methods: {
@@ -247,8 +254,8 @@ export default {
   <div class="py-20">
     <p class="flex justify-center text-[48px]">ต้องการอะไรอย่างอื่นอีกไหม?</p>
     <div class="flex gap-x-7 justify-center mt-8">
-      <div v-for="item in 3">
-        <main_card />
+      <div v-for="item in course_item">
+        <main_card :item="item"/>
       </div>
     </div>
   </div>

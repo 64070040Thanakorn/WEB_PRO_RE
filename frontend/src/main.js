@@ -3,6 +3,9 @@ import { createApp } from 'vue'
 import PrimeVue from 'primevue/config';
 import InputText from 'primevue/inputtext';
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import App from './App.vue'
 import router from './router'
 import Footer from './components/Footer.vue'
@@ -14,6 +17,7 @@ import './styles/main.css'
 const app = createApp(App)
 
 app.use(createPinia())
+app.use(VueAxios, axios)
 app.use(router)
 app.use(PrimeVue, { ripple: true })
 

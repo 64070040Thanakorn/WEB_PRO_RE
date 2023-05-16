@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model Users {
@@ -34,6 +34,7 @@ model Course {
   level        String
   certificate  Boolean
   lesson       Int
+  amount       Int               @default(0)
   start_date   DateTime
   end_date     DateTime
   createAt     DateTime          @default(now())

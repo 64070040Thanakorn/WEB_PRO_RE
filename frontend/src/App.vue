@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from "./components/Navbar.vue";
 
+
 defineProps({
   enter: String,
   components: {

@@ -3,7 +3,9 @@ import cors from "cors";
 import express from "express";
 import verifyToken from "./middleware/token.js";
 import auth from "./routes/auth.js";
-import product from "./routes/product.js";
+import course from "./routes/course.js";
+import category from "./routes/category.js";
+import comment from "./routes/comment.js"
 import user from "./routes/user.js";
 
 const app = express()
@@ -15,12 +17,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
+app.use('/images', express.static('static/uploads'));
 app.use(cors());
 
 app.use("/api",
  router.use("/auth", auth),
  router.use("/user", user),
- router.use("/product", product)
+ router.use("/course", course),
+ router.use("/category", category),
+ router.use("/comment", comment)
 );
 
 app.get("/", verifyToken,(req, res) => {
