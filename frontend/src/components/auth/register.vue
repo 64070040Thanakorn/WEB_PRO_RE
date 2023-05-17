@@ -3,7 +3,7 @@
     <div class="flex flex-col justify-between h-full px-10 py-5">
       <div class="flex justify-between items-center">
           <h1 class="text-4xl">สมัครสมาชิก 🖐</h1>
-          <i @click="callbackToParent" class="pi pi-times cursor-pointer" style="font-size: 1.5rem"></i>
+          <i @click="modal_close" class="pi pi-times cursor-pointer" style="font-size: 1.5rem"></i>
       </div>
       <div>
         <div class="flex flex-col space-y-2">
@@ -110,7 +110,11 @@ export default {
           this.error = error.response.data
           console.log(error.response.data)
         })
-    }
+    },
+    modal_close(){
+      console.log('modal');
+      this.$emit('modal_close')
+    },
   },
 }
 </script>

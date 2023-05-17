@@ -6,7 +6,7 @@
         <div class="space-y-10">
           <div class="flex justify-between items-center">
             <h1 class="text-4xl">ยินดีต้อนรับกลับ 🖐</h1>
-            <i @click="callbackToParent" class="pi pi-times cursor-pointer" style="font-size: 1.5rem"></i>
+            <i @click="modal_close" class="pi pi-times cursor-pointer" style="font-size: 1.5rem"></i>
           </div>
           <div>
             <div>
@@ -83,7 +83,11 @@ export default{
           this.error = error.response.data
           console.log(error.response.data)
         })
-    }
+    },
+    modal_close(){
+      console.log('modal');
+      this.$emit('modal_close')
+    },
   }
 }
 </script>

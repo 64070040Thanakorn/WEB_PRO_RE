@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     closing_auth(){
+      console.log('closing auth');
       if(this.isActive_Login){
         this.isOpen = !this.isOpen
         this.isActive_Login = !this.isActive_Login
@@ -120,9 +121,9 @@ export default {
 <template>
   <div v-if="isOpen" class="w-full z-[50] fixed">
     <div class="absolute left-1/2 translate-x-[-50%] w-full h-screen flex justify-center items-center">
-      <div @click="closing_auth" class="bg-black w-full h-full absolute opacity-80 fixed fixed"></div>
-      <Register v-if="isActive_Register"  @click="toggleModal('register')" @auth-change="onAuthChange"/>
-      <Login v-if="isActive_Login" @click="toggleModal('login')"/>
+      <div class="bg-black w-full h-full absolute opacity-80 fixed fixed"></div>
+      <Register v-if="isActive_Register" @auth-change="onAuthChange" @modal_close="closing_auth()"/>
+      <Login v-if="isActive_Login" @auth-change="onAuthChange" @modal_close="closing_auth()"/>
     </div>
   </div>
   
