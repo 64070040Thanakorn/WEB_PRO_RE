@@ -38,6 +38,7 @@ export default {
       .then((response) => {
         this.course_item = response.data;
         this.category_name = response.data.category.category_name;
+        this.enrolled = response.data.enrolled
         console.log(response.data);
       });
 
@@ -68,6 +69,7 @@ export default {
       course_item: [],
       category_name: [],
       comments: [],
+      enrolled: [],
       user: null,
     };
   },
@@ -127,7 +129,7 @@ export default {
                   </clipPath>
                 </defs>
               </svg>
-              <p>{{course_item.enrolled.length}}/{{ course_item.amount }}</p>
+              <p>{{enrolled.length}}/{{ course_item.amount }}</p>
             </div>
           </div>
         </div>
