@@ -18,7 +18,6 @@ export default {
         this.category = response.data
         console.log(response.data)
       })
-    this.user = localStorage.getItem('user');
   },
   data() {
     return {
@@ -45,7 +44,6 @@ export default {
       lesson16: null,
       course_item: null,
       category: null,
-      user: null,
     };
   },
   computed: {
@@ -121,7 +119,7 @@ export default {
       <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat flex items-center">
         <div class="text-white w-full gap-8 flex flex-col">
           <p class="flex justify-center text-6xl font-medium">
-            หาคอร์สเรียนที่เหมาะกับคุณ {{user}}
+            หาคอร์สเรียนที่เหมาะกับคุณ
           </p>
           <div class="flex justify-center text-center">
             <p class="w-[70%] text-sm">

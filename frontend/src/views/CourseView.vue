@@ -44,13 +44,16 @@ export default {
       })
 
   },
-  
+  mounted() {
+    this.user = localStorage.getItem("user")
+  },
   data() {
     return {
       showComponent: true,
       random_course_item: null,
       course_item: [],
       category_name: [],
+      user: null
     };
   },
   methods: {
@@ -73,7 +76,7 @@ export default {
     <div class="mx-12 space-y-10">
       <div class="bg-white px-12 py-5 h-[328px] space-y-6">
         <div class="flex space-x-4 text-white">
-          <p class="px-4 py-2 bg-purple-500 rounded-full">{{category_name}}</p>
+          <p class="px-4 py-2 bg-purple-500 rounded-full">{{category_name}} {{user}}</p>
         </div>
         <div class="flex justify-between items-center">
           <h1 class="text-[36px]">{{course_item.title}}</h1>
