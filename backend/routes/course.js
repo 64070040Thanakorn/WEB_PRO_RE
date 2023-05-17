@@ -104,4 +104,86 @@ router.post("/createCourse", upload.single('fileupload'), async (req, res, next)
   }
 });
 
+
+// enroll new course
+
+router.post("/enroll/:course_id", async (req, res) => {
+  const { user_id } = req.body
+  try {
+    const enroll = await prisma.enroll.create({
+      data: {
+        user_id: user_id,
+        course_id: req.params.course_id,
+        enroll_date: new Date(),
+      },
+    });
+    res.status(200).json(enroll);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// get all student Course Enrolled
+router.get("/getEnrolled/:user_id", async (req, res) => {
+  try {
+    const getCourse = await prisma.enroll.findMany({
+      where: {
+        user_id: req.params.user_id,
+      },
+    });
+    res.status(200).json(getCourse);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Delete Course
+router.delete('/deleteCourse/:course_id', async (req, res) => {
+  try {
+    const deleteCourse = await prisma.course.delete({
+      where: {
+        course_id: req.params.course_id,
+      },
+    });
+    res.status(200).json(deleteCourse);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// update course
+router.put("/updateCourse/", upload.single('fileupload'), async (req, res) => {
+  try {
+    const data = req.body;
+    const file = req.file;
+
+    const course_id = data.course_id;
+
+    data["start_date"] = new Date(data["start_date"]);
+    data["end_date"] = new Date(data["end_date"]);
+    data["price"] = Number(data["price"]);
+    data["lesson"] = Number(data["lesson"]);
+    data["certificate"] = Boolean(data["lesson"]);
+    data["amount"] = Number(data["amount"]);
+
+    if (file) {
+      data["course_image"] = file.filename;
+    }
+
+
+    const updatedCourse = await prisma.course.update({
+      where: {
+        course_id: course_id,
+      },
+      data: data,
+    });
+    res.status(200).json(updatedCourse);
+  } catch (err) {
+
+    console.log(err.message)
+
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default router;
