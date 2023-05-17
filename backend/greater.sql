@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 17, 2023 at 12:34 PM
+-- Generation Time: May 17, 2023 at 05:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -55,6 +55,19 @@ CREATE TABLE `Comments` (
   `comment_date` datetime(3) NOT NULL DEFAULT current_timestamp(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `Comments`
+--
+
+INSERT INTO `Comments` (`comment_id`, `content`, `user_id`, `course_id`, `comment_date`) VALUES
+('0179acc0-b75c-4711-ae81-d279cd855313', 'wow nice', '4ffc9d99-f923-40cc-ac44-6ad45353813e', '1110b7d9-ee68-4482-9b3e-5088062ae55d', '2023-05-17 14:11:31.668'),
+('20707fc1-c285-49a5-bf31-0d80dc19a0c0', 'new comment', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '434ab3b7-007d-45a6-b9bc-eff4db6f9d61', '2023-05-17 13:05:55.836'),
+('2bfd4ecf-628a-42ae-a3f0-7f7f75df7050', '111', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '434ab3b7-007d-45a6-b9bc-eff4db6f9d61', '2023-05-17 13:17:40.666'),
+('74c04527-339e-45bc-a142-38791460e8db', 'test', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '434ab3b7-007d-45a6-b9bc-eff4db6f9d61', '2023-05-17 13:17:03.988'),
+('96ebdf43-2db0-460c-8692-e5343d6fa3cd', 'nice nice good', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '1110b7d9-ee68-4482-9b3e-5088062ae55d', '2023-05-17 13:30:25.048'),
+('aa4674f0-6944-49f8-851a-38b6a750e3ed', 'Wow good course', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '434ab3b7-007d-45a6-b9bc-eff4db6f9d61', '2023-05-17 12:28:18.340'),
+('dabb913b-c229-486a-b55c-40cf8285beae', 'idk?', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '434ab3b7-007d-45a6-b9bc-eff4db6f9d61', '2023-05-17 13:17:22.253');
+
 -- --------------------------------------------------------
 
 --
@@ -102,6 +115,13 @@ CREATE TABLE `Enroll` (
   `course_id` varchar(191) NOT NULL,
   `enroll_date` datetime(3) NOT NULL DEFAULT current_timestamp(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `Enroll`
+--
+
+INSERT INTO `Enroll` (`user_id`, `course_id`, `enroll_date`) VALUES
+('1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '434ab3b7-007d-45a6-b9bc-eff4db6f9d61', '2023-05-17 14:10:26.946');
 
 -- --------------------------------------------------------
 
@@ -160,7 +180,8 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `role`, `address`, `info`, `phone`, `user_image`) VALUES
-('1efca52a-60b6-46e6-97ed-b0a6565ccf2f', 'thana', 'korn', '$2b$10$uJAr9jp6qS5BLAS8sp4XT.QqzN393PhKmQj1cBQohZCjvSe04p8Dy', '123@email', 'Student', NULL, NULL, NULL, NULL);
+('1efca52a-60b6-46e6-97ed-b0a6565ccf2f', 'thana', 'korn', '$2b$10$uJAr9jp6qS5BLAS8sp4XT.QqzN393PhKmQj1cBQohZCjvSe04p8Dy', '123@email', 'Student', NULL, NULL, NULL, NULL),
+('4ffc9d99-f923-40cc-ac44-6ad45353813e', 'non', 'zaza', '$2b$10$iI8x6htkIzIxQR.wXpdZQ.jX6NQ7lESquqYSuTXRpbJFxgeR3IR/u', 'non@email', 'Student', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
