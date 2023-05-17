@@ -12,8 +12,8 @@ defineProps({
 </script>
 
 <template>
-    <Navbar />
-    <RouterView />
+    <Navbar :key="$route.fullPath"/>
+    <RouterView :key="$route.fullPath"/>
 </template>
 
 <style>

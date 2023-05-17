@@ -18,6 +18,7 @@ export default {
         this.category = response.data
         console.log(response.data)
       })
+    this.user = localStorage.getItem('user');
   },
   data() {
     return {
@@ -44,12 +45,16 @@ export default {
       lesson16: null,
       course_item: null,
       category: null,
+      user: null,
     };
   },
   computed: {
     pageAmount() {
       return Math.ceil(this.items.length / 12);
     },
+    item_length() {
+      return this.course_item ? this.course_item.length : 0
+    }
   },
   methods: {
     clearFilter() {
@@ -116,7 +121,7 @@ export default {
       <div class="bg-search-01 w-full h-[600px] bg-cover bg-no-repeat flex items-center">
         <div class="text-white w-full gap-8 flex flex-col">
           <p class="flex justify-center text-6xl font-medium">
-            หาคอร์สเรียนที่เหมาะกับคุณ
+            หาคอร์สเรียนที่เหมาะกับคุณ {{user}}
           </p>
           <div class="flex justify-center text-center">
             <p class="w-[70%] text-sm">
@@ -194,7 +199,7 @@ export default {
               <div class="flex items-center">
                 <h3 class="text-2xl font-normal">Python Course</h3>
               </div>
-              <p class="text-xs underline font-light text-[#676767]">{{course_item.length}} ผลลัพท์</p>
+              <p class="text-xs underline font-light text-[#676767]">{{item_length}} ผลลัพท์</p>
               <hr class="mt-2 border-[1.5px] border-black" />
             </div>
             <div class="flex flex-col gap-4 mt-4">

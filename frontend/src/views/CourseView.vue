@@ -33,15 +33,24 @@ onMounted(() => {
 <script>
 export default {
   beforeCreate() {
+    this.axios.get(`http://localhost:3000/api/course/${this.$route.params.course_id}`).then((response) => {
+      this.course_item = response.data
+      this.category_name = response.data.category.category_name
+      console.log(response.data);
+    })
+
     this.axios.get(`http://localhost:3000/api/course/randomCourse/3`).then((response) => {
-        this.course_item = response.data
-        console.log(response.data)
+        this.random_course_item = response.data
       })
+
   },
+  
   data() {
     return {
       showComponent: true,
-      course_item: null,
+      random_course_item: null,
+      course_item: [],
+      category_name: [],
     };
   },
   methods: {
@@ -55,7 +64,7 @@ export default {
 <template>
   <div class="absolute z-[-1] w-full h-[510px] flex">
     <img
-      :src="'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'"
+      :src="course_item.course_image? `http://localhost:3000/images/${course_item.course_image}` :'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'"
       class="w-full h-auto relative object-cover"
       alt="course_image"
     />
@@ -64,10 +73,10 @@ export default {
     <div class="mx-12 space-y-10">
       <div class="bg-white px-12 py-5 h-[328px] space-y-6">
         <div class="flex space-x-4 text-white">
-          <p class="px-4 py-2 bg-purple-500 rounded-full">Programming</p>
+          <p class="px-4 py-2 bg-purple-500 rounded-full">{{category_name}}</p>
         </div>
         <div class="flex justify-between items-center">
-          <h1 class="text-[36px]">Python for beginner</h1>
+          <h1 class="text-[36px]">{{course_item.title}}</h1>
           <div class="flex">
             <div class="flex space-x-3">
               <svg
@@ -94,15 +103,13 @@ export default {
                   </clipPath>
                 </defs>
               </svg>
-              <p>2/12</p>
+              <p>2/{{course_item.amount}}</p>
             </div>
           </div>
         </div>
 
         <p class="text-[14px] font-light text-gray-01 limit2Line">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tristique gravida
-          erat ac accumsan. Orci varius natoque penatibus et magnis dis parturient montes,
-          nascetur ridiculus mus. Donec eget venenatis dui, non facilisis turpis. lorem
+          {{course_item.description}}
         </p>
         <div class="flex">
           <RouterLink to="">
@@ -117,7 +124,7 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ระดับความสามารถ</p>
-            <p class="text-2xl">เริ่มต้น</p>
+            <p class="text-2xl">{{course_item.level}}</p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -126,7 +133,7 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ระยะเวลา</p>
-            <p class="text-2xl">15 คาบเรียน</p>
+            <p class="text-2xl">{{course_item.lesson}} คาบเรียน</p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -134,8 +141,8 @@ export default {
             <img src="..\assets\icon\recieve.png" alt="" />
           </div>
           <div>
-            <p class="text-sm font-light">พร้อมใบ Certificate เมื่อเรียนจบ</p>
-            <p class="text-2xl">มีในคอร์สเรียนนี้</p>
+            <p class="text-sm font-light">ใบ Certificate</p>
+            <p class="text-2xl">{{course_item.certificate? "มีในคอร์สเรียนนี้": "ไม่มีในคอร์สเรียนนี้"}}</p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -144,7 +151,7 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ราคาคอร์สเรียน</p>
-            <p class="text-2xl">1200 บาท</p>
+            <p class="text-2xl">{{course_item.price}} บาท</p>
           </div>
         </div>
       </div>
@@ -166,7 +173,7 @@ export default {
           </div>
         </div>
         <div v-if="showComponent">
-          <CourseDetail />
+          <CourseDetail :course_info="course_item.info"/>
         </div>
         <div v-else>
           <CourseReview />
@@ -254,7 +261,7 @@ export default {
   <div class="py-20">
     <p class="flex justify-center text-[48px]">ต้องการอะไรอย่างอื่นอีกไหม?</p>
     <div class="flex gap-x-7 justify-center mt-8">
-      <div v-for="item in course_item">
+      <div v-for="item in random_course_item">
         <main_card :item="item"/>
       </div>
     </div>

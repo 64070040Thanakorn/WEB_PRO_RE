@@ -14,7 +14,7 @@ onMounted(() => {
     stagger: .1,
     delay:.5,
     scrollTrigger: {
-      trigger: ".box",
+      // trigger: ".box",
       toggleActions: "play none none reset"
     }
   })

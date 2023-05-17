@@ -46,9 +46,10 @@ model Course {
 }
 
 model Category {
-  category_id   String   @id @default(uuid())
-  category_name String
-  Course        Course[]
+  category_id     String   @id @default(uuid())
+  category_name   String
+  category_detail String   @default("No detail")
+  Course          Course[]
 }
 
 model Comments {

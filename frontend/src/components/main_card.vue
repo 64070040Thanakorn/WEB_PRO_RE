@@ -44,12 +44,18 @@
     class="w-[300px] h-[430px] shadow-lg shadow-black-500/50 rounded-[15px] flex flex-col"
   >
     <img
-      :src="item.course_image? `http://localhost:3000/images/${item.course_image}`:'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'"
+      :src="
+        item.course_image
+          ? `http://localhost:3000/images/${item.course_image}`
+          : 'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'
+      "
       class="basis-5/12 rounded-t-[15px] w-auto h-0 object-cover"
       alt="course_img"
     />
     <div class="absolute mx-3 my-2">
-      <p class="px-5 py-1 bg-blue-500 rounded-full text-white text-sm">{{item.category.category_name}}</p>
+      <p class="px-5 py-1 bg-blue-500 rounded-full text-white text-sm">
+        {{ item.category.category_name }}
+      </p>
     </div>
     <div class="basis-7/12 p-4 gap-y-1 flex flex-col justify-between">
       <div>
@@ -75,21 +81,27 @@
                 </clipPath>
               </defs>
             </svg>
-            <p>0/{{item.amount}}</p>
+            <p>0/{{ item.amount }}</p>
           </div>
         </div>
-        <p class="text-xl">{{item.title}}</p>
+        <p class="text-xl">{{ item.title }}</p>
         <div class="flex justify-between items-center">
-          <p class="text-orange-01 text-sm">{{item.level}}{{item.certificate? ", ใบ Certificate" : null}}</p>
+          <p class="text-orange-01 text-sm">
+            {{ item.level }}{{ item.certificate ? ", ใบ Certificate" : null }}
+          </p>
         </div>
         <hr class="border-[1.2px]" />
         <p class="text-[#9F9F9F] font-light text-[10px] textOver">
-          {{item.description}}
+          {{ item.description }}
         </p>
       </div>
       <div>
-        <p class="flex justify-end text-[#467A55] py-2">{{item.price}} บาท</p>
-        <RouterLink to="">
+        <p class="flex justify-end text-[#467A55] py-2">{{ item.price }} บาท</p>
+        <RouterLink
+          :to="{ name: 'course', params: { course_id: item.course_id } }"
+          target=""
+          @click="scrollToTop"
+        >
           <div
             class="bg-black text-white py-1 rounded-[3px] text-center hover:bg-[#2E2E2E]"
           >
@@ -124,6 +136,11 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 };
 </script>
