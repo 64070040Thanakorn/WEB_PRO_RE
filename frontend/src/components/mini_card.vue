@@ -1,3 +1,22 @@
+<script>
+export default {
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+  },
+};
+</script>
+
 <template>
   <div id="mini_card" class="transition-all duration-500 shadow-md shadow-black/10 hover:scale-[1.05]">
     <div class="bg-black rounded-t-md w-[510px] h-[33px] flex items-center px-3">
@@ -10,7 +29,7 @@
     <div class="bg-white rounded-b-md w-[510px] h-[225px] px-3 py-3">
       <div>
         <div class="flex justify-between items-center">
-          <h5 class="text-[32px]">Course Title</h5>
+          <h5 class="text-[32px]">{{item.title}}</h5>
           <div class="flex space-x-3">
             <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_173_469)">
@@ -22,23 +41,32 @@
                 </clipPath>
               </defs>
             </svg>
-            <p>2/12</p>
+            <p>{{item.enrolled.length}}/{{item.amount}}</p>
           </div>
         </div>
-        <p class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p class="text-secondary textOver">{{item.description}}</p>
       </div>
       <div class="flex justify-between absolute inset-x-0 bottom-2 px-3 py-1">
         <div class="flex items-center space-x-3">
-          <p>ใบ Certificate</p>
+          <p>{{item.certificate? "ใบ Certificate |" : null}} </p>
+          <p>{{item.lesson}} บท</p>
           <p>|</p>
-          <p>15 บท</p>
-          <p>|</p>
-          <p>Intermediate</p>
+          <p>{{item.level}}</p>
         </div>
         <div>
-          <p class="text-[20px]">1200 บาท</p>
+          <p class="text-[20px] text-[#467A55]">{{item.price}} บาท</p>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style>
+.textOver {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+</style>

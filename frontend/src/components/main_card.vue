@@ -53,7 +53,7 @@
       alt="course_img"
     />
     <div class="absolute mx-3 my-2">
-      <p class="px-5 py-1 bg-blue-500 rounded-full text-white text-sm">
+      <p class="px-5 py-1 bg-orange-01 rounded-full text-white text-sm">
         {{ item.category.category_name }}
       </p>
     </div>
@@ -81,7 +81,7 @@
                 </clipPath>
               </defs>
             </svg>
-            <p>0/{{ item.amount }}</p>
+            <p>{{item.enrolled.length}}/{{ item.amount }}</p>
           </div>
         </div>
         <p class="text-xl">{{ item.title }}</p>

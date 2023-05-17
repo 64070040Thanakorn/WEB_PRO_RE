@@ -33,19 +33,33 @@ onMounted(() => {
 <script>
 export default {
   beforeCreate() {
-    this.axios.get(`http://localhost:3000/api/course/${this.$route.params.course_id}`).then((response) => {
-      this.course_item = response.data
-      this.category_name = response.data.category.category_name
-      console.log(response.data);
-    })
+    this.axios
+      .get(`http://localhost:3000/api/course/${this.$route.params.course_id}`)
+      .then((response) => {
+        this.course_item = response.data;
+        this.category_name = response.data.category.category_name;
+        console.log(response.data);
+      });
 
     this.axios.get(`http://localhost:3000/api/course/randomCourse/3`).then((response) => {
-        this.random_course_item = response.data
-      })
+      this.random_course_item = response.data;
+    });
 
+    this.axios
+      .get(`http://localhost:3000/api/comment/${this.$route.params.course_id}`)
+      .then((response) => {
+        this.comments = response.data;
+        console.log(response.data);
+      });
+
+    this.axios
+      .get(`http://localhost:3000/api/auth/${localStorage.getItem("user")}`)
+      .then((res) => {
+        this.user = res.data;
+      });
   },
   mounted() {
-    this.user = localStorage.getItem("user")
+    this.user = localStorage.getItem("user");
   },
   data() {
     return {
@@ -53,7 +67,8 @@ export default {
       random_course_item: null,
       course_item: [],
       category_name: [],
-      user: null
+      comments: [],
+      user: null,
     };
   },
   methods: {
@@ -67,7 +82,11 @@ export default {
 <template>
   <div class="absolute z-[-1] w-full h-[510px] flex">
     <img
-      :src="course_item.course_image? `http://localhost:3000/images/${course_item.course_image}` :'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'"
+      :src="
+        course_item.course_image
+          ? `http://localhost:3000/images/${course_item.course_image}`
+          : 'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'
+      "
       class="w-full h-auto relative object-cover"
       alt="course_image"
     />
@@ -76,10 +95,12 @@ export default {
     <div class="mx-12 space-y-10">
       <div class="bg-white px-12 py-5 h-[328px] space-y-6">
         <div class="flex space-x-4 text-white">
-          <p class="px-4 py-2 bg-purple-500 rounded-full">{{category_name}} {{user}}</p>
+          <p class="px-4 py-2 bg-orange-01 rounded-full">
+            {{ category_name }}
+          </p>
         </div>
         <div class="flex justify-between items-center">
-          <h1 class="text-[36px]">{{course_item.title}}</h1>
+          <h1 class="text-[36px]">{{ course_item.title }}</h1>
           <div class="flex">
             <div class="flex space-x-3">
               <svg
@@ -106,17 +127,17 @@ export default {
                   </clipPath>
                 </defs>
               </svg>
-              <p>2/{{course_item.amount}}</p>
+              <p>{{course_item.enrolled.length}}/{{ course_item.amount }}</p>
             </div>
           </div>
         </div>
 
         <p class="text-[14px] font-light text-gray-01 limit2Line">
-          {{course_item.description}}
+          {{ course_item.description }}
         </p>
         <div class="flex">
           <RouterLink to="">
-            <div class="rounded bg-black text-white px-12 py-2">ลงคอร์สเรียน</div>
+            <div class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">ลงคอร์สเรียน</div>
           </RouterLink>
         </div>
       </div>
@@ -127,7 +148,7 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ระดับความสามารถ</p>
-            <p class="text-2xl">{{course_item.level}}</p>
+            <p class="text-2xl">{{ course_item.level }}</p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -136,7 +157,7 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ระยะเวลา</p>
-            <p class="text-2xl">{{course_item.lesson}} คาบเรียน</p>
+            <p class="text-2xl">{{ course_item.lesson }} คาบเรียน</p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -145,7 +166,9 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ใบ Certificate</p>
-            <p class="text-2xl">{{course_item.certificate? "มีในคอร์สเรียนนี้": "ไม่มีในคอร์สเรียนนี้"}}</p>
+            <p class="text-2xl">
+              {{ course_item.certificate ? "มีในคอร์สเรียนนี้" : "ไม่มีในคอร์สเรียนนี้" }}
+            </p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -154,7 +177,7 @@ export default {
           </div>
           <div>
             <p class="text-sm font-light">ราคาคอร์สเรียน</p>
-            <p class="text-2xl">{{course_item.price}} บาท</p>
+            <p class="text-2xl text-[#467A55]">{{ course_item.price }} บาท</p>
           </div>
         </div>
       </div>
@@ -176,10 +199,10 @@ export default {
           </div>
         </div>
         <div v-if="showComponent">
-          <CourseDetail :course_info="course_item.info"/>
+          <CourseDetail :course_info="course_item.info" />
         </div>
         <div v-else>
-          <CourseReview />
+          <CourseReview :user="user" :comments="comments" />
         </div>
       </div>
 
@@ -265,7 +288,7 @@ export default {
     <p class="flex justify-center text-[48px]">ต้องการอะไรอย่างอื่นอีกไหม?</p>
     <div class="flex gap-x-7 justify-center mt-8">
       <div v-for="item in random_course_item">
-        <main_card :item="item"/>
+        <main_card :item="item" />
       </div>
     </div>
   </div>

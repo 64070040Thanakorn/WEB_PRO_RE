@@ -18,6 +18,10 @@ export default {
         this.category = response.data
         console.log(response.data)
       })
+
+    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
+      this.random_course_item = response.data;
+    });
   },
   data() {
     return {
@@ -42,8 +46,9 @@ export default {
       lesson0To4: null,
       lesson5To15: null,
       lesson16: null,
-      course_item: null,
-      category: null,
+      course_item: [],
+      category: [],
+      random_course_item: [],
     };
   },
   computed: {
@@ -109,6 +114,9 @@ export default {
           });
         }
       }
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
   },
 };
@@ -516,11 +524,9 @@ export default {
               dolore.
             </p>
             <h1 class="text-2xl font-medium">คอร์สเรียนที่แนะนำ</h1>
-            <div class="flex justify-start">
-              <RouterLink id="Recommend_card" class="" to="">
-                <Recommend_card />
-              </RouterLink>
-            </div>
+            <Router-link class="flex justify-start" v-for="item in random_course_item" :to="{ path: `course/${item.course_id}` }" @click="scrollToTop()">
+              <Recommend_card class="card_showing" :item="item"/>
+            </Router-link>
           </div>
         </div>
         <div class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1 mb-20">

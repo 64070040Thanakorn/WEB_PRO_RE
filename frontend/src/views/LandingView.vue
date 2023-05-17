@@ -22,6 +22,30 @@ onMounted(() => {
 })
 </script>
 
+<script>
+export default {
+  beforeCreate() {
+    this.axios.get(`http://localhost:3000/api/course/randomCourse/6`).then((response) => {
+      this.random_course_item = response.data;
+    });
+  },
+  data() {
+    return {
+      random_course_item: []
+    }
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+    viewCourse() {
+      this.$router.push("/search");
+      window.scrollTo(0, 0);
+    }
+  }
+}
+</script>
+
 <template>
   <section>
     <div class="flex justify-center bg-landing-01 bg-no-repeat bg-cover w-full h-[1080px]">
@@ -45,16 +69,18 @@ onMounted(() => {
   <section>
     <div id="hot" class="bg-pattern-01 w-full h-[950px]">
       <div class="py-6 mx-6">
-        <h1>คอร์สเรียนยอดฮิต</h1>
-        <p class="w-[710px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id maximus felis. Fusce massa urna, luctus sed mi quis, pretium sodales magna. Pellentesque gravida malesuada nibh</p>
+        <h1>คอร์สเรียนน่าสนใจ</h1>
+        <p class="w-[710px]">พบกับคอร์สเรียนมากมายที่ทางเราจัดหามาให้ มีทั้ง Python, JS, JAVA, C, C# และอื่นๆอีกมากมายพร้อมให้คุณมาเรียนรู้ได้แล้ววันนี้!</p>
       </div>
       <div class="flex justify-center">
         <div class="grid grid-cols-3 gap-6 justify-center">
-          <Landing_Card class="card_showing" v-for="n in 6"/>
+          <Router-link v-for="item in random_course_item" :to="{ path: `course/${item.course_id}` }" @click="scrollToTop()">
+            <Landing_Card class="card_showing" :item="item"/>
+          </Router-link>
         </div>
       </div>
       <div class="flex justify-center my-8">
-        <button class="bg-black text-white py-2 px-8 rounded-md">ดูคอร์สเรียนเพิ่มเติม</button>
+        <button class="bg-black text-white py-2 px-8 rounded-md" @click="viewCourse()">ดูคอร์สเรียนเพิ่มเติม</button>
       </div>
     </div>
   </section>

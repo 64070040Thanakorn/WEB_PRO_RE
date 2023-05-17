@@ -121,7 +121,7 @@ export default {
 <template>
   <div v-if="isOpen" class="w-full z-[50] fixed">
     <div class="absolute left-1/2 translate-x-[-50%] w-full h-screen flex justify-center items-center">
-      <div class="bg-black w-full h-full absolute opacity-80 fixed fixed"></div>
+      <div class="bg-black w-full h-full absolute opacity-80"></div>
       <Register v-if="isActive_Register" @auth-change="onAuthChange" @modal_close="closing_auth()"/>
       <Login v-if="isActive_Login" @auth-change="onAuthChange" @modal_close="closing_auth()"/>
     </div>
