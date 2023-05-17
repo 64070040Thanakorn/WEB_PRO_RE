@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Landing from '../views/LandingView.vue'
-import Search from '../views/SearchView.vue'
-import Quiz from '../views/QuizView.vue'
 import Course from '../views/CourseView.vue'
+import Landing from '../views/LandingView.vue'
+import Quiz from '../views/QuizView.vue'
+import Search from '../views/SearchView.vue'
 
 import user from './user'
 

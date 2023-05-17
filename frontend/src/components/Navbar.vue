@@ -148,7 +148,7 @@ export default {
           <RouterLink to="/search" id="search" class="nav_search pi pi-search flex items-center"></RouterLink>
           <div v-if="user">
             <div class="px-8">
-              <RouterLink to="/profile" class="px-8">{{ user.first_name }}</RouterLink>
+              <RouterLink :to="`/profile`" id="login" class="nav_login px-8">{{ user.first_name }}</RouterLink>
             </div>
           </div>
           <div v-else>

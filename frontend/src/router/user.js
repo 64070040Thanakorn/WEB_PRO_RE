@@ -1,9 +1,9 @@
-import dashboardView from '../views/profile/dashboard.vue'
+import profile from '../views/ProfileView.vue'
 
 export default [
   {
-    path: '/:id/dashboard',
-    name: 'dashboard',
-    component: dashboardView
+    path: '/profile',
+    name: 'profile',
+    component: profile
   },
 ]

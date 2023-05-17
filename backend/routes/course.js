@@ -4,7 +4,7 @@ import express from "express";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-import upload from '../multer.js'
+import upload from '../middleware/multer.js';
 
 // get all course
 router.get("/", async (req, res, next) => {
