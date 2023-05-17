@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 16, 2023 at 05:34 PM
+-- Generation Time: May 17, 2023 at 12:34 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -29,16 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Category` (
   `category_id` varchar(191) NOT NULL,
-  `category_name` varchar(191) NOT NULL
+  `category_name` varchar(191) NOT NULL,
+  `category_detail` varchar(191) NOT NULL DEFAULT 'No detail'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `Category`
 --
 
-INSERT INTO `Category` (`category_id`, `category_name`) VALUES
-('3eae8093-14e8-42f8-9eb1-30590fbdfd35', 'Python'),
-('9144682f-a79c-4fd5-9c6b-9528b948e92c', 'JavaScript');
+INSERT INTO `Category` (`category_id`, `category_name`, `category_detail`) VALUES
+('3eae8093-14e8-42f8-9eb1-30590fbdfd35', 'Python', 'No detail'),
+('9144682f-a79c-4fd5-9c6b-9528b948e92c', 'JavaScript', 'No detail');
 
 -- --------------------------------------------------------
 
@@ -153,6 +154,13 @@ CREATE TABLE `Users` (
   `phone` varchar(191) DEFAULT NULL,
   `user_image` varchar(191) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `role`, `address`, `info`, `phone`, `user_image`) VALUES
+('1efca52a-60b6-46e6-97ed-b0a6565ccf2f', 'thana', 'korn', '$2b$10$uJAr9jp6qS5BLAS8sp4XT.QqzN393PhKmQj1cBQohZCjvSe04p8Dy', '123@email', 'Student', NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
