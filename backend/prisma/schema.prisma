@@ -49,6 +49,7 @@ model Category {
   category_id     String   @id @default(uuid())
   category_name   String
   category_detail String   @default("No detail")
+  category_color  String   @default("#E99F30")
   Course          Course[]
 }
 

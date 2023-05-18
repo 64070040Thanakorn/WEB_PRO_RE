@@ -14,6 +14,9 @@ router.get("/", async (req, res, next) => {
         category: true,
         enrolled: true,
       },
+      orderBy: {
+        "createAt": "desc",
+      }
     });
     res.status(200).json(course);
   } catch (err) {

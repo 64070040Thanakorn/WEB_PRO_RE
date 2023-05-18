@@ -57,7 +57,10 @@ export default {
     },
     item_length() {
       return this.course_item ? this.course_item.length : 0
-    }
+    },
+    filteredItems() {
+      return this.searchValue ? this.course_item.filter((item) => item.title.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())) : this.course_item
+    },
   },
   methods: {
     clearFilter() {
@@ -524,13 +527,15 @@ export default {
               dolore.
             </p>
             <h1 class="text-2xl font-medium">คอร์สเรียนที่แนะนำ</h1>
-            <Router-link class="flex justify-start" v-for="item in random_course_item" :to="{ path: `course/${item.course_id}` }" @click="scrollToTop()">
-              <Recommend_card class="card_showing" :item="item"/>
-            </Router-link>
+            <div class="flex justify-start">
+              <Router-link v-for="item in random_course_item" :to="{ path: `course/${item.course_id}` }" @click="scrollToTop()">
+                <Recommend_card class="card_showing" :item="item"/>
+              </Router-link>
+            </div>
           </div>
         </div>
         <div class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1 mb-20">
-          <div v-for="item in course_item">
+          <div v-for="item in filteredItems">
             <Main_card :item="item"/>
           </div>
         </div>

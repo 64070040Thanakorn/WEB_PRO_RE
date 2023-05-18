@@ -53,7 +53,7 @@
       alt="course_img"
     />
     <div class="absolute mx-3 my-2">
-      <p class="px-5 py-1 bg-orange-01 rounded-full text-white text-sm">
+      <p class="px-5 py-1 rounded-full text-white text-sm" :style="`background-color: ${item.category.category_color}`">
         {{ item.category.category_name }}
       </p>
     </div>
@@ -135,7 +135,8 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+    };
   },
   methods: {
     scrollToTop() {
