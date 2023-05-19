@@ -1,10 +1,10 @@
 <script setup>
-import main_card from "../components/main_card.vue";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { onMounted } from "vue";
-import CourseReview from "../components/course/CourseReview.vue";
 import CourseDetail from "../components/course/CourseDetail.vue";
+import CourseReview from "../components/course/CourseReview.vue";
+import main_card from "../components/main_card.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -140,7 +140,7 @@ export default {
           {{ course_item.description }}
         </p>
         <div class="flex">
-          <RouterLink to="">
+          <RouterLink :to="`/payment/${$route.params.course_id}`">
             <div class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">ลงคอร์สเรียน</div>
           </RouterLink>
         </div>

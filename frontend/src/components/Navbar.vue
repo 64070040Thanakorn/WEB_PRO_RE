@@ -44,6 +44,8 @@ onMounted(() => {
 </script>
 
 <script>
+import { ref, onMounted } from 'vue';
+import { gsap } from 'gsap';
 import axios from 'axios';
 
 export default {
@@ -62,6 +64,9 @@ export default {
     }
   },
   mounted() {
+    this.$nextTick(() => {
+      gsap.fromTo('.nav_login', { opacity: 0, y: -15 }, { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, delay: 0.7 });
+    });
     this.onAuthChange();
   },
   methods: {
@@ -127,7 +132,7 @@ export default {
     </div>
   </div>
   
-  <div class="navbar w-full z-20" :class="{'absolute': isActive, 'bg-black': !isActive}">
+  <div class="navbar w-full z-20 py-1" :class="{'absolute': isActive, 'bg-black': !isActive}">
     <div :class="{'absolute top-0 left-0 h-56 w-full bg-gradient-to-b from-black to-white-0% p-5': isActive} "></div>
     <div class="flex justify-between items-center px-48 h-[80px]">
       <div>
@@ -148,7 +153,7 @@ export default {
           <RouterLink to="/search" id="search" class="nav_search pi pi-search flex items-center"></RouterLink>
           <div v-if="user">
             <div class="px-8">
-              <RouterLink :to="`/profile`" id="login" class="nav_login px-8">{{ user.first_name }}</RouterLink>
+              <RouterLink to="/profile" id="login" class="nav_login px-8" ref="navLogin">{{ user.first_name }}</RouterLink>
             </div>
           </div>
           <div v-else>

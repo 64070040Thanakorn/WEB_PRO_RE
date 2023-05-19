@@ -1,0 +1,174 @@
+<script>
+import Footer from '../components/Footer.vue'
+
+export default {
+  name: "payment",
+  data() {
+    return {
+      course: {
+        id: null,
+        name: null,
+        category: null,
+        price: null,
+        img: null,
+      },
+      vat: null,
+      paymentMethods: null,
+      customer: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        tel: '',
+      },
+    }
+  },
+  mounted() {
+    this.axios
+      .get(`http://localhost:3000/api/course/${this.$route.params.course_id}`)
+      .then((res) => {
+        this.course.id = res.data.course_id
+        this.course.name = res.data.title
+        this.course.category = res.data.category.category_name
+        this.course.price = parseFloat(res.data.price)
+        this.course.img = res.data.course_image
+        this.vat = this.course.price+(this.course.price*0.07)
+      });
+  },
+  methods: {
+    payment(){
+      const data = {
+        user_id: localStorage.getItem('user'),
+        course_id: this.course,
+        customer: this.customer,
+        payment_methods: this.paymentMethods,
+        price: this.vat,
+      }
+      this.axios.post(`http://localhost:3000/api/payment/`,data)
+        .then(res => {
+          window.location = '/payment/success'
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  },
+};
+
+</script>
+<template>
+  <section>
+    <div class="flex mt-10 justify-center">
+      <!-- ชำระเงิน -->
+      <div class="px-10">
+        <div class="w-[50em]">
+          <p class="text-2xl  py-3">ชำระเงิน</p>
+  
+          <div class="border-[1px] w-full rounded-full"></div>
+          
+          <div class="flex justify-between px-2 py-5">
+            <div class="flex">
+              <div class="bg-gray-200 w-[230px] h-[120px] rounded-xl mr-4 overflow-hidden">
+                <img :src="course.img ? `http://localhost:3000/images/${course.img}` : 0" alt="">
+              </div>
+              <div>
+                <p>{{ course.name }}</p>
+                <div class="flex justify-center border rounded-full w-[120px] mt-2">
+                  <p>{{ course.category }}</p>
+                </div>
+              </div>
+            </div>
+            <p>{{ course.price }}.00 บาท</p>
+          </div>
+  
+          <div class="border-[1px] w-full rounded-full"></div>
+  
+          <p class="text-2xl  pt-3">ข้อมูลผู้ชำระเงิน</p>
+          <div class="py-8">
+            <div class="flex justify-between mx-10">
+              <div class="flex flex-col">
+                <label for="">ชื่อ</label>
+                <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.first_name">
+              </div>
+              <div class="flex flex-col">
+                <label for="">นามสกุล</label>
+                <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.last_name">
+              </div>
+            </div>
+            <div class="flex justify-between mx-10 pt-3">
+              <div class="flex flex-col">
+                <label for="">อีเมล</label>
+                <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.email">
+              </div>
+              <div class="flex flex-col">
+                <label for="">เบอร์โทรศัพท์</label>
+                <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.tel">
+              </div>
+            </div>
+          </div>
+  
+  
+          <div class="border-[1px] w-full rounded-full mt-3"></div>
+  
+          <p class="text-2xl  py-3">วิธีชำระเงิน</p>
+          <div>
+            <div class="flex flex-col px-4 py-4">
+              <div :class="paymentMethods === 'PromtPay' ? 'border-[#E99F30]': ''" class="border-2 rounded-md py-8 px-10 mt-2">
+                <input type="radio" name="1" id="" v-model="paymentMethods" value="PromtPay">
+                <label class="ml-5" for="">ชำระเงินผ่าน PromptPay (QR Code)</label>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="0">
+            <p class="text-2xl  py-3">ข้อมูลบัตรเครดิต</p>
+            <div class="py-8">
+              <div class="flex justify-between mx-10">
+                <div class="flex flex-col">
+                  <label for="">รหัสบัตรเครดิต</label>
+                  <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]">
+                </div>
+                <div class="flex flex-col">
+                  <label label for="">CVC</label>
+                  <input type="text" class="border-2 w-[5em] py-1 px-2 rounded-[7px]">
+               </div>
+                <div class="flex flex-col">
+                  <label for="">วันหมดอายุ</label>
+                  <input type="text" class="border-2 w-[10em] py-1 px-2 rounded-[7px]">
+                </div>
+              </div>
+              <div class="flex justify-between mx-10 pt-3">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-[1px] mx-5 h-[80vh] rounded-full"></div>
+      <!-- ยอดชำระเงิน -->
+      <div class="">
+        <p class=" text-2xl">ยอดชำระเงิน</p>
+        <div class="ml-10 mt-7">
+          <div class="w-[23.5em]">
+            <div class="flex justify-between">
+              <p>รวมสินค้าชำระเงิน</p>
+              <p>{{ course.price }}.00 บาท</p>
+            </div>
+            <div class="flex justify-between mt-2">
+              <div>
+                <p class="">สรุปยอดชำระเงิน</p>
+                <p class="text-[70%] ml-1 text-gray-400">**7% ภาษีมูลลค่าเพิ่ม**</p>
+              </div>
+              <p class="">{{ vat }}.00 บาท</p>
+            </div>
+          <p class="text-xs mt-5">เมื่อชำระเงิน ถือว่าท่านได้ยอมรับ <span class="text-violet-800">ข้อตกลงและเงื่อนไขการใช้บริการ, ประกาศความเป็นส่วนตัวสำหรับลูกค้าและผู้รับบริการ</span> และ <span>นโยบายการคืนเงิน</span> เรียบร้อยแล้ว</p>
+          </div>
+          <button class="bg-[#E99F30] rounded-full py-2 px-40 text-white mt-3" @click=payment>ชำระเงิน</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+<style>
+input {box-sizing: border-box;}
+</style>

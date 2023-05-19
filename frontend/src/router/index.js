@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Course from '../views/CourseView.vue'
 import Landing from '../views/LandingView.vue'
+import payment_success from '../views/PaymentSuccessView.vue'
+import payment from '../views/PaymentView.vue'
 import Quiz from '../views/QuizView.vue'
 import Search from '../views/SearchView.vue'
 
@@ -43,6 +45,16 @@ const router = createRouter({
       path: '/course/:course_id',
       name: 'course',
       component: Course
+    },
+    {
+      path: '/payment/:course_id',
+      name: 'payment',
+      component: payment,
+    },
+    {
+      path: '/payment/success',
+      name: 'payment_success',
+      component: payment_success
     },
     ...user,
   ]
