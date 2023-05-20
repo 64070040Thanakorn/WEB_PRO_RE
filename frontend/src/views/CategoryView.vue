@@ -1,17 +1,16 @@
 <script setup>
 import { gsap } from "gsap";
 import { TweenMax } from "gsap/gsap-core";
-import Main_card from "../components/main_card.vue";
 import Recommend_card from "../components/mini_card.vue";
+import Main_card from "../components/main_card.vue";
 </script>
 
 <script>
 export default {
   name: "Search",
   beforeCreate() {
-    this.axios.get(`http://localhost:3000/api/course/`).then((response) => {
-      this.course_item = response.data;
-      console.log(response.data);
+    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
+      this.random_course_item = response.data;
     });
 
     this.axios.get(`http://localhost:3000/api/category/`).then((response) => {
@@ -19,13 +18,12 @@ export default {
       console.log(response.data);
     });
 
-    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
-      this.random_course_item = response.data;
-    });
-    this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
-      .then(res => {
-        this.userLog_on = res.data
-      })
+    this.axios
+      .get(`http://localhost:3000/api/category/${this.$route.params.category_id}`)
+      .then((response) => {
+        this.course_item = response.data;
+        console.log(response.data);
+      });
   },
   data() {
     return {
@@ -50,29 +48,25 @@ export default {
       lesson0To4: null,
       lesson5To15: null,
       lesson16: null,
+      page_category: [],
       course_item: [],
       category: [],
       random_course_item: [],
-
-      userLog_on: {},
     };
   },
   computed: {
     pageAmount() {
       return Math.ceil(this.items.length / 12);
     },
-    all_course_length() {
-      return this.course_item ? this.course_item.length : 0;
-    },
     item_length() {
       return this.filteredItems ? this.filteredItems.length : 0;
     },
     filteredItems() {
       return this.searchValue
-        ? this.course_item.filter((item) =>
+        ? this.course_item.Course.filter((item) =>
             item.title.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())
           )
-        : this.course_item;
+        : this.course_item.Course;
     },
   },
   methods: {
@@ -187,7 +181,7 @@ export default {
   </section>
   <section>
     <div class="flex">
-      <div class="w-[18%] bg-white shadow-md shadow-black/10 mx-auto">
+      <section class="w-[18%] bg-white shadow-md shadow-black/10 mx-auto">
         <div class="flex flex-col p-8 overflow-y-auto h-full w-full scrollbar">
           <!-- upper side-bar -->
           <div class="gap-4 flex flex-col dropdown mb-[10rem]">
@@ -200,15 +194,17 @@ export default {
                 <ul class="flex flex-col gap-2 text-normal ml-4 list-disc">
                   <Router-link to="/search">
                     <li class="font-light hover:font-normal">All</li>
-                  </Router-Link>
+                  </Router-link>
                 </ul>
                 <ul
                   class="flex flex-col gap-2 text-normal ml-4 list-disc"
                   v-for="item in category"
                 >
-                  <Router-link :to="{ path: `category/${item.category_id}` }">
+                  <Router-link
+                    :to="{ path: `/category/${item.category_id}` }"
+                  >
                     <li class="font-light hover:font-normal">{{ item.category_name }}</li>
-                  </Router-Link>
+                  </Router-link>
                 </ul>
               </div>
             </div>
@@ -527,16 +523,16 @@ export default {
             </div>
           </div>
         </div>
-      </div>
-      <div class="w-[82%] mb-20">
+      </section>
+      <section class="w-[82%] mb-20">
         <div class="bg-search-02 h-[650px] px-20 py-12">
           <div class="space-y-8">
             <p class="text-md text-[#EBC919]">
-              หมวดหมู่ <span class="text-black">/ All</span>
+              หมวดหมู่ <span class="text-black">/ {{course_item.category_name}}</span>
             </p>
-            <p class="text-4xl font-medium">คอร์สเรียนทั้งหมด</p>
+            <p class="text-4xl font-medium">{{course_item.category_name}}</p>
             <p class="text-lg">
-              แหล่งรวมคอร์สเรียนต่างๆที่เราคัดสรรมาอย่างมีคุณภาพ เพื่อให้คุณได้มาเรียนรู้ หรือเสริมสร้างประสบการณ์ใหม่ๆ ได้แล้วที่นี่ มีคอร์สมากกว่า {{all_course_length}} คอร์สเรียน มีอาจารย์ที่มีความรู้ จบจากสายตรง การันตีคุณภาพ
+              {{course_item.category_detail}}
             </p>
             <h1 class="text-2xl font-medium">คอร์สเรียนที่น่าสนใจ</h1>
             <div class="flex justify-start">
@@ -554,7 +550,7 @@ export default {
           class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1 mb-20"
         >
           <div v-for="item in filteredItems">
-            <Main_card :item="item" :user-log_on="userLog_on"/>
+            <Main_card :item="item" />
           </div>
         </div>
         <!-- <div class="flex justify-center gap-4">
@@ -562,7 +558,7 @@ export default {
             <span class="font-light hover:font-normal">{{ value }}</span>
           </RouterLink>
         </div> -->
-      </div>
+      </section>
     </div>
   </section>
   <Footer />

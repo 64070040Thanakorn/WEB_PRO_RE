@@ -3,7 +3,7 @@
     <label for="" class="text-4xl mx-4">ประวัติการชำระเงิน</label>
   </div>
 
-  <div v-if="0" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-4 mb-12 mx-7 justify-items-center">
+  <div v-if="0" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-4 mb-12 justify-items-center">
 
   </div>
   <div v-else class="flex justify-center items-center p-60 text-xl">

@@ -92,9 +92,9 @@
 
 <script>
 import axios from 'axios';
-import course from '../components/profie/course.vue';
-import payment from '../components/profie/payment.vue';
-import user from '../components/profie/user.vue';
+import course from '../components/profile/course.vue';
+import payment from '../components/profile/payment.vue';
+import user from '../components/profile/user.vue';
 
 export default {
   components:{

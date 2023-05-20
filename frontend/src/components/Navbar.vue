@@ -71,7 +71,6 @@ export default {
     logout() {
       localStorage.removeItem('user')
       this.$router.push("/")
-      window.location.reload()
     },
     closing_auth(){
       console.log('closing auth');
@@ -120,7 +119,7 @@ export default {
   },
   computed: {
     isActive() {
-      return this.$route.name === 'home' || this.$route.name === 'search' ? true : false;
+      return this.$route.name === 'home' || this.$route.name === 'search' || this.$route.name === 'category';
     },
   },
 }

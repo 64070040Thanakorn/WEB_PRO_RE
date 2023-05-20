@@ -21,9 +21,11 @@
               class="border w-full rounded-md py-1 px-2"
               v-model="fname"
             />
-            <span v-if="!v$.fname.required.$response" class="text-red-500 text-xs"
-              >*This field is required</span
-            >
+            <template v-if="v$.fname.$model">
+              <span v-if="!v$.fname.required.$response" class="text-red-500 text-xs"
+                >*This field is required</span
+              >
+            </template>
           </div>
           <div class="flex flex-col">
             <label for="">นามสกุล</label>
@@ -32,9 +34,11 @@
               class="border w-full rounded-md py-1 px-2"
               v-model="lname"
             />
-            <span v-if="!v$.lname.required.$response" class="text-red-500 text-xs"
-              >*This field is required</span
-            >
+            <template v-if="v$.lname.$model">
+              <span v-if="!v$.lname.required.$response" class="text-red-500 text-xs"
+                >*This field is required</span
+              >
+            </template>
           </div>
           <div class="flex flex-col">
             <label for="">อีเมล</label>
@@ -43,12 +47,14 @@
               class="border w-full rounded-md py-1 px-2"
               v-model="my_email"
             />
-            <span v-if="!v$.my_email.required.$response" class="text-red-500 text-xs"
-              >*This field is required</span
-            >
-            <span v-if="!v$.my_email.email.$response" class="text-red-500 text-xs"
-              >*Invalid email</span
-            >
+            <template v-if="v$.my_email.$model">
+              <span v-if="!v$.my_email.required.$response" class="text-red-500 text-xs"
+                >*This field is required</span
+              >
+              <span v-if="!v$.my_email.email.$response" class="text-red-500 text-xs"
+                >*Invalid email</span
+              >
+            </template>
           </div>
           <div class="flex space-x-3">
             <div class="flex flex-col">
@@ -58,17 +64,17 @@
                 class="border w-full rounded-md py-1 px-2"
                 v-model="password"
               />
-              <span v-if="!v$.password.required.$response" class="text-red-500 text-xs"
-                >*This field is required</span
-              >
-              <span
-                v-if="complexPassword(this.password ? this.password : '')"
-                class="text-red-500 text-xs"
-                >*Password is not safe</span
-              >
-              <span v-if="!v$.password.minLength.$response" class="text-red-500 text-xs"
-                >*Must be at least 8 characters</span
-              >
+              <template v-if="v$.password.$model">
+                <span v-if="!v$.password.required.$response" class="text-red-500 text-xs"
+                  >*This field is required</span
+                >
+                <span v-if="!v$.password.complex.$response" class="text-red-500 text-xs"
+                  >*Password is not safe</span
+                >
+                <span v-if="!v$.password.minLength.$response" class="text-red-500 text-xs"
+                  >*Must be at least 8 characters</span
+                >
+              </template>
             </div>
             <div class="flex flex-col">
               <label for="">ยืนยันรหัสผ่าน</label>
@@ -77,16 +83,18 @@
                 class="border w-full rounded-md py-1 px-2"
                 v-model="confirm_password"
               />
-              <span
-                v-if="!v$.confirm_password.required.$response"
-                class="text-red-500 text-xs"
-                >*This field is required</span
-              >
-              <span
-                v-if="!v$.confirm_password.sameAs.$response"
-                class="text-red-500 text-xs"
-                >*Password not match</span
-              >
+              <template v-if="v$.confirm_password.$model">
+                <span
+                  v-if="!v$.confirm_password.required.$response"
+                  class="text-red-500 text-xs"
+                  >*This field is required</span
+                >
+                <span
+                  v-if="!v$.confirm_password.sameAs.$response"
+                  class="text-red-500 text-xs"
+                  >*Password not match</span
+                >
+              </template>
             </div>
           </div>
           <div class="flex justify-center">
@@ -144,21 +152,28 @@ import { useVuelidate } from "@vuelidate/core";
 import { email, minLength, required, sameAs } from "@vuelidate/validators";
 import axios from "axios";
 
+export function complexPassword(value) {
+  if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+    return false;
+  }
+  return true;
+}
+
 export default {
   setup() {
-    return { v$: useVuelidate() }
+    return { v$: useVuelidate() };
   },
   data() {
     return {
-      fname: "dwdw",
-      lname: "dwdwd",
-      my_email: "123@gmail.com",
-      password: "rainD91j",
-      confirm_password: "rainD91j",
+      fname: null,
+      lname: null,
+      my_email: null,
+      password: null,
+      confirm_password: null,
       isOpen: false,
     };
   },
-  validations () {
+  validations() {
     return {
       fname: {
         required,
@@ -172,13 +187,17 @@ export default {
       },
       password: {
         required,
+        complex: {
+          $validator: complexPassword,
+          $message: "*Password is not safe",
+        },
         minLength: minLength(8),
       },
       confirm_password: {
         required,
         sameAs: sameAs(this.password),
       },
-    }
+    };
   },
   methods: {
     toggleModal() {
@@ -186,38 +205,34 @@ export default {
     },
     submit() {
       this.v$.$touch;
-      if (!this.v$.$invalid) {
-        const data = {
-          first_name: this.fname,
-          last_name: this.lname,
-          email: this.my_email,
-          password: this.password,
-        };
-        console.log(data);
-        axios
-          .post("http://localhost:3000/api/auth/register", data)
-          .then((res) => {
-            localStorage.setItem("user", res.data.user);
-            localStorage.setItem("token", res.data.token);
-            this.$emit("auth-change");
-            window.location.reload()
-          })
-          .catch((error) => {
-            this.error = error.response.data;
-            console.log(error.response.data);
-            alert(error.response.data);
-          });
+      if (this.v$.$invalid) {
+        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        return false;
       }
+      const data = {
+        first_name: this.fname,
+        last_name: this.lname,
+        email: this.my_email,
+        password: this.password,
+      };
+      console.log(data);
+      axios
+        .post("http://localhost:3000/api/auth/register", data)
+        .then((res) => {
+          localStorage.setItem("user", res.data.user);
+          localStorage.setItem("token", res.data.token);
+          this.$emit("auth-change");
+          this.$router.push({ path: "/" });
+        })
+        .catch((error) => {
+          this.error = error.response.data;
+          console.log(error.response.data);
+          alert(error.response.data);
+        });
     },
     modal_close() {
       console.log("modal");
       this.$emit("modal_close");
-    },
-    complexPassword(value) {
-      if (value) {
-        return !(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/));
-      }
-      return false;
     },
   },
 };

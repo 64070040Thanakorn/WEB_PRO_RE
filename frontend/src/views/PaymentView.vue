@@ -66,7 +66,8 @@ export default {
       
       this.axios.post(`http://localhost:3000/api/payment/`,data)
         .then(res => {
-          // window.location = '/payment/success'
+          this.fetchEnroll()
+          this.$router.push('/payment/success')
           console.log(res);
         })
         .catch(err => {
@@ -94,6 +95,13 @@ export default {
       .get(`http://localhost:3000/api/payment/`, userData)
       .then((res) => {
         this.userCreditCard = res.data
+      });
+    },
+    fetchEnroll() {
+      const userData = { user_id: localStorage.getItem('user')}
+      this.axios
+      .post(`http://localhost:3000/api/course/enroll/${this.course.id}`, userData)
+      .then((res) => {
       });
     },
   },

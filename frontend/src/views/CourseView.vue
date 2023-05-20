@@ -38,8 +38,8 @@ export default {
       .then((response) => {
         this.course_item = response.data;
         this.category_name = response.data.category.category_name;
-        this.category_color = response.data.category.category_color
-        this.enrolled = response.data.enrolled
+        this.category_color = response.data.category.category_color;
+        this.enrolled = response.data.enrolled;
         console.log(response.data);
       });
 
@@ -99,7 +99,10 @@ export default {
     <div class="mx-12 space-y-10">
       <div class="bg-white px-12 py-5 h-[328px] space-y-6">
         <div class="flex space-x-4 text-white">
-          <p class="px-4 py-2 rounded-full" :style="`background-color: ${category_color}`">
+          <p
+            class="px-4 py-2 rounded-full"
+            :style="`background-color: ${category_color}`"
+          >
             {{ category_name }}
           </p>
         </div>
@@ -131,7 +134,7 @@ export default {
                   </clipPath>
                 </defs>
               </svg>
-              <p>{{enrolled.length}}/{{ course_item.amount }}</p>
+              <p>{{ enrolled.length }}/{{ course_item.amount }}</p>
             </div>
           </div>
         </div>
@@ -140,9 +143,13 @@ export default {
           {{ course_item.description }}
         </p>
         <div class="flex">
-          <RouterLink :to="`/payment/${$route.params.course_id}`">
-            <div class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">ลงคอร์สเรียน</div>
-          </RouterLink>
+          <div v-if="this.user">
+            <RouterLink :to="`/payment/${$route.params.course_id}`">
+              <div class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">
+                ลงคอร์สเรียน
+              </div>
+            </RouterLink>
+          </div>
         </div>
       </div>
       <div class="bg-white py-8 border-2 border-black flex justify-around">
