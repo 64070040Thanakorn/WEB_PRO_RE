@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Admin from '../views/AdminView.vue'
+import CategoryView from '../views/CategoryView.vue'
 import Course from '../views/CourseView.vue'
 import create_course from '../views/CreateCourseView.vue'
 import course_edit from '../views/EditCourse.vue'
@@ -8,7 +9,6 @@ import payment_success from '../views/PaymentSuccessView.vue'
 import payment from '../views/PaymentView.vue'
 import Quiz from '../views/QuizView.vue'
 import Search from '../views/SearchView.vue'
-import CategoryView from '../views/CategoryView.vue'
 
 import user from './user'
 
@@ -77,7 +77,7 @@ const router = createRouter({
     },
     {
       path: '/create',
-      name: 'course',
+      name: 'create_course',
       component: create_course
     },
     ...user,

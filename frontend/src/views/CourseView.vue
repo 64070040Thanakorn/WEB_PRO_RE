@@ -299,7 +299,9 @@ export default {
     <p class="flex justify-center text-[48px]">ต้องการอะไรอย่างอื่นอีกไหม?</p>
     <div class="flex gap-x-7 justify-center mt-8">
       <div v-for="item in random_course_item">
+        <!-- <main_card :item="item" :userLog_on="user"/> -->
         <main_card :item="item" :user-log_on="user"/>
+
       </div>
     </div>
   </div>
