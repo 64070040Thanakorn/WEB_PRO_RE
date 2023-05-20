@@ -113,10 +113,10 @@ export default {
           <p class="text-2xl  py-3">วิธีชำระเงิน</p>
           <div>
             <div class="flex flex-col px-4 py-4">
-              <div :class="paymentMethods === 'PromtPay' ? 'border-[#E99F30]': ''" class="border-2 rounded-md py-8 px-10 mt-2">
-                <input type="radio" name="1" id="" v-model="paymentMethods" value="PromtPay">
-                <label class="ml-5" for="">ชำระเงินผ่าน PromptPay (QR Code)</label>
-              </div>
+              <label for="PromtPay" :class="paymentMethods === 'PromtPay' ? 'border-[#E99F30]': ''" class="flex border-2 rounded-md py-8 px-10 mt-2">
+                <input type="radio" name="1" id="PromtPay" v-model="paymentMethods" value="PromtPay">
+                <p class="ml-5" for="PromtPay">ชำระเงินผ่าน PromptPay (QR Code)</p>
+              </label>
             </div>
           </div>
 
