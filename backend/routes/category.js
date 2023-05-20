@@ -39,4 +39,18 @@ router.get("/:category_id", async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
+
+// delete category
+router.delete("/", async( req, res,next) => {
+  try{
+    const removing = await prisma.category.delete({
+      where:{
+        category_id: req.body
+      }
+    })
+    res.send('ok')
+  } catch(err){
+    res.json(err)
+  }
+})
 export default router;

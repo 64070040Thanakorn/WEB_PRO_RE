@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between">
     <label for="" class="text-4xl mx-4">คอร์สเรียน</label>
-    <div class="flex w-[50%]">
+    <div class="flex w-[ุ50%]">
       <form class="w-full">
         <input id="" type="search" class="block w-full px-4 py-2 text-sm text-gray-900 border border-gray-950 rounded-3xl" placeholder="ค้นหาคอร์สเรียน" v-model="searchValue">
       </form>
@@ -30,32 +30,39 @@
       </div>
     </div>
   </div>
-
   <div v-if="1" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 mt-4 mb-12 mx-7 justify-center items-center">
     <div v-for="item in filteredItems">
-      <Main_card :item="item"/>
+      <Main_card :item="item" :userLog_on="userLog_on"/>
     </div>
+    <RouterLink to="/create">
+      <Create_card :userLog_on="userLog_on"/>
+    </RouterLink>
   </div>
   <div v-else class="flex justify-center items-center p-60 text-xl">
     <p>
       คุณยังไม่มีคอร์สเรียน
-      <RouterLink to="/search" class="text-orange-01">สร้างคอร์สเรียนที่สนใจตอนนี้!</RouterLink>
+      <RouterLink to="/create" class="text-orange-01">สร้างคอร์สเรียนที่สนใจตอนนี้!</RouterLink>
     </p>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Create_card from '../../components/create_card.vue';
 import Main_card from '../../components/main_card.vue';
 
 export default {
   components:{
     Main_card,
+    Create_card,
   },
   props: {
     course: {
       type: Object,
       required: true,
+    },
+    userLog_on: {
+      type: Object,
     }
   },
   data() {

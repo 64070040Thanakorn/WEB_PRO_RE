@@ -130,15 +130,14 @@ export default {
       }
       const data = {
         email: this.email,
-        password: this.password,
-      };
-      axios
-        .post("http://localhost:3000/api/auth/login", data)
-        .then((res) => {
-          localStorage.setItem("user", res.data.user);
-          localStorage.setItem("token", res.data.token);
-          this.$emit("auth-change");
-          this.$router.push({ path: "/" });
+        password: this.password
+      }
+      axios.post('http://localhost:3000/api/auth/login', data)
+        .then(res => {
+            localStorage.setItem('user', res.data.user)
+            localStorage.setItem('token', res.data.token)
+            this.$emit('auth-change')
+            window.location.reload()
         })
         .catch((error) => {
           this.error = error.response.data;

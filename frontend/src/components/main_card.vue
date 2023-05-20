@@ -97,17 +97,18 @@
       </div>
       <div>
         <p class="flex justify-end text-[#467A55] py-2">{{ item.price }} บาท</p>
-        <RouterLink
-          :to="{ name: 'course', params: { course_id: item.course_id } }"
-          target=""
-          @click="scrollToTop"
-        >
-          <div
-            class="bg-black text-white py-1 rounded-[3px] text-center hover:bg-[#2E2E2E]"
-          >
-            ดูคอร์สเรียน
-          </div>
-        </RouterLink>
+        <div>
+          <RouterLink :to="{ name: 'course', params: { course_id: item.course_id } }" target="" @click="scrollToTop">
+            <div class="bg-black text-white py-1 rounded-[3px] text-center hover:bg-[#2E2E2E]">
+              ดูคอร์สเรียน
+            </div>
+          </RouterLink>
+          <RouterLink :to="`/edit/${item.course_id}`">
+            <div v-if="userLog_on.role === 'Admin'" class="bg-white py-1 rounded-[3px] text-center border-2 border-black mt-2">
+              แก้ไขคอร์เรียน
+            </div>
+          </RouterLink>
+        </div>
       </div>
     </div>
     <!-- <div class="flex justify-between mx-2 mt-12">
@@ -127,12 +128,16 @@
   </div>
 </template>
 <script>
+
 export default {
   props: {
     item: {
       type: Object,
       required: true,
     },
+    userLog_on: {
+      type: Object,
+    }
   },
   data() {
     return {

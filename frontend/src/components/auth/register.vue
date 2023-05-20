@@ -148,9 +148,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import { useVuelidate } from "@vuelidate/core";
 import { email, minLength, required, sameAs } from "@vuelidate/validators";
+import axios from "axios";
 
 export function complexPassword(value) {
   if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
