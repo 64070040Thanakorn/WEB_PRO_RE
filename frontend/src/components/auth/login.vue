@@ -129,7 +129,7 @@ export default {
         return false
       }
       const data = {
-        email: this.email,
+        email: this.my_email,
         password: this.password
       }
       axios.post('http://localhost:3000/api/auth/login', data)
