@@ -44,8 +44,6 @@ onMounted(() => {
 </script>
 
 <script>
-import { ref, onMounted } from 'vue';
-import { gsap } from 'gsap';
 import axios from 'axios';
 
 export default {
@@ -158,7 +156,7 @@ export default {
           <RouterLink to="/search" id="search" class="nav_search pi pi-search flex items-center"></RouterLink>
           <div v-if="user" class="flex items-center">
             <div class="px-8">
-              <RouterLink to="/profile" id="login" class="nav_login px-8" ref="navLogin">{{ user.first_name }}</RouterLink>
+              <RouterLink :to="user.role === 'Admin' ? '/dashboard' : '/profile'" id="login" class="nav_login px-8" ref="navLogin">{{ user.first_name }}</RouterLink>
             </div>
             <button @click="logout()" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">ออกจากระบบ</button>
           </div>
