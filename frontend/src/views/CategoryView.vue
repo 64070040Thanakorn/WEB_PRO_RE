@@ -538,7 +538,7 @@ export default {
             <div class="flex justify-start">
               <Router-link
                 v-for="item in random_course_item"
-                :to="{ path: `course/${item.course_id}` }"
+                :to="{ path: `/course/${item.course_id}` }"
                 @click="scrollToTop()"
               >
                 <Recommend_card class="card_showing" :item="item" />
