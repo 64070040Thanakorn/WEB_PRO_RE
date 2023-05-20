@@ -64,7 +64,7 @@
   </div>
   <div v-if="course.length > 0" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-4 mb-12 justify-items-center">
     <div v-for="item in course">
-      <Main_card :item="item.course"></Main_card>
+      <Main_card :item="item.course" :user-log_on="userLog_on"></Main_card>
     </div>
   </div>
   <div v-else class="flex justify-center items-center p-60 text-xl">
@@ -90,16 +90,26 @@ export default {
       required: true,
     },
   },
+  beforeMount(){
+    if(this.user){
+      this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
+        .then(res => {
+          this.userLog_on = res.data
+        })
+    }
+  },
   mounted() {
+    this.user = localStorage.getItem('user')
     axios
       .get(`http://localhost:3000/api/course/getenrolled/${localStorage.getItem("user")}`)
       .then((res) => {
         this.course = res.data;
-        console.log(res.data);
       });
   },
   data() {
     return {
+      user: {},
+      userLog_on: {},
       course: [],
     };
   },

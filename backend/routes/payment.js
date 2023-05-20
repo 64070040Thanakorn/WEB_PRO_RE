@@ -18,6 +18,26 @@ router.get("/", async(req, res, next) => {
   }
 })
 
+router.get("/by/:user_id", async(req, res, next) => {
+  try{
+    const getPaymentHis = await prisma.payment_history.findMany({
+      where:{
+        user_id: req.params.user_id
+      },
+      include:{
+        course:{
+          select:{
+            title: true,
+          }
+        }
+      }
+    })
+    res.json(getPaymentHis)
+  } catch(err) {
+    res.json(err)
+  }
+})
+
 router.post("/", async(req, res, next) => {
   console.log(req.body);
   const { user_id, course, creditCard, total } = req.body
