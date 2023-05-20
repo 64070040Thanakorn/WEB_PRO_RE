@@ -21,7 +21,7 @@
               class="border w-full rounded-md py-1 px-2"
               v-model="fname"
             />
-            <span v-if="!$v.fname.required.$response" class="text-red-500 text-xs"
+            <span v-if="!v$.fname.required.$response" class="text-red-500 text-xs"
               >*This field is required</span
             >
           </div>
@@ -32,7 +32,7 @@
               class="border w-full rounded-md py-1 px-2"
               v-model="lname"
             />
-            <span v-if="!$v.lname.required.$response" class="text-red-500 text-xs"
+            <span v-if="!v$.lname.required.$response" class="text-red-500 text-xs"
               >*This field is required</span
             >
           </div>
@@ -43,10 +43,10 @@
               class="border w-full rounded-md py-1 px-2"
               v-model="my_email"
             />
-            <span v-if="!$v.my_email.required.$response" class="text-red-500 text-xs"
+            <span v-if="!v$.my_email.required.$response" class="text-red-500 text-xs"
               >*This field is required</span
             >
-            <span v-if="!$v.my_email.email.$response" class="text-red-500 text-xs"
+            <span v-if="!v$.my_email.email.$response" class="text-red-500 text-xs"
               >*Invalid email</span
             >
           </div>
@@ -58,7 +58,7 @@
                 class="border w-full rounded-md py-1 px-2"
                 v-model="password"
               />
-              <span v-if="!$v.password.required.$response" class="text-red-500 text-xs"
+              <span v-if="!v$.password.required.$response" class="text-red-500 text-xs"
                 >*This field is required</span
               >
               <span
@@ -66,7 +66,7 @@
                 class="text-red-500 text-xs"
                 >*Password is not safe</span
               >
-              <span v-if="!$v.password.minLength.$response" class="text-red-500 text-xs"
+              <span v-if="!v$.password.minLength.$response" class="text-red-500 text-xs"
                 >*Must be at least 8 characters</span
               >
             </div>
@@ -78,12 +78,12 @@
                 v-model="confirm_password"
               />
               <span
-                v-if="!$v.confirm_password.required.$response"
+                v-if="!v$.confirm_password.required.$response"
                 class="text-red-500 text-xs"
                 >*This field is required</span
               >
               <span
-                v-if="!$v.confirm_password.sameAs.$response"
+                v-if="!v$.confirm_password.sameAs.$response"
                 class="text-red-500 text-xs"
                 >*Password not match</span
               >
@@ -141,19 +141,25 @@
 
 <script>
 import axios from "axios";
-import { ref, computed, watch } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { email, minLength, required, sameAs } from "@vuelidate/validators";
 
 export default {
   setup() {
-    const fname = ref("Thanakorn");
-    const lname = ref("Sriwannawit");
-    const my_email = ref("non@email.com");
-    const password = ref("rainD91j");
-    const confirm_password = ref("rainD91j");
-
-    const rules = {
+    return { v$: useVuelidate() }
+  },
+  data() {
+    return {
+      fname: "dwdw",
+      lname: "dwdwd",
+      my_email: "123@gmail.com",
+      password: "rainD91j",
+      confirm_password: "rainD91j",
+      isOpen: false,
+    };
+  },
+  validations () {
+    return {
       fname: {
         required,
       },
@@ -170,31 +176,22 @@ export default {
       },
       confirm_password: {
         required,
-        sameAs: sameAs(password),
+        sameAs: sameAs(this.password),
       },
-    };
-
-    const v$ = useVuelidate(rules, {
-      fname,
-      lname,
-      my_email,
-      password,
-      confirm_password,
-    });
-
-    watch([fname, lname, my_email, password, confirm_password], () => {
-      v$.value.$touch();
-    });
-
-    const submit = () => {
-      v$.value.$touch();
-      if (!v$.value.$invalid) {
-        console.log("valid");
+    }
+  },
+  methods: {
+    toggleModal() {
+      this.isOpen = !this.isOpen;
+    },
+    submit() {
+      this.v$.$touch;
+      if (!this.v$.$invalid) {
         const data = {
-          first_name: fname.value,
-          last_name: lname.value,
-          email: my_email.value,
-          password: password.value,
+          first_name: this.fname,
+          last_name: this.lname,
+          email: this.my_email,
+          password: this.password,
         };
         console.log(data);
         axios
@@ -202,59 +199,17 @@ export default {
           .then((res) => {
             localStorage.setItem("user", res.data.user);
             localStorage.setItem("token", res.data.token);
-            // this.$emit("auth-change");
-            this.$router.push("/")
+            this.$emit("auth-change");
+            this.$router.push({ path: "/" });
             window.location.reload()
           })
-          // .catch((error) => {
-          //   console.log(error);
-          //   if (error) {
-          //     alert(error.response.data);
-          //   }
-          // });
+          .catch((error) => {
+            this.error = error.response.data;
+            console.log(error.response.data);
+            alert(error.response.data);
+          });
       }
-    };
-    return {
-      fname,
-      lname,
-      my_email,
-      password,
-      confirm_password,
-      $v: v$,
-      submit,
-    };
-  },
-  data() {
-    return {
-      isOpen: false,
-    };
-  },
-  methods: {
-    toggleModal() {
-      this.isOpen = !this.isOpen;
     },
-    // submit() {
-    //   const data = {
-    //     first_name: this.fname,
-    //     last_name: this.lname,
-    //     email: this.my_email,
-    //     password: this.password,
-    //   };
-    //   console.log(data);
-    //   axios
-    //     .post("http://localhost:3000/api/auth/register", data)
-    //     .then((res) => {
-    //       localStorage.setItem("user", res.data.user);
-    //       localStorage.setItem("token", res.data.token);
-    //       this.$emit("auth-change");
-    //       this.$router.push({ path: "/" });
-    //     })
-    //     .catch((error) => {
-    //       this.error = error.response.data;
-    //       console.log(error.response.data);
-    //       alert(error.response.data);
-    //     });
-    // },
     modal_close() {
       console.log("modal");
       this.$emit("modal_close");
