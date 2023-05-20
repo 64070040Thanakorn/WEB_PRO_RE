@@ -55,8 +55,11 @@ export default {
     pageAmount() {
       return Math.ceil(this.items.length / 12);
     },
-    item_length() {
+    all_course_length() {
       return this.course_item ? this.course_item.length : 0;
+    },
+    item_length() {
+      return this.filteredItems ? this.filteredItems.length : 0;
     },
     filteredItems() {
       return this.searchValue
@@ -523,14 +526,11 @@ export default {
         <div class="bg-search-02 h-[650px] px-20 py-12">
           <div class="space-y-8">
             <p class="text-md text-[#EBC919]">
-              หมวดหมู่ <span class="text-black">/ Python</span>
+              หมวดหมู่ <span class="text-black">/ All</span>
             </p>
-            <p class="text-4xl font-medium">Python</p>
+            <p class="text-4xl font-medium">คอร์สเรียนทั้งหมด</p>
             <p class="text-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
-              facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
-              inventore in commodi alias cumque perferendis ducimus reiciendis ratione
-              dolore.
+              แหล่งรวมคอร์สเรียนต่างๆที่เราคัดสรรมาอย่างมีคุณภาพ เพื่อให้คุณได้มาเรียนรู้ หรือเสริมสร้างประสบการณ์ใหม่ๆ ได้แล้วที่นี่ มีคอร์สมากกว่า {{all_course_length}} คอร์สเรียน มีอาจารย์ที่มีความรู้ จบจากสายตรง การันตีคุณภาพ
             </p>
             <h1 class="text-2xl font-medium">คอร์สเรียนที่น่าสนใจ</h1>
             <div class="flex justify-start">
