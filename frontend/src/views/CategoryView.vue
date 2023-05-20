@@ -9,9 +9,8 @@ import Main_card from "../components/main_card.vue";
 export default {
   name: "Search",
   beforeCreate() {
-    this.axios.get(`http://localhost:3000/api/course/`).then((response) => {
-      this.course_item = response.data;
-      console.log(response.data);
+    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
+      this.random_course_item = response.data;
     });
 
     this.axios.get(`http://localhost:3000/api/category/`).then((response) => {
@@ -19,9 +18,12 @@ export default {
       console.log(response.data);
     });
 
-    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
-      this.random_course_item = response.data;
-    });
+    this.axios
+      .get(`http://localhost:3000/api/category/${this.$route.params.category_id}`)
+      .then((response) => {
+        this.course_item = response.data;
+        console.log(response.data);
+      });
   },
   data() {
     return {
@@ -46,6 +48,7 @@ export default {
       lesson0To4: null,
       lesson5To15: null,
       lesson16: null,
+      page_category: [],
       course_item: [],
       category: [],
       random_course_item: [],
@@ -56,14 +59,14 @@ export default {
       return Math.ceil(this.items.length / 12);
     },
     item_length() {
-      return this.course_item ? this.course_item.length : 0;
+      return this.filteredItems ? this.filteredItems.length : 0;
     },
     filteredItems() {
       return this.searchValue
-        ? this.course_item.filter((item) =>
+        ? this.course_item.Course.filter((item) =>
             item.title.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())
           )
-        : this.course_item;
+        : this.course_item.Course;
     },
   },
   methods: {
@@ -178,7 +181,7 @@ export default {
   </section>
   <section>
     <div class="flex">
-      <div class="w-[18%] bg-white shadow-md shadow-black/10 mx-auto">
+      <section class="w-[18%] bg-white shadow-md shadow-black/10 mx-auto">
         <div class="flex flex-col p-8 overflow-y-auto h-full w-full scrollbar">
           <!-- upper side-bar -->
           <div class="gap-4 flex flex-col dropdown mb-[10rem]">
@@ -191,15 +194,17 @@ export default {
                 <ul class="flex flex-col gap-2 text-normal ml-4 list-disc">
                   <Router-link to="/search">
                     <li class="font-light hover:font-normal">All</li>
-                  </Router-Link>
+                  </Router-link>
                 </ul>
                 <ul
                   class="flex flex-col gap-2 text-normal ml-4 list-disc"
                   v-for="item in category"
                 >
-                  <Router-link :to="{ path: `category/${item.category_id}` }">
+                  <Router-link
+                    :to="{ path: `/category/${item.category_id}` }"
+                  >
                     <li class="font-light hover:font-normal">{{ item.category_name }}</li>
-                  </Router-Link>
+                  </Router-link>
                 </ul>
               </div>
             </div>
@@ -518,19 +523,16 @@ export default {
             </div>
           </div>
         </div>
-      </div>
-      <div class="w-[82%] mb-20">
+      </section>
+      <section class="w-[82%] mb-20">
         <div class="bg-search-02 h-[650px] px-20 py-12">
           <div class="space-y-8">
             <p class="text-md text-[#EBC919]">
-              หมวดหมู่ <span class="text-black">/ Python</span>
+              หมวดหมู่ <span class="text-black">/ {{course_item.category_name}}</span>
             </p>
-            <p class="text-4xl font-medium">Python</p>
+            <p class="text-4xl font-medium">{{course_item.category_name}}</p>
             <p class="text-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni dolorem
-              facere suscipit itaque facilis iste tempora, aliquam id fuga distinctio
-              inventore in commodi alias cumque perferendis ducimus reiciendis ratione
-              dolore.
+              {{course_item.category_detail}}
             </p>
             <h1 class="text-2xl font-medium">คอร์สเรียนที่น่าสนใจ</h1>
             <div class="flex justify-start">
@@ -556,7 +558,7 @@ export default {
             <span class="font-light hover:font-normal">{{ value }}</span>
           </RouterLink>
         </div> -->
-      </div>
+      </section>
     </div>
   </section>
   <Footer />
