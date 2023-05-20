@@ -8,7 +8,6 @@ const router = express.Router();
 
 router.get("/:user_id", async (req, res, next) => {
   const { user_id } = req.params
-  console.log(req.params);
   try{
     const exist = await prisma.users.findFirst({
       where:{

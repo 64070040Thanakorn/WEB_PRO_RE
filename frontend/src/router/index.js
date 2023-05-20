@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Admin from '../views/AdminView.vue'
 import Course from '../views/CourseView.vue'
 import Landing from '../views/LandingView.vue'
 import payment_success from '../views/PaymentSuccessView.vue'
@@ -61,6 +62,11 @@ const router = createRouter({
       path: '/category/:category_id',
       name: 'category',
       component: CategoryView
+    },
+    {
+      path: '/dashboard',
+      name: 'admin',
+      component: Admin
     },
     ...user,
   ]
