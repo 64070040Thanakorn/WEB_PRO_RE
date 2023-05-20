@@ -122,7 +122,7 @@ export default {
   },
   computed: {
     isActive() {
-      return this.$route.name === 'home' || this.$route.name === 'search' ? true : false;
+      return this.$route.name === 'home' || this.$route.name === 'search' || this.$route.name === 'category';
     },
   },
 }

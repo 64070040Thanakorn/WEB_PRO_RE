@@ -5,6 +5,7 @@ import payment_success from '../views/PaymentSuccessView.vue'
 import payment from '../views/PaymentView.vue'
 import Quiz from '../views/QuizView.vue'
 import Search from '../views/SearchView.vue'
+import CategoryView from '../views/CategoryView.vue'
 
 import user from './user'
 
@@ -55,6 +56,11 @@ const router = createRouter({
       path: '/payment/success',
       name: 'payment_success',
       component: payment_success
+    },
+    {
+      path: '/category/:category_id',
+      name: 'category',
+      component: CategoryView
     },
     ...user,
   ]

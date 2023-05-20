@@ -8,6 +8,9 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const category = await prisma.category.findMany({
+      orderBy: {
+        "category_name": "desc"
+      }
     });
     res.status(200).json(category);
   } catch (error) {
@@ -22,11 +25,18 @@ router.get("/:category_id", async (req, res) => {
         where: {
           category_id: req.params.category_id,
         },
+        include: {
+          Course: {
+            include: {
+              category: true,
+              enrolled: true
+            }
+          }
+        }
       });
       res.status(200).json(category);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   });
-
 export default router;
