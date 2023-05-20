@@ -19,7 +19,16 @@ export default {
         email: '',
         tel: '',
       },
-    }
+      creditCard: {
+        cc_number: null,
+        cc_cvc: null,
+        cc_exp: null,
+        cc_first_name: null,
+        cc_last_name: null,
+      },
+      userCreditCard: null,
+      userCCSelected: null,
+      }
   },
   mounted() {
     this.axios
@@ -32,26 +41,67 @@ export default {
         this.course.img = res.data.course_image
         this.vat = this.course.price+(this.course.price*0.07)
       });
+    this.fetchUserCC()
   },
   methods: {
     payment(){
       const data = {
         user_id: localStorage.getItem('user'),
-        course_id: this.course,
+        course: this.course,
         customer: this.customer,
         payment_methods: this.paymentMethods,
-        price: this.vat,
+        total: this.vat,
       }
+      if(this.paymentMethods === 'CreditCard' && this.userCCSelected === null){
+        data['creditCard'] = this.creditCard
+        console.log(data);
+
+
+      }
+      if(this.userCCSelected){
+          console.log(this.userCCSelected);
+          data['usingCC'] = this.userCCSelected
+          console.log(data);
+      }
+      
       this.axios.post(`http://localhost:3000/api/payment/`,data)
         .then(res => {
-          window.location = '/payment/success'
+          // window.location = '/payment/success'
           console.log(res);
         })
         .catch(err => {
           console.log(err);
         })
-    }
+    },
+    removeCC(id){
+      this.axios.delete(`http://localhost:3000/api/payment/${id}`)
+        .then(res => {
+          this.fetchUserCC()
+          console.log(`remove CC ${id}`);
+        })
+    },
+    // uncheckCC(id) {
+    //   if(this.userCCSelected === id){
+    //     this.userCCSelected = null
+    //   } else {
+    //     this.userCCSelected = id
+    //   }
+    //   console.log(this.userCCSelected, id);
+    // },
+    fetchUserCC(){
+      const userData = { user_id: localStorage.getItem('user')}
+      this.axios
+      .get(`http://localhost:3000/api/payment/`, userData)
+      .then((res) => {
+        this.userCreditCard = res.data
+      });
+    },
   },
+  computed:{
+    // userCCSelected(b,f){
+    //   console.log(f);
+    // }
+  }
 };
 
 </script>
@@ -134,23 +184,61 @@ export default {
 
           <div v-if="paymentMethods === 'CreditCard'">
             <p class="text-2xl  py-3">ข้อมูลบัตรเครดิต</p>
-            <div class="py-8">
+            <div v-if="userCreditCard.length !== 0">
+              <div class="flex flex-col px-4 py-4">
+
+
+
+
+                <div v-for="index in userCreditCard">
+                  <label :for="index.cc_id" :class="userCCSelected === index.cc_id ? 'border-[#E99F30]' : 'not-same'" class="flex justify-between border-2 rounded-md py-5 px-10 mt-2">
+                    <div class="flex">
+                      <input type="radio" name="2" :id="index.cc_id" v-model="userCCSelected" :value='index.cc_id' @click.stop>
+                      <div class="flex ml-5 items-center space-x-2">
+                        <div class="flex space-x-2">
+                          <img class="h-[20px]" src="/src/assets/icon/mastercard.png" alt="">
+                        </div>
+                        <p for="PromtPay">{{ index }}</p>
+                      </div>
+                    </div>
+                    <button @click="removeCC(index.cc_id)" class="underline text-red-400">remove</button>
+                  </label>
+                </div>
+
+
+
+
+
+              </div>
+              <div class="border-[1px] w-full rounded-full mt-5"></div>
+            </div>
+            <div class="py-8 space-y-5">
               <div class="flex justify-between mx-10">
                 <div class="flex flex-col">
                   <label for="">รหัสบัตรเครดิต</label>
-                  <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]">
+                  <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_number">
                 </div>
                 <div class="flex flex-col">
                   <label label for="">CVC</label>
-                  <input type="text" class="border-2 w-[5em] py-1 px-2 rounded-[7px]">
+                  <input type="text" class="border-2 w-[5em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_cvc">
                </div>
                 <div class="flex flex-col">
                   <label for="">วันหมดอายุ</label>
-                  <input type="text" class="border-2 w-[10em] py-1 px-2 rounded-[7px]">
+                  <input type="text" class="border-2 w-[10em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_exp">
+                </div>
+              </div>
+              <div class="flex justify-between mx-10">
+                <div class="flex flex-col">
+                  <label for="">ชื่อ</label>
+                  <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_first_name">
+                </div>
+                <div class="flex flex-col">
+                  <label for="">นามสกุล</label>
+                  <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_last_name">
                 </div>
               </div>
               <div class="flex justify-between mx-10 pt-3">
-                
+
               </div>
             </div>
           </div>
