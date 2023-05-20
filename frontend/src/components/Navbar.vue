@@ -71,7 +71,6 @@ export default {
     logout() {
       localStorage.removeItem('user')
       this.$router.push("/")
-      window.location.reload()
     },
     closing_auth(){
       console.log('closing auth');
