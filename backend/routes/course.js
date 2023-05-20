@@ -4,7 +4,7 @@ import express from "express";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-import upload from '../middleware/multer.js';
+import upload from "../middleware/multer.js";
 
 // get all course
 router.get("/", async (req, res, next) => {
@@ -15,8 +15,8 @@ router.get("/", async (req, res, next) => {
         enrolled: true,
       },
       orderBy: {
-        "createAt": "desc",
-      }
+        createAt: "desc",
+      },
     });
     res.status(200).json(course);
   } catch (err) {
@@ -80,9 +80,10 @@ router.get("/randomCourse/:amount", async (req, res, next) => {
 });
 
 // create course
-router.post("/createCourse", upload.single('fileupload'), async (req, res, next) => {
+router.post("/createCourse", upload.single("fileupload"), async (req, res, next) => {
   const course_image = req.file;
-  const { title, category_id, description, info, price, level, certificate, lesson, amount,start_date, end_date } = req.body;
+  const { title, category_id, description, info, price, level, certificate, lesson, amount, start_date, end_date } =
+    req.body;
 
   try {
     const course = await prisma.course.create({
@@ -98,7 +99,9 @@ router.post("/createCourse", upload.single('fileupload'), async (req, res, next)
         amount: Number(amount),
         start_date: new Date(start_date),
         end_date: new Date(end_date),
-        course_image: course_image ? course_image.filename : "https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png"
+        course_image: course_image
+          ? course_image.filename
+          : "https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png",
       },
     });
     res.status(201).json(course);
@@ -107,11 +110,10 @@ router.post("/createCourse", upload.single('fileupload'), async (req, res, next)
   }
 });
 
-
 // enroll new course
 
 router.post("/enroll/:course_id", async (req, res) => {
-  const { user_id } = req.body
+  const { user_id } = req.body;
   try {
     const enroll = await prisma.enroll.create({
       data: {
@@ -133,6 +135,14 @@ router.get("/getEnrolled/:user_id", async (req, res) => {
       where: {
         user_id: req.params.user_id,
       },
+      include: {
+        course: {
+          include: {
+            category: true,
+            enrolled: true,
+          },
+        },
+      },
     });
     res.status(200).json(getCourse);
   } catch (error) {
@@ -141,7 +151,7 @@ router.get("/getEnrolled/:user_id", async (req, res) => {
 });
 
 // Delete Course
-router.delete('/deleteCourse/:course_id', async (req, res) => {
+router.delete("/deleteCourse/:course_id", async (req, res) => {
   try {
     const deleteCourse = await prisma.course.delete({
       where: {
@@ -155,7 +165,7 @@ router.delete('/deleteCourse/:course_id', async (req, res) => {
 });
 
 // update course
-router.put("/updateCourse/", upload.single('fileupload'), async (req, res) => {
+router.put("/updateCourse/", upload.single("fileupload"), async (req, res) => {
   try {
     const data = req.body;
     const file = req.file;
@@ -173,7 +183,6 @@ router.put("/updateCourse/", upload.single('fileupload'), async (req, res) => {
       data["course_image"] = file.filename;
     }
 
-
     const updatedCourse = await prisma.course.update({
       where: {
         course_id: course_id,
@@ -182,8 +191,7 @@ router.put("/updateCourse/", upload.single('fileupload'), async (req, res) => {
     });
     res.status(200).json(updatedCourse);
   } catch (err) {
-
-    console.log(err.message)
+    console.log(err.message);
 
     res.status(500).json({ message: err.message });
   }
