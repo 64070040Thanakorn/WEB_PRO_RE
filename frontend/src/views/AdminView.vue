@@ -27,16 +27,20 @@
       <div class="flex flex-col space-y-5">
         <div class="mr-20">
           <ul class=flex>
-            <div @click="changeComponent('course')" to="/dashboard/course">
+            <div @click="changeComponent('category')">
+              <li id="user_interface" :class="categoryComponent ? 'underline': ''" class="px-4 py-2 rounded">รายวิชา</li>
+            </div>
+            <div @click="changeComponent('course')">
               <li id="course_interface" :class="courseComponent ? 'underline': ''" class="px-4 py-2 rounded">คอร์สเรียน</li>
             </div>
-            <div @click="changeComponent('user')" to="/dashboard/studytable">
+            <div @click="changeComponent('user')">
               <li id="user_interface" :class="userComponent ? 'underline': ''" class="px-4 py-2 rounded">ข้อมูลผู้ใช้</li>
             </div>
           </ul>
         </div>
         <div class="">
-          <course v-if="courseComponent" :course="course"/>
+          <category v-if="categoryComponent" :category="category" @category-change="fetchCategory"/>
+          <course v-if="courseComponent" :course="course" :userLog_on="userLog_on"/>
           <user v-if="userComponent" :user ="user" @user-change="fetchUser"/>
         </div>
       </div>
@@ -45,20 +49,25 @@
 </template>
 
 <script>
-import course from '../components/admin/CreateCourse.vue';
+import category from '../components/admin/Category.vue';
+import course from '../components/admin/Course.vue';
 import user from '../components/admin/User.vue';
 
 export default {
   components:{
     user,
     course,
+    category,
   },
   data() {
     return {
       user: [],
+      userLog_on : {},
       course: [],
-      courseComponent: false,
-      userComponent: true
+      category: [],
+      courseComponent: true,
+      userComponent: false,
+      categoryComponent: false,
     }
   },
   beforeCreate(){
@@ -66,9 +75,17 @@ export default {
       .then((response) => {
         this.course = response.data
       })
+    this.axios.get(`http://localhost:3000/api/category/`)
+      .then((response) => {
+        this.category = response.data
+      })
     this.axios.get(`http://localhost:3000/api/user/all`)
       .then(res => {
         this.user = res.data;
+      })
+    this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
+      .then(res => {
+        this.userLog_on = res.data
       })
   },
   methods: {
@@ -77,10 +94,17 @@ export default {
         case "user":
           this.userComponent = true
           this.courseComponent = false
+          this.categoryComponent = false
           break;
         case "course":
           this.userComponent = false
           this.courseComponent = true
+          this.categoryComponent = false
+          break;
+        case "category":
+          this.userComponent = false
+          this.categoryComponent = true
+          this.courseComponent = false
           break;
         default:
           return 0
@@ -90,6 +114,12 @@ export default {
       this.axios.get(`http://localhost:3000/api/user/all`)
         .then(res => {
           this.user = res.data;
+        })
+    },
+    fetchCategory(){
+      this.axios.get(`http://localhost:3000/api/category/`)
+        .then(res => {
+          this.category = res.data;
         })
     }
   }

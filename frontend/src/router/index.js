@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Admin from '../views/AdminView.vue'
 import Course from '../views/CourseView.vue'
+import create_course from '../views/CreateCourseView.vue'
+import course_edit from '../views/EditCourse.vue'
 import Landing from '../views/LandingView.vue'
 import payment_success from '../views/PaymentSuccessView.vue'
 import payment from '../views/PaymentView.vue'
@@ -61,6 +63,16 @@ const router = createRouter({
       path: '/dashboard',
       name: 'admin',
       component: Admin
+    },
+    {
+      path: '/edit/:course_id',
+      name: 'course_edit',
+      component: course_edit
+    },
+    {
+      path: '/create',
+      name: 'course',
+      component: create_course
     },
     ...user,
   ]

@@ -77,7 +77,7 @@ export default{
             localStorage.setItem('user', res.data.user)
             localStorage.setItem('token', res.data.token)
             this.$emit('auth-change')
-            this.$router.push({path: '/'})
+            window.location.reload()
         })
         .catch(error => {
           this.error = error.response.data

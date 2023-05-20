@@ -140,9 +140,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import { useVuelidate } from "@vuelidate/core";
 import { email, minLength, required, sameAs } from "@vuelidate/validators";
+import axios from "axios";
 
 export default {
   setup() {
@@ -200,7 +200,6 @@ export default {
             localStorage.setItem("user", res.data.user);
             localStorage.setItem("token", res.data.token);
             this.$emit("auth-change");
-            this.$router.push({ path: "/" });
             window.location.reload()
           })
           .catch((error) => {
