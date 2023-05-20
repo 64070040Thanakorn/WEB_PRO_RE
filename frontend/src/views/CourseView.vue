@@ -4,7 +4,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { onMounted } from "vue";
 import CourseDetail from "../components/course/CourseDetail.vue";
 import CourseReview from "../components/course/CourseReview.vue";
-import main_card from "../components/main_card.vue";
+import Main_card from "../components/main_card.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,7 +40,6 @@ export default {
         this.category_name = response.data.category.category_name;
         this.category_color = response.data.category.category_color;
         this.enrolled = response.data.enrolled;
-        console.log(response.data);
       });
 
     this.axios.get(`http://localhost:3000/api/course/randomCourse/3`).then((response) => {
@@ -51,14 +50,13 @@ export default {
       .get(`http://localhost:3000/api/comment/${this.$route.params.course_id}`)
       .then((response) => {
         this.comments = response.data;
-        console.log(response.data);
       });
-
-    this.axios
-      .get(`http://localhost:3000/api/auth/${localStorage.getItem("user")}`)
-      .then((res) => {
-        this.user = res.data;
-      });
+    if(this.user){
+      this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
+        .then(res => {
+          this.userLog_on = res.data
+        })
+    }
   },
   mounted() {
     this.user = localStorage.getItem("user");
@@ -72,7 +70,8 @@ export default {
       category_color: [],
       comments: [],
       enrolled: [],
-      user: null,
+      user: {},
+      userLog_on: {},
     };
   },
   methods: {
@@ -216,67 +215,6 @@ export default {
           <CourseReview :user="user" :comments="comments" />
         </div>
       </div>
-
-      <!-- <div>
-                <p class="text-[#E99F30] text-xl my-8">เนื้อหาของคอร์สนี้</p>
-                <table class="border-collapse border border-black flex flex-col">
-                    <thead class="border-collapse border bg-[#E99F30] text-white text-lg px-4 py-1">
-                        <tr>
-                            บทที่ 1: จำนวนจริง
-                        </tr>
-                    </thead>
-                    <tbody class="px-4 py-2 text-[#717171]">
-                        <tr>1.1  จำนวนจริง ตอนที่ 1</tr>
-                        <tr>1.2  จำนวนจริง ตอนที่ 2</tr>
-                        <tr>1.3  จำนวนไม่จริง</tr>
-                        <tr>1.4  จำนวนปลอม</tr>
-                    </tbody>
-                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
-                        <tr>
-                            บทที่ 2: จำนวนจริง
-                        </tr>
-                    </thead>
-                    <tbody class="px-4 py-2 text-[#717171]">
-                        <tr>2.1  จำนวนจริง ตอนที่ 1</tr>
-                        <tr>2.2  จำนวนจริง ตอนที่ 2</tr>
-                        <tr>2.3  จำนวนไม่จริง</tr>
-                        <tr>2.4  จำนวนปลอม</tr>
-                    </tbody>
-                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
-                        <tr>
-                            บทที่ 3: จำนวนจริง
-                        </tr>
-                    </thead>
-                    <tbody class="px-4 py-2 text-[#717171]">
-                        <tr>3.1  จำนวนจริง ตอนที่ 1</tr>
-                        <tr>3.2  จำนวนจริง ตอนที่ 2</tr>
-                        <tr>3.3  จำนวนไม่จริง</tr>
-                        <tr>3.4  จำนวนปลอม</tr>
-                    </tbody>
-                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
-                        <tr>
-                            บทที่ 4: จำนวนจริง
-                        </tr>
-                    </thead>
-                    <tbody class="px-4 py-2 text-[#717171]">
-                        <tr>4.1  จำนวนจริง ตอนที่ 1</tr>
-                        <tr>4.2  จำนวนจริง ตอนที่ 2</tr>
-                        <tr>4.3  จำนวนไม่จริง</tr>
-                        <tr>4.4  จำนวนปลอม</tr>
-                    </tbody>
-                    <thead class="border-collapse border bg-[#7E82E6] text-white text-lg px-4 py-1">
-                        <tr>
-                            บทที่ 5: จำนวนจริง
-                        </tr>
-                    </thead>
-                    <tbody class="px-4 py-2 text-[#717171]">
-                        <tr>5.1  จำนวนจริง ตอนที่ 1</tr>
-                        <tr>5.2  จำนวนจริง ตอนที่ 2</tr>
-                        <tr>5.3  จำนวนไม่จริง</tr>
-                        <tr>5.4  จำนวนปลอม</tr>
-                    </tbody>
-                </table>
-            </div> -->
     </div>
   </div>
   <div
@@ -300,24 +238,10 @@ export default {
     <div class="flex gap-x-7 justify-center mt-8">
       <div v-for="item in random_course_item">
         <!-- <main_card :item="item" :userLog_on="user"/> -->
-        <main_card :item="item" :user-log_on="user"/>
+        <Main_card :item="item" :user-log_on="userLog_on"/>
 
       </div>
     </div>
   </div>
   <Footer />
 </template>
-
-<style>
-/* .splitBg {
-
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom,
-            #FCFCFC 0%,
-            #FCFCFC 31%,
-            white 31%,
-            white 100%);
-
-} */
-</style>

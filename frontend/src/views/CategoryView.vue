@@ -1,8 +1,8 @@
 <script setup>
 import { gsap } from "gsap";
 import { TweenMax } from "gsap/gsap-core";
-import Recommend_card from "../components/mini_card.vue";
 import Main_card from "../components/main_card.vue";
+import Recommend_card from "../components/mini_card.vue";
 </script>
 
 <script>
@@ -15,15 +15,22 @@ export default {
 
     this.axios.get(`http://localhost:3000/api/category/`).then((response) => {
       this.category = response.data;
-      console.log(response.data);
     });
 
     this.axios
       .get(`http://localhost:3000/api/category/${this.$route.params.category_id}`)
       .then((response) => {
         this.course_item = response.data;
-        console.log(response.data);
       });
+    if(this.user){
+      this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
+        .then(res => {
+          this.userLog_on = res.data
+        })
+    }
+  },
+  mounted(){
+    this.user = localStorage.getItem('user')
   },
   data() {
     return {
@@ -52,6 +59,8 @@ export default {
       course_item: [],
       category: [],
       random_course_item: [],
+      user: {},
+      userLog_on: {}
     };
   },
   computed: {
@@ -550,7 +559,8 @@ export default {
           class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1 mb-20"
         >
           <div v-for="item in filteredItems">
-            <Main_card :item="item" />
+            <!-- <Main_card :item="item" /> -->
+            <Main_card :item="item" :user-log_on="userLog_on"/>
           </div>
         </div>
         <!-- <div class="flex justify-center gap-4">

@@ -72,6 +72,7 @@ export default {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
       this.$router.push("/")
+      this.user = null
     },
     closing_auth(){
       console.log('closing auth');

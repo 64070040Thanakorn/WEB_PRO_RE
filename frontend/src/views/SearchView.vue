@@ -1,6 +1,4 @@
 <script setup>
-import { gsap } from "gsap";
-import { TweenMax } from "gsap/gsap-core";
 import Main_card from "../components/main_card.vue";
 import Recommend_card from "../components/mini_card.vue";
 </script>
@@ -22,10 +20,15 @@ export default {
     this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
       this.random_course_item = response.data;
     });
-    this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
-      .then(res => {
-        this.userLog_on = res.data
-      })
+    if(this.user){
+      this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
+        .then(res => {
+          this.userLog_on = res.data
+        })
+    }
+  },
+  mounted(){
+    this.user = localStorage.getItem('user')
   },
   data() {
     return {
@@ -53,88 +56,10 @@ export default {
       course_item: [],
       category: [],
       random_course_item: [],
-
+      user: {},
       userLog_on: {},
     };
-  },
-  computed: {
-    pageAmount() {
-      return Math.ceil(this.items.length / 12);
-    },
-    all_course_length() {
-      return this.course_item ? this.course_item.length : 0;
-    },
-    item_length() {
-      return this.filteredItems ? this.filteredItems.length : 0;
-    },
-    filteredItems() {
-      return this.searchValue
-        ? this.course_item.filter((item) =>
-            item.title.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())
-          )
-        : this.course_item;
-    },
-  },
-  methods: {
-    clearFilter() {
-      this.beginner = null;
-      this.intermediate = null;
-      this.advanced = null;
-      this.priceFree = null;
-      this.price1To1000 = null;
-      this.price1001To3000 = null;
-      this.price3000 = null;
-      this.amountFull = null;
-      this.amountNotFull = null;
-      this.cerHave = null;
-      this.cerNot = null;
-      this.lesson0To4 = null;
-      this.lesson5To15 = null;
-      this.lesson16 = null;
-    },
-    showHide(header, content, bottom, bool, value) {
-      if (bool) {
-        gsap.to(header, {
-          rotate: 180,
-        });
-        TweenMax.to(content, 0.1, {
-          y: -20,
-          autoAlpha: 0,
-          display: "none",
-        });
-        if (bottom) {
-          TweenMax.to(bottom, 0.1, {
-            y: value,
-          });
-
-          gsap.to(bottom, {
-            delay: 0.1,
-            duration: 0,
-            y: 0,
-          });
-        }
-      } else {
-        gsap.to(header, {
-          rotate: 0,
-        });
-
-        TweenMax.to(content, 0.1, {
-          y: 0,
-          autoAlpha: 1,
-          display: "block",
-        });
-
-        if (bottom) {
-          TweenMax.to(bottom, 0.1, {
-            y: 0,
-          });
-        }
-      }
-    },
-    scrollToTop() {
-      window.scrollTo(0, 0);
-    },
-  },
+  }
 };
 </script>
 <template>
