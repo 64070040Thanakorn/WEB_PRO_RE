@@ -1,5 +1,4 @@
 <script>
-import Footer from '../components/Footer.vue'
 
 export default {
   name: "payment",
@@ -113,14 +112,27 @@ export default {
           <p class="text-2xl  py-3">วิธีชำระเงิน</p>
           <div>
             <div class="flex flex-col px-4 py-4">
+              <label for="CreditCard" :class="paymentMethods === 'CreditCard' ? 'border-[#E99F30]': ''" class="flex border-2 rounded-md py-8 px-10 mt-2">
+                <input type="radio" name="1" id="CreditCard" v-model="paymentMethods" value="CreditCard">
+                <div class="flex flex-col ml-5 space-y-2">
+                  <p for="PromtPay">ชำระผ่านบัตรเครดิต/เดบิต</p>
+                  <div class="flex space-x-2">
+                    <img class="h-[20px]" src="/src/assets/icon/mastercard.png" alt="">
+                    <img class="h-[20px]" src="/src/assets/icon/visa.png" alt="">
+                  </div>
+                </div>
+              </label>
               <label for="PromtPay" :class="paymentMethods === 'PromtPay' ? 'border-[#E99F30]': ''" class="flex border-2 rounded-md py-8 px-10 mt-2">
                 <input type="radio" name="1" id="PromtPay" v-model="paymentMethods" value="PromtPay">
-                <p class="ml-5" for="PromtPay">ชำระเงินผ่าน PromptPay (QR Code)</p>
+                <div class="flex flex-col ml-6 space-y-2">
+                  <p for="PromtPay">ชำระผ่าน PromptPay (QR Code)</p>
+                  <img class="h-[20px] w-[50px]" src="/src/assets/icon/promtpay.png" alt="">
+                </div>
               </label>
             </div>
           </div>
 
-          <div v-if="0">
+          <div v-if="paymentMethods === 'CreditCard'">
             <p class="text-2xl  py-3">ข้อมูลบัตรเครดิต</p>
             <div class="py-8">
               <div class="flex justify-between mx-10">
