@@ -278,7 +278,7 @@ export default {
           </div>
 
           <!-- lower side-bar -->
-          <div class="mt-8 mb-8">
+          <div class="mt-8 mb-56">
             <div class="flex flex-col">
               <div class="flex items-center">
                 <h3 class="text-2xl font-normal">All Course</h3>
