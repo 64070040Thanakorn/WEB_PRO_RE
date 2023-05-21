@@ -196,7 +196,6 @@ router.put("/updateCourse/", upload.single("fileupload"), async (req, res) => {
     data["lesson"] = Number(data["lesson"]);
     data["certificate"] = convertToBoolean(data["certificate"]);
     data["amount"] = Number(data["amount"]);
-    console.log(data["certificate"]);
     if (file) {
       data["course_image"] = file.filename;
     }
