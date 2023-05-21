@@ -48,7 +48,7 @@ const createPaymentSchema = Joi.object({
     img: Joi.string(),
   },
   creditCard:{
-    cc_number: Joi.string().required().regex(/'^[0-9]+$'/).min(15).max(16).error(new Error('ต้องกรอก cc_number')),
+    cc_number: Joi.string().required().min(15).max(16).error(new Error('ต้องกรอก cc_number')),
     cc_cvc: Joi.string().required().min(3).max(3).error(new Error('ต้องกรอก cc_ccv')),
     cc_exp: Joi.string().required().error(new Error('ต้องกรอก cc_expiry')),
     cc_first_name: Joi.string().required().regex(/^[0-9]+$/).error(new Error('ต้องกรอก last_name')),

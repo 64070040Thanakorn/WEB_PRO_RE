@@ -191,10 +191,23 @@ export default {
               <div class="flex flex-col">
                 <label for="">อีเมล</label>
                 <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.email">
+                <template v-if="v$.customer.email.$model">
+                  <span v-if="!v$.customer.email.email.$response" class="text-red-500 text-xs">
+                    *กรอกข้อมูลไม่ถูกต้อง
+                  </span>
+                </template>
               </div>
               <div class="flex flex-col">
                 <label for="">เบอร์โทรศัพท์</label>
                 <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.tel">
+                <template v-if="v$.customer.tel.$model">
+                  <span v-if="!v$.customer.tel.minLength.$response" class="text-red-500 text-xs">
+                    *กรอกข้อมูลไม่ถูกต้อง
+                  </span>
+                  <span v-if="!v$.customer.tel.maxLength.$response" class="text-red-500 text-xs">
+                    *กรอกข้อมูลไม่ถูกต้อง
+                  </span>
+                </template>
               </div>
             </div>
           </div>
