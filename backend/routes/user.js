@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+
 import express from "express";
 import Joi from 'joi';
 import upload from '../middleware/multer.js';
-import verifyToken from '../middleware/token.js'
+import verifyToken from '../middleware/token.js';
 
 
 const prisma = new PrismaClient();
@@ -116,6 +118,33 @@ router.put("/updateImage", verifyToken, upload.single('fileupload'), async(req, 
   }
 });
 
+const passwordSchema = Joi.object({
+  user_id: Joi.string().required(),
+  old_password: Joi.string().alphanum().min(8),
+  password: Joi.string().alphanum().min(8)
+})
 
+router.put("/changepassword/:user_id", verifyToken, async(req,res,next) => {
+  const {error, value} = passwordSchema.validate(req.body, { abortEarly: false })
+  if(error){
+    return res.status(400).json({ message: error.message });
+  }
+  const { user_id, old_password, password } = req.body
+  try{
+    if(await bcrypt.compare(old_password, password)){
+      const update = await prisma.user.update({
+        where: {
+          user_id: user_id
+        },
+        data: {
+          password: await bcrypt.hash(password, 10)
+        }
+      })
+    }
+    res.send('ok')
+  } catch(err) {
+    res.json({message: err.message})
+  }
+})
 
 export default router

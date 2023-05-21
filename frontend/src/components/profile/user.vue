@@ -27,9 +27,31 @@
     </div>
     <div class="h-[2px] w-full bg-[#F6F6F6] rounded"></div>
     <div class="flex">
+      <label class="w-[20%]" for="">รหัสผ่าน</label>
+      <div v-if="togglePassword" class="flex flex-col space-y-3 w-[30%]">
+        {{ v$.OldPassword.matchesCurrentPassword }}
+        <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Old Password" v-model="OldPassword"/>
+        <!-- <template v-if="$v.OldPassword.$model"> -->
+          <!-- <span v-if="v$.OldPassword.matchesCurrentPassword" class="text-red-500 text-xs">
+            *กรอกรหัสไม่ถูกต้อง
+          </span> -->
+        <!-- </template> -->
+        <input class="border rounded px-3 py-1 w-full" type="password" placeholder="New Password" v-model="NewPassword"/>
+        <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Confirm Password" v-model="ConfirmPassword"/>
+      </div>
+      
+      <input v-else class="border bg-gray-200 text-gray-700 rounded px-3 py-1 w-[30%]" type="password" v-model="data.password" readonly/>
+      <button v-if="togglePassword" class="underline ml-7 align-top flex" @click="toggle()">ยกเลิก</button>
+      <button v-if="togglePassword" class="underline ml-7 align-top flex" @click="changepassword()">เปลี่ยนรหัสผ่าน</button>
+
+      <button v-if="!togglePassword" class="underline ml-7 align-top flex" @click="toggle()">แก้ไขรหัสผ่าน</button>
+    </div>
+    <div class="h-[2px] w-full bg-[#F6F6F6] rounded"></div>
+    <div class="flex">
       <label class="w-[20%]" for="">อีเมล</label>
       <input class="border rounded px-3 py-1 w-[30%]" type="email" v-model="data.email"/>
     </div>
+    <div class="h-[2px] w-full bg-[#F6F6F6] rounded"></div>
     <div class="flex">
       <label class="w-[20%]" for="">เบอร์โทร</label>
       <input class="border rounded px-3 py-1 w-[30%]" type="email" v-model="data.phone"/>
@@ -65,9 +87,28 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { minLength, required, sameAs } from "@vuelidate/validators";
 import axios from 'axios';
+// import bcrypt from "bcrypt";
+
+
+
+export function complexPassword(value) {
+  if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+    // if(bcrypt.compare(OldPassword, password)){
+    //   return true
+    // } else{
+      return false
+    // }
+  }
+  return true;
+}
 
 export default {
+  setup(){
+    return { v$: useVuelidate() };
+  },
   props: {
     data: {
       type: Object,
@@ -78,6 +119,32 @@ export default {
     return {
       file: null,
       imageUrl: null,
+      togglePassword: false,
+      OldPassword: '',
+      NewPassword: '',
+      ConfirmPassword: '',
+    }
+  },
+  validations(){
+    return {
+      OldPassword: {
+      required: required
+      // matchesCurrentPassword: (value) => {
+      //   return bcrypt.compare(this.OldPassword, value;
+      // },
+    },
+      NewPassword: {
+      required: required,
+      minLength: minLength(8),
+      $validator: complexPassword,
+    },
+      ConfirmPassword: {
+      required: required,
+      sameAsNewPassword: sameAs(function () {
+        return this.NewPassword;
+      }),
+    },
+
     }
   },
   methods: {
@@ -114,6 +181,28 @@ export default {
           )
       }
     },
+    toggle(){
+      this.togglePassword = !this.togglePassword
+      if(this.togglePassword){
+        this.OldPassword = ''
+        this.NewPassword = ''
+        this.ConfirmPassword = ''
+      }
+    },
+    changepassword(){
+      const password = {
+        user_id: this.data.user_id,
+        old_password: this.OldPassword,
+        password: this.NewPassword
+      }
+
+      axios.put(`http://localhost:3000/api/user/changepassword/${this.data.user_id}`, password, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
+        .then( window.location.reload() )
+    }
   }
 }
 
