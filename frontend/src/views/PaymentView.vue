@@ -53,13 +53,13 @@ export default {
       creditCard: {
         cc_number: { required: requiredIf(function () {
           return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
-        }), minLength: minLength(16), maxLength: maxLength(16), isNumeric},
+        }), minLength: minLength(16), maxLength: maxLength(16) },
         cc_cvc: { required: requiredIf(function () {
           return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
-        }), minLength: minLength(3), maxLength: maxLength(3), isNumeric },
+        }), minLength: minLength(3), maxLength: maxLength(3) },
         cc_exp: { required: requiredIf(function () {
           return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
-        }), isDatePattern },
+        }) },
         cc_first_name: { required: requiredIf(function () {
           return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
         }) },
