@@ -54,6 +54,7 @@ router.post("/register", async (req,res,next) => {
     user.token = token
     res.json({
       user: user.user_id,
+      role: user.role,
       token: user.token
     })
   } catch(err) {
@@ -81,6 +82,7 @@ router.post("/login", async(req, res, next) => {
           user.token = token;
           res.json({
             user: user.user_id,
+            role: user.role,
             token: user.token
           })
       }
