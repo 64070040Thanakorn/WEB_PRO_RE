@@ -66,11 +66,11 @@
             {{ category.category_color }}
           </td>
           <td v-if="editCategory && editRows === index" class="flex space-x-2 justify-center items-center border-b border-[#F4F4F4] px-4 py-3">
-            <button class="underline" @click="edit(index)">Cancel</button>
+            <button class="underline" @click="edit(index, category)">Cancel</button>
             <button class="text-green-500 underline" @click="updateCategory(category)">Save</button>
           </td>
           <td v-else class="flex space-x-2 justify-center items-center border-b border-[#F4F4F4] px-4 py-3">
-            <button class="underline" @click="edit(index)">Edit</button>
+            <button class="underline" @click="edit(index, category)">Edit</button>
             <button class="text-red-500 underline" @click="removingCategory(category.category_id)">Remove</button>
           </td>
         </tr>
@@ -122,6 +122,7 @@ export default {
       category_color: null,
       editRows: null,
       editCategory: false,
+      temp: {}
     }
   },
   emits: ['category-change'],
@@ -137,14 +138,14 @@ export default {
           this.$emit('category-change')
         })
     },
-    edit(index){
+    edit(index, category){
       this.editCategory = !this.editCategory
       if(this.editCategory){
         this.editRows = index
-        console.log(this.editCategory ,this.editRows);
+        this.temp  = JSON.parse(JSON.stringify(this.filteredItems[index]))
       } else {
         this.editRows = null
-        console.log(this.editCategory, this.editRows);
+        this.filteredItems[index] = this.temp
       }
     },
     updateCategory(category){
