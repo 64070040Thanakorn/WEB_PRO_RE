@@ -52,10 +52,6 @@
           <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
             <label for="">ชื่อประเภทวิชา :</label>
             <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_name"/>
-
-            <span v-if="v$.category[category.category_id].category_name.$error" class="text-red-500 text-xs">
-      *{{ v$.category[category.category_id].category_name.$params.type }}
-    </span>
           </td>
           <td v-else class="border-b border-[#F4F4F4] px-4 py-3">
             {{ category.category_name }}
