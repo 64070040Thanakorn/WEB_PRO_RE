@@ -29,7 +29,7 @@
     <div class="flex">
       <label class="w-[20%]" for="">รหัสผ่าน</label>
       <div v-if="togglePassword" class="flex flex-col space-y-3 w-[30%]">
-        <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Old Password" v-model="OldPassword"/>
+        <!-- <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Old Password" v-model="OldPassword"/> -->
         <div class="flex flex-col">
           <input class="border rounded px-3 py-1 w-full" type="password" placeholder="New Password" v-model="NewPassword"/>
           <template v-if="v$.NewPassword.$model">
@@ -99,7 +99,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { minLength, required, sameAs } from "@vuelidate/validators";
 import axios from 'axios';
-
+import Swal from 'sweetalert2'
 
 
 export function complexPassword(value) {
@@ -124,16 +124,13 @@ export default {
       file: null,
       imageUrl: null,
       togglePassword: false,
-      OldPassword: '',
-      NewPassword: '',
-      ConfirmPassword: '',
+      // OldPassword: '',
+      NewPassword: null,
+      ConfirmPassword: null,
     }
   },
   validations(){
     return {
-      OldPassword: {
-        required: required
-    },
       NewPassword: {
         required: required,
         minLength: minLength(8),
@@ -156,7 +153,18 @@ export default {
         },
       })
           .then(res => {
-            this.asyncData()
+            Swal.fire(
+              'Success!',
+              'แก้ไขข้อมูลสำเร็จ',
+              'success'
+            )
+          })
+          .catch(res => {
+            Swal.fire(
+              'error!',
+              'โปรดตรวจสอบความถูกต้องของข้อมูล',
+              'error'
+            )
           })
     },
     onFileSelected(event) {
@@ -185,15 +193,22 @@ export default {
     toggle(){
       this.togglePassword = !this.togglePassword
       if(this.togglePassword){
-        this.OldPassword = ''
         this.NewPassword = ''
         this.ConfirmPassword = ''
       }
     },
     changepassword(){
+      this.v$.$touch;
+      if (this.v$.$invalid) {
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
+        return false
+      }
       const password = {
         user_id: this.data.user_id,
-        old_password: this.OldPassword,
         password: this.NewPassword
       }
 
@@ -202,7 +217,17 @@ export default {
           'x-access-token': localStorage.getItem("token"),
         },
       })
-        // .then( window.location.reload() )
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire(
+          'Success!',
+          'แก้ไขรหัสผ่านสำเร็จ',
+          'success'
+        )
+        setTimeout(function() {
+          window.location.reload()
+        }, 2000);
+      })
     }
   }
 }

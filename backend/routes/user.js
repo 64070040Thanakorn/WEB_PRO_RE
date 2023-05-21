@@ -65,8 +65,13 @@ const updateUserSchema = Joi.object({
   user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
   first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
   last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
-  phone: Joi.string().min(10).max(10).error(new Error('กรอกข้อมูลมือถือผิดพลาด')),
-  address: Joi.required().error(new Error('ต้องกรอก address'))
+  phone: Joi.string().allow(null).min(10).max(10),
+  address: Joi.string().allow(null),
+  password: Joi.string().optional(),
+  email: Joi.string().optional(),
+  user_image: Joi.string().optional().allow(null),
+  info: Joi.string().optional().allow(null),
+  role: Joi.string().optional().allow(null),
 })
 
 // update user
@@ -120,7 +125,7 @@ router.put("/updateImage", verifyToken, upload.single('fileupload'), async(req, 
 
 const passwordSchema = Joi.object({
   user_id: Joi.string().required(),
-  old_password: Joi.string().alphanum().min(8),
+  // old_password: Joi.string().alphanum().min(8),
   password: Joi.string().alphanum().min(8)
 })
 
@@ -129,7 +134,7 @@ router.put("/changepassword/:user_id", verifyToken, async(req,res,next) => {
   if(error){
     return res.status(400).json({ message: error.message });
   }
-  const { old_password, password } = req.body
+  const { password } = req.body
   try{
     const update = await prisma.users.update({
       where: {
@@ -139,7 +144,7 @@ router.put("/changepassword/:user_id", verifyToken, async(req,res,next) => {
         password: await bcrypt.hash(password, 10)
       }
     })
-    res.send('ok')
+    res.json(update)
   } catch(err) {
     res.json({message: err.message})
   }
