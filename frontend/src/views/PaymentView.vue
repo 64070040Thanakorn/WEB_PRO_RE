@@ -206,7 +206,7 @@ export default {
                         <div class="flex space-x-2">
                           <img class="h-[20px]" src="/src/assets/icon/mastercard.png" alt="">
                         </div>
-                        <p for="PromtPay">{{ index }}</p>
+                        <p for="PromtPay">{{ index.cc_number }}</p>
                       </div>
                     </div>
                     <button @click="removeCC(index.cc_id)" class="underline text-red-400">remove</button>
