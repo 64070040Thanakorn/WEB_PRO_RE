@@ -41,6 +41,12 @@ export default {
       selectedOptions: {},
       options: [
         { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
         { id: "level2", label: "ระดับกลาง", name: "level", title: "ระดับ"  },
         { id: "level3", label: "ระดับสูง", name: "level", title: "ระดับ"  },
         { id: "price1000", label: "0-1000 บาท", name: "price", title: "ราคา"  },
@@ -310,10 +316,11 @@ export default {
 
 
               <!-- filter -->
-              <section class="flex flex-col gap-2 dropdown" v-for="(item, index) in options" :key="index">
-                  <button
+              <section class="flex flex-col dropdown" v-for="(item, index) in options" :key="index">
+                  <button v-if="index === 0 || item.name != options[index-1].name"
                     type="button"
                     class="flex justify-between items-center"
+                    :class="!(index === 0 || item.name != options[index-1].name) ? 'hidden' : ''"
                     @click="showHide(`.${item.name}-icon`, `.${item.name}-content`, null, isActive), (isActive = !isActive)">
                     <p class="text-lg font-normal">{{item.title}}</p>
                     <i class="pi pi-chevron-up" :class="`${item.name}-icon`"></i>
@@ -326,7 +333,9 @@ export default {
                       </div>
                     </div>
                   </div>
-                  <hr class="border-[1.2px]" />
+                  <template v-if="index === options.length - 1 || item.name !== options[index + 1].name">
+                    <hr class="border-[1.2px]" />
+                  </template>
               </section>
 
 
