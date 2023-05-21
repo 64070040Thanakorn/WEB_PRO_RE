@@ -41,12 +41,6 @@ export default {
       selectedOptions: {},
       options: [
         { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
-        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
-        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
-        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
-        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
-        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
-        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
         { id: "level2", label: "ระดับกลาง", name: "level", title: "ระดับ"  },
         { id: "level3", label: "ระดับสูง", name: "level", title: "ระดับ"  },
         { id: "price1000", label: "0-1000 บาท", name: "price", title: "ราคา"  },
@@ -311,28 +305,28 @@ export default {
 
 
               <!-- filter -->
-              <section class="flex flex-col dropdown" v-for="(item, index) in options" :key="index">
-                  <button v-if="index === 0 || item.name != options[index-1].name"
-                    type="button"
-                    class="flex justify-between items-center"
-                    :class="!(index === 0 || item.name != options[index-1].name) ? 'hidden' : ''"
-                    @click="showHide(`.${item.name}-icon`, `.${item.name}-content`, null, isActive), (isActive = !isActive)">
-                    <p class="text-lg font-normal">{{item.title}}</p>
-                    <i class="pi pi-chevron-up" :class="`${item.name}-icon`"></i>
-                  </button>
-                  <div :class="`${item.name}-content`">
-                    <div class="ml-3 gap-2 flex flex-col">
-                      <div class="flex items-center gap-2" >
-                          <input :id="item.id" type="checkbox" class="p-2 border-2 border-black inline-block" v-model="selectedOptions[item.id]"/>
-                          <label :for="item.id" class="font-light">{{item.label}}</label>
+              <section class="flex flex-col dropdown gap-4">
+                <template v-for="(item, index) in options" :key="index">
+                    <button v-if="index === 0 || item.name != options[index-1].name"
+                      type="button"
+                      class="flex justify-between items-center"
+                      @click="showHide(`.${item.name}-icon`, `.${item.name}-content`, null, isActive), (isActive = !isActive)">
+                      <p class="text-lg font-normal">{{item.title}}</p>
+                      <i class="pi pi-chevron-up" :class="`${item.name}-icon`"></i>
+                    </button>
+                    <div :class="`${item.name}-content`">
+                      <div class="ml-3 gap-2 flex flex-col">
+                        <div class="flex items-center gap-2" >
+                            <input :id="item.id" type="checkbox" class="p-2 border-2 border-black inline-block" v-model="selectedOptions[item.id]"/>
+                            <label :for="item.id" class="font-light">{{item.label}}</label>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <template v-if="index === options.length - 1 || item.name !== options[index + 1].name">
-                    <hr class="border-[1.2px]" />
-                  </template>
+                    <template v-if="index === options.length - 1 || item.name !== options[index + 1].name">
+                      <hr class="border-[1.2px]" />
+                    </template>
+                </template>
               </section>
-
 
             </div>
           </div>
