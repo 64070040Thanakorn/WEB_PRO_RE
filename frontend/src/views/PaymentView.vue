@@ -1,6 +1,18 @@
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { email, maxLength, minLength, required } from "@vuelidate/validators";
+
+export function isNumeric(value) {
+  return /^[0-9]+$/.test(value);
+}
+export function isDatePattern(value) {
+  return /^\d{2}\/\d{2}$/.test(value);
+}
 
 export default {
+  setup(){
+    return { v$: useVuelidate() };
+  },
   name: "payment",
   data() {
     return {
@@ -30,6 +42,23 @@ export default {
       userCCSelected: null,
       }
   },
+  validations(){
+    return {
+      customer: {
+        first_name: { required },
+        last_name: { required },
+        email: { required, email },
+        tel: { required, minLength: minLength(9), maxLength: maxLength(10) },
+      },
+      creditCard: {
+        cc_number: { required,  minLength: minLength(15), maxLength: maxLength(16), isNumeric},
+        cc_cvc: { required, minLength: minLength(3),maxLength: maxLength(3), isNumeric},
+        cc_exp: { required, isDatePattern},
+        cc_first_name: { required },
+        cc_last_name: { required },
+      },
+    }
+  },
   mounted() {
     this.axios
       .get(`http://localhost:3000/api/course/${this.$route.params.course_id}`)
@@ -49,6 +78,12 @@ export default {
   },
   methods: {
     payment(){
+      this.v$.$touch;
+      if (this.v$.$invalid) {
+        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        return false;
+      }
+
       const data = {
         user_id: localStorage.getItem('user'),
         course: this.course,
@@ -216,7 +251,6 @@ export default {
 
 
 
-
               </div>
               <div class="border-[1px] w-full rounded-full mt-5"></div>
             </div>
@@ -225,14 +259,41 @@ export default {
                 <div class="flex flex-col">
                   <label for="">รหัสบัตรเครดิต</label>
                   <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_number">
+                  <template v-if="v$.creditCard.cc_number.$model">
+                    <span v-if="!v$.creditCard.cc_number.isNumeric.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                    <span v-if="!v$.creditCard.cc_number.minLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรอย่างน้อย 15 ตัว
+                    </span>
+                    <span v-if="!v$.creditCard.cc_number.maxLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                  </template>
                 </div>
                 <div class="flex flex-col">
                   <label label for="">CVC</label>
                   <input type="text" class="border-2 w-[5em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_cvc">
+                  <template v-if="v$.creditCard.cc_cvc.$model">
+                    <span v-if="!v$.creditCard.cc_cvc.isNumeric.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                    <span v-if="!v$.creditCard.cc_cvc.minLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                    <span v-if="!v$.creditCard.cc_cvc.maxLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                  </template>
                </div>
                 <div class="flex flex-col">
                   <label for="">วันหมดอายุ</label>
                   <input type="text" class="border-2 w-[10em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_exp">
+                  <template v-if="v$.creditCard.cc_exp.$model">
+                    <span v-if="!v$.creditCard.cc_exp.isDatePattern.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                  </template>
                 </div>
               </div>
               <div class="flex justify-between mx-10">
