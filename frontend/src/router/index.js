@@ -7,15 +7,37 @@ import course_edit from '../views/EditCourse.vue'
 import Landing from '../views/LandingView.vue'
 import payment_success from '../views/PaymentSuccessView.vue'
 import payment from '../views/PaymentView.vue'
-import Quiz from '../views/QuizView.vue'
 import Search from '../views/SearchView.vue'
-import test from '../views/test.vue'
-
 import user from './user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   component: null
+    // },
+    // {
+    //   path: '/portfoilo',
+    //   name: 'portfoilo',
+    //   component: null
+    // },
+    // {
+    //   path: '/location',
+    //   name: 'location',
+    //   component: null
+    // },
+    // {
+      //   path: '/quiz',
+      //   name: 'quiz',
+      //   component: Quiz
+      // },
+      // {
+        //   path: '/test',
+      //   name: 'test',
+      //   component: test,
+      // },
     {
       path: '/',
       name: 'home',
@@ -25,26 +47,6 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: Search,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: null
-    },
-    {
-      path: '/portfoilo',
-      name: 'portfoilo',
-      component: null
-    },
-    {
-      path: '/location',
-      name: 'location',
-      component: null
-    },
-    {
-      path: '/quiz',
-      name: 'quiz',
-      component: Quiz
     },
     {
       path: '/course/:course_id',
@@ -80,11 +82,6 @@ const router = createRouter({
       path: '/create',
       name: 'create_course',
       component: create_course
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: test,
     },
     ...user,
   ]

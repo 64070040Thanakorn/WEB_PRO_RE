@@ -42,7 +42,7 @@
                 *ต้องมีอย่างน้อย 10 ตัวอักษร
             </span>
             <span v-if="!v$.course.description.maxLength.$response" class="text-red-500 text-xs">
-                *ต้องมีไม่มากกว่า 100 ตัวอักษร
+                *ต้องมีไม่มากกว่า 200 ตัวอักษร
             </span>
           </div>
           <div class="flex flex-col space-y-1">
@@ -208,7 +208,7 @@ export default {
         description: {
           required,
           minLength: minLength(10),
-          maxLength: maxLength(100),
+          maxLength: maxLength(200),
         },
         info: {
           required,
@@ -287,6 +287,11 @@ export default {
         })
         .then((respones) => {
           console.log(respones);
+          Swal.fire(
+            'Success!',
+            'สร้างคอร์สเรียนสำเร็จ',
+            'success'
+          )
           this.$router.push("/dashboard")
         })
         .catch((err) => {

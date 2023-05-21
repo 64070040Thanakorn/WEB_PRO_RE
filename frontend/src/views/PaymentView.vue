@@ -1,6 +1,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { email, maxLength, minLength, required, requiredIf } from "@vuelidate/validators";
+import Swal from 'sweetalert2'
 
 export function isNumeric(value) {
   return /^[0-9]+$/.test(value);
@@ -90,7 +91,11 @@ export default {
     payment(){
       this.v$.$touch;
       if (this.v$.$invalid) {
-        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
         return false;
       }
 
