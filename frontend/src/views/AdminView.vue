@@ -97,8 +97,11 @@ export default {
       .then((res) => {
         this.userLog_on = res.data;
       });
+    const user = localStorage.getItem('user')
     const role = localStorage.getItem('role')
-    console.log(role);
+    if (!user) {
+      this.$router.push('/')
+    }
     if(role !== 'Admin') {
       this.$router.push('/')
     }

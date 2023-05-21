@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import Joi from 'joi';
+import verifyToken from '../middleware/token.js'
+
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -112,7 +114,7 @@ const createCourseSchema = Joi.object({
   }).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
   end_date: Joi.date().min(Joi.ref('start_date')).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
 })
-router.post("/createCourse", upload.single("fileupload"), async (req, res, next) => {
+router.post("/createCourse", verifyToken, upload.single("fileupload"), async (req, res, next) => {
   const { error, value } = createCourseSchema.validate(req.body, { abortEarly: true})
   if(error){
     return res.status(400).json({message: error.message})
@@ -147,7 +149,7 @@ router.post("/createCourse", upload.single("fileupload"), async (req, res, next)
 
 // enroll new course
 
-router.post("/enroll/:course_id", async (req, res) => {
+router.post("/enroll/:course_id", verifyToken, async (req, res) => {
   const { user_id } = req.body;
   try {
     const enroll = await prisma.enroll.create({
@@ -216,7 +218,7 @@ router.get("/getEnrolledCourse/by/", async (req, res) => {
 });
 
 // Delete Course
-router.delete("/deleteCourse/:course_id", async (req, res) => {
+router.delete("/deleteCourse/:course_id", verifyToken, async (req, res) => {
   try {
     const deleteCourse = await prisma.course.delete({
       where: {
@@ -230,6 +232,7 @@ router.delete("/deleteCourse/:course_id", async (req, res) => {
 });
 
 const updateCourseSchema = Joi.object({
+  course_id: Joi.string().required(),
   title: Joi.string().required().error(new Error('ต้องกรอก title')),
   category_id: Joi.string().required().error(new Error('ต้องกรอก category_id')),
   description: Joi.string(),
@@ -245,8 +248,8 @@ const updateCourseSchema = Joi.object({
   end_date: Joi.date().min(Joi.ref('start_date')).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
 })
 // update course
-router.put("/updateCourse/", upload.single("fileupload"), async (req, res) => {
-  const { error, value } = createCourseSchema.validate(req.body, { abortEarly: true})
+router.put("/updateCourse/", verifyToken, upload.single("fileupload"), async (req, res) => {
+  const { error, value } = updateCourseSchema.validate(req.body, { abortEarly: true})
   if(error){
     return res.status(400).json({message: error.message})
   }

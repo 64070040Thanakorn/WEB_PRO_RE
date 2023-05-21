@@ -97,7 +97,11 @@ export default {
   },
   methods: {
     async removingUser(id){
-      await axios.delete(`http://localhost:3000/api/auth/${id}/deleteAcc`)
+      await axios.delete(`http://localhost:3000/api/auth/${id}/deleteAcc`, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
         .then(res => {
           this.$emit('user-change')
         })

@@ -133,7 +133,11 @@ export default {
   },
   methods: {
     async removingCategory(category){
-      await axios.delete(`http://localhost:3000/api/category/delete/${category}`)
+      await axios.delete(`http://localhost:3000/api/category/delete/${category}`, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
         .then(res => {
           this.$emit('category-change')
         })
@@ -154,6 +158,10 @@ export default {
         category_name: category.category_name,
         category_detail: category.category_detail,
         category_color: category.category_color
+      }, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
       })
       .then( (res) => {
         this.$emit('category-change')
@@ -166,7 +174,11 @@ export default {
         category_detail: this.category_detail,
         category_color: this.category_color ? this.category_color: null,
       }
-      this.axios.post("http://localhost:3000/api/category/addCategory/", data).then((res) => {
+      this.axios.post("http://localhost:3000/api/category/addCategory/", data, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      }).then((res) => {
         this.$emit('category-change')
         console.log(res.data);
       })

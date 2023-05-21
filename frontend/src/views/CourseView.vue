@@ -123,10 +123,10 @@ export default {
           >
             {{ category_name }}
           </p>
-          <div class="text-green-500 text-xl bg-black/5 px-4 py-2 rounded-md" v-if="this.user && this.check_enrolled.length > 0">
+          <div class="text-green-500 text-xl bg-black/5 px-4 py-2 rounded-md" v-if="this.user && this.check_enrolled.length > 0 && this.user.role !== 'Admin'">
             <span class="text-gray-01 font-light">status: </span>คุณกำลังเรียนคอร์สนี้อยู่
           </div>
-          <div class="text-red-700 text-xl bg-black/5 px-4 py-2 rounded-md" v-if="this.user && this.check_enrolled.length < 1">
+          <div class="text-red-700 text-xl bg-black/5 px-4 py-2 rounded-md" v-if="this.user && this.check_enrolled.length < 1 && this.user.role !== 'Admin'">
             <span class="text-gray-01 font-light">status: </span>คุณไม่ได้เรียนคอร์สนี้
           </div>
         </div>
@@ -174,7 +174,7 @@ export default {
               </div>
             </RouterLink>
           </div>
-          <div v-if="(this.course_item.amount <= this.enrolled.length) && this.user && this.user.role !== 'Admin'">
+          <div v-if="(this.course_item.amount <= this.enrolled.length) && this.user">
             <button>
               <div class="rounded bg-black/40 text-white px-12 py-2 hover:bg-black/30">
                 คอร์สเรียนเต็มแล้ว

@@ -68,7 +68,11 @@ export default {
           console.log(data);
       }
       
-      this.axios.post(`http://localhost:3000/api/payment/`,data)
+      this.axios.post(`http://localhost:3000/api/payment/`,data, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
         .then(res => {
           this.fetchEnroll()
           this.$router.push('/payment/success')
@@ -80,7 +84,11 @@ export default {
         })
     },
     removeCC(id){
-      this.axios.delete(`http://localhost:3000/api/payment/${id}`)
+      this.axios.delete(`http://localhost:3000/api/payment/${id}`, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
         .then(res => {
           this.fetchUserCC()
           console.log(`remove CC ${id}`);
@@ -105,7 +113,11 @@ export default {
     fetchEnroll() {
       const userData = { user_id: localStorage.getItem('user')}
       this.axios
-      .post(`http://localhost:3000/api/course/enroll/${this.course.id}`, userData)
+      .post(`http://localhost:3000/api/course/enroll/${this.course.id}`, userData, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
       });
     },

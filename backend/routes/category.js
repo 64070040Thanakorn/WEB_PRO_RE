@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import Joi from 'joi';
+import verifyToken from '../middleware/token.js'
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -70,7 +71,7 @@ const addCateSchema = Joi.object({
   category_color: Joi.string().required().error(new Error('ต้องกรอก category_color')),
 })
 // add category
-router.post("/addCategory", async(req, res) => {
+router.post("/addCategory", verifyToken, async(req, res) => {
   const { error, value } = addCateSchema.validate(req.body, { abortEarly: true })
   if(error){
     return res.status(400).json({ message: error.message})
@@ -92,7 +93,7 @@ router.post("/addCategory", async(req, res) => {
 
 // update category
 
-router.put("/updateCategory/:category_id", async(req, res) => {
+router.put("/updateCategory/:category_id", verifyToken, async(req, res) => {
   const {category_name, category_detail, category_color} = req.body
 
   try {
@@ -117,7 +118,7 @@ const removeCateSchema = Joi.object({
   category_id: Joi.string().required().error(new Error('ต้องกรอก category_id'))
 })
 // delete category
-router.delete("/delete/:category_id", async (req, res, next) => {
+router.delete("/delete/:category_id", verifyToken, async (req, res, next) => {
   const { error, value } = removeCateSchema.validate(req.params)
   if(error){
     return res.status(400).json({ message: error.message})

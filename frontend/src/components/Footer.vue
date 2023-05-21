@@ -10,6 +10,11 @@ export default {
       category: []
     };
   },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+  }
 };
 </script>
 
@@ -29,18 +34,13 @@ export default {
         <div class="space-y-5">
           <h4 class="text-[20px]">คอร์ส</h4>
           <ul class="text-[#B0B0B0] grid grid-rows-10 grid-flow-col gap-2 gap-x-36">
-            <li>Python</li>
-            <li>JavaScript</li>
-            <li>HTML & CSS</li>
-            <li>SQL</li>
-            <li>Java</li>
-            <li>C++</li>
-            <li>C#</li>
-            <li>Bash</li>
-            <li>PHP</li>
-            <li>Swift</li>
-            <li>.NET</li>
-            <li>Lua</li>
+            <template v-for="item in category">
+              <li>
+                <RouterLink :to="{path: `/category/${item.category_id}`}" @click="scrollToTop()">
+                  {{item.category_name}}
+                </RouterLink>
+              </li>
+            </template>
           </ul>
         </div>
         <div class="space-y-5">

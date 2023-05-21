@@ -8,14 +8,7 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 
-const getSchema = Joi.object({
-  user_id: Joi.string().required().error(new Error('ต้องกรอก user id'))
-})
 router.get("/:user_id", async (req, res, next) => {
-  const {error, value} = getSchema.validate(req.params)
-  if(error){
-    return res.status(400).json({ message: error.message });
-  }
   const { user_id } = req.params
   try{
     const exist = await prisma.users.findFirst({
@@ -114,45 +107,48 @@ router.post("/login", async(req, res, next) => {
       else {
         res.status(409).send("Password not correct!")
       }
-    };
+    }
+    else {
+      throw new Error("ไม่เจอผู้ใช้งาน")
+    }
   } catch(err) {
     next(err);
   };
 });
 
 
-router.delete("/:id/deleteAcc", async(req, res, next) => {
-  try{
-    await prisma.$transaction(async(tx) => {
-      const findAcc = await prisma.users.findUnique({
-        where:{
-          user_id: req.params.id
-        }
-      })
-      if(findAcc){
-        const user = await prisma.users.delete({
-          where:{
-            user_id: req.params.id
-          }
-        })
-        res.send(`delete account id ${req.params.id}`)
-      } else {
-        res.send(`Not found`)
-      }
-    });
-  } catch(err){
-    next(err)
-  }
-});
+// router.delete("/:id/deleteAcc", async(req, res, next) => {
+//   try{
+//     await prisma.$transaction(async(tx) => {
+//       const findAcc = await prisma.users.findUnique({
+//         where:{
+//           user_id: req.params.id
+//         }
+//       })
+//       if(findAcc){
+//         const user = await prisma.users.delete({
+//           where:{
+//             user_id: req.params.id
+//           }
+//         })
+//         res.send(`delete account id ${req.params.id}`)
+//       } else {
+//         res.send(`Not found`)
+//       }
+//     });
+//   } catch(err){
+//     next(err)
+//   }
+// });
 
 
-router.delete("/deleteAllAcc", async(req, res, next) => {
-  try{
-    const findAcc = await prisma.users.deleteMany({})
-    res.send("Delete all account")
-  } catch(err){
-    next(err)
-  }
-});
+// router.delete("/deleteAllAcc", async(req, res, next) => {
+//   try{
+//     const findAcc = await prisma.users.deleteMany({})
+//     res.send("Delete all account")
+//   } catch(err){
+//     next(err)
+//   }
+// });
 
 export default router

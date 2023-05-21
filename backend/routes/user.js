@@ -2,10 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import Joi from 'joi';
 import upload from '../middleware/multer.js';
+import verifyToken from '../middleware/token.js'
+
 
 const prisma = new PrismaClient();
 const router = express.Router();
-
 
 
 router.get("/by/:user_id", async(req, res, next) => {
@@ -13,9 +14,20 @@ router.get("/by/:user_id", async(req, res, next) => {
     const user = await prisma.users.findFirst({
       where: {
         user_id: req.params.user_id
+      },
+      select: {
+        user_id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        user_image: true,
+        info: true,
+        phone: true,
+        address: true,
+        role: true,
       }
     });
-    user.password = undefined
+    // user.password = undefined
 
     res.status(200).json(user)
   } catch (err) {
@@ -25,8 +37,20 @@ router.get("/by/:user_id", async(req, res, next) => {
 
 router.get("/all", async(req, res, next) => {
   try{
-    const user = await prisma.users.findMany();
-    user.password = undefined
+    const user = await prisma.users.findMany({
+      select: {
+        user_id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        user_image: true,
+        info: true,
+        phone: true,
+        address: true,
+        role: true,
+      }
+    });
+    // user.password = undefined
 
     res.status(200).json(user)
   } catch (err) {
@@ -42,7 +66,9 @@ const updateUserSchema = Joi.object({
   phone: Joi.string().min(10).max(10).error(new Error('กรอกข้อมูลมือถือผิดพลาด')),
   address: Joi.required().error(new Error('ต้องกรอก address'))
 })
-router.put("/", async(req, res, next) => {
+
+// update user
+router.put("/", verifyToken ,async(req, res, next) => {
   const {error, value} = updateUserSchema.validate(req.body, { abortEarly: false })
   if(error){
     return res.status(400).json({ message: error.message });
@@ -68,7 +94,8 @@ router.put("/", async(req, res, next) => {
   }
 });
 
-router.put("/updateImage", upload.single('fileupload'), async(req, res, next) => {
+// update image
+router.put("/updateImage", verifyToken, upload.single('fileupload'), async(req, res, next) => {
   const file = req.file
   console.log(file);
   const { user_id } = req.body

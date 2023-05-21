@@ -154,7 +154,11 @@ export default {
     },
     deleteCourse(id) {
       console.log(id);
-      this.axios.delete(`http://localhost:3000/api/course/deleteCourse/${id}`).then((res) => {
+      this.axios.delete(`http://localhost:3000/api/course/deleteCourse/${id}`, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      }).then((res) => {
         console.log(res.data);
         this.$emit("change-delete")
       })

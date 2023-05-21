@@ -92,6 +92,9 @@
 <script>
 import course from '../components/admin/Course.vue';
 import user from '../components/admin/User.vue';
+import moment from 'moment';
+import Swal from 'sweetalert2'
+
 
 export default {
   components:{
@@ -120,6 +123,15 @@ export default {
     this.axios.get(`http://localhost:3000/api/category/`).then((response) => {
       this.category = response.data;
     });
+
+    const user = localStorage.getItem('user')
+    const role = localStorage.getItem('role')
+    if (!user) {
+      this.$router.push('/')
+    }
+    if(role !== 'Admin') {
+      this.$router.push('/')
+    }
   },
   methods: {
     onFileSelected(event) {
@@ -153,6 +165,9 @@ export default {
       formData.append("end_date", this.course.end_date);
       this.axios
         .put("http://localhost:3000/api/course/updateCourse", formData, {
+          headers: {
+            'x-access-token': localStorage.getItem("token"),
+          },
         })
         .then((respones) => {
           console.log(respones);

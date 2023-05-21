@@ -1,7 +1,7 @@
 <template>
   <div
     id="card"
-    class="flex justify-center w-[420px] h-[550px] bg-white rounded-md border"
+    class="flex justify-center w-[420px] h-[400px] bg-white rounded-md border"
   >
     <div class="flex flex-col justify-between h-full px-10 py-5 space-y-10">
       <div class="space-y-10">
@@ -50,7 +50,7 @@
                   เข้าสู่ระบบ
                 </button>
               </div>
-              <div class="flex items-center space-x-2">
+              <!-- <div class="flex items-center space-x-2">
                 <div class="w-full h-[2px] bg-[#D9D9D9]"></div>
                 <div class="text-[#D9D9D9]">หรือ</div>
                 <div class="w-full h-[2px] bg-[#D9D9D9]"></div>
@@ -81,14 +81,14 @@
                   </svg>
                   <p>Sign in with Google</p>
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
       <div class="flex justify-center items space-x-2">
         <p class="text-[#767676]">ยังไม่เป็นสมาชิก?</p>
-        <p class="text-[#AAAAAA]">ลงทะเบียนที่นี้</p>
+        <p class="text-[#AAAAAA]">ลงทะเบียนที่นี่</p>
       </div>
     </div>
   </div>
@@ -98,6 +98,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { email, required } from "@vuelidate/validators";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export default {
   setup() {
@@ -125,7 +126,11 @@ export default {
     submit() {
       this.v$.$touch;
       if (this.v$.$invalid) {
-        alert("โปรดตรวจสอบ email หรือ password ของคุณว่าถูกต้องหรือไม่")
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
         return false
       }
       const data = {
@@ -138,11 +143,22 @@ export default {
             localStorage.setItem('role', res.data.role);
             localStorage.setItem('token', res.data.token);
             this.$emit('auth-change')
-            window.location.reload()
+            Swal.fire(
+              'Success!',
+              'เข้าสู่ระบบสำเร็จ',
+              'success'
+            )
+            setTimeout(function() {
+              window.location.reload()
+            }, 2000); // 2000 milliseconds (2 seconds)
         })
         .catch((error) => {
-          this.error = error.response.data;
-          console.log(error.response.data);
+          console.log(error);
+          Swal.fire(
+            'Error!',
+            'โปรดตรวจสอบความถูกต้องของข้อมูล',
+            'error'
+          )
         });
     },
     modal_close() {

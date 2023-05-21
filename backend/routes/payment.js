@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import Joi from 'joi';
+import verifyToken from '../middleware/token.js'
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -63,11 +64,13 @@ const createPaymentSchema = Joi.object({
   payment_methods: Joi.string(),
   total: Joi.number().required().error(new Error('ต้องกรอก total')),
 })
-router.post("/", async(req, res, next) => {
-  const { error, value } = createPaymentSchema.validate(req.body, { abortEarly: false })
-  if(error) {
-    return res.status(400).json({message: error.message})
-  }
+
+
+router.post("/", verifyToken, async(req, res, next) => {
+  // const { error, value } = createPaymentSchema.validate(req.body, { abortEarly: false })
+  // if(error) {
+  //   return res.status(400).json({message: error.message})
+  // }
   const { user_id, course, creditCard, total } = req.body
   try{
     if(creditCard){
@@ -110,7 +113,7 @@ router.post("/", async(req, res, next) => {
   }
 });
 
-router.delete("/:cc_id", async(req, res, next) => {
+router.delete("/:cc_id", verifyToken, async(req, res, next) => {
   const { cc_id } = req.params
   try{
     const deleteCC = await prisma.payment.delete({

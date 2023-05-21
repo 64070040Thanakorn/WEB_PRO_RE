@@ -3,6 +3,8 @@ import CourseComment from './CourseComment.vue'
 </script>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   mounted() {
     this.user_id = localStorage.getItem("user");
@@ -30,6 +32,11 @@ export default {
             user_id: this.user_id,
             course_id: this.$route.params.course_id,
           },
+          {
+            headers: {
+              'x-access-token': localStorage.getItem("token"),
+            },
+          }
         )
         .then((res) => {
           // console.log(res);
@@ -41,7 +48,11 @@ export default {
         })
     },
     toLogin() {
-      alert("You must login first!")
+      Swal.fire(
+        'Not login!',
+        'โปรดเข้าสู่ระบบ เพื่อทำการคอมเมนต์',
+        'info'
+      )
     }
   },
 }

@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import Joi from 'joi';
+import verifyToken from '../middleware/token.js'
+
 const prisma = new PrismaClient();
 const router = express.Router();
 
@@ -40,12 +42,11 @@ const createComSchema = Joi.object({
   user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
   course_id: Joi.string().required().error(new Error('ต้องกรอก course_id'))
 })
-router.post('/createComment/', async (req, res) => {
+router.post('/createComment/', verifyToken, async (req, res) => {
   const { error, value } = createComSchema.validate(req.body, { abortEarly: true })
   if(error) {
     return res.status(400).json({message: error.message})
   }
-  
   const { content, user_id, course_id } = req.body;
   try {
     const comment = await prisma.comments.create({

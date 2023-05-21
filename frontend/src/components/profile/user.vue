@@ -82,7 +82,11 @@ export default {
   },
   methods: {
     updateData() {
-      axios.put(`http://localhost:3000/api/user/`, this.data)
+      axios.put(`http://localhost:3000/api/user/`, this.data, {
+        headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+      })
           .then(res => {
             this.asyncData()
           })
@@ -100,7 +104,11 @@ export default {
         const x = new FormData();
         x.append("user_id", this.data.user_id);
         x.append("fileupload", this.file);
-        axios.put(`http://localhost:3000/api/user/updateImage`, x)
+        axios.put(`http://localhost:3000/api/user/updateImage`, x, {
+          headers: {
+          'x-access-token': localStorage.getItem("token"),
+        },
+        })
           .then(
             window.location.reload()
           )

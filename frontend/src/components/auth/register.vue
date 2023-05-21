@@ -1,7 +1,7 @@
 <template>
   <div
     id="card"
-    class="flex justify-center w-[420px] h-[550px] bg-white rounded-md border"
+    class="flex justify-center w-[420px] h-[500px] bg-white rounded-md border"
   >
     <div class="flex flex-col justify-between h-full px-10 py-5">
       <div class="flex justify-between items-center">
@@ -97,15 +97,7 @@
               </template>
             </div>
           </div>
-          <div class="flex justify-center">
-            <button
-              @click="submit()"
-              class="bg-[#E99F30] rounded-full px-20 py-2 text-white"
-            >
-              ลงทะเบียน
-            </button>
-          </div>
-          <div class="flex items-center space-x-2">
+          <!-- <div class="flex items-center space-x-2">
             <div class="w-full h-[2px] bg-[#D9D9D9]"></div>
             <div class="text-[#D9D9D9]">หรือ</div>
             <div class="w-full h-[2px] bg-[#D9D9D9]"></div>
@@ -136,12 +128,20 @@
               </svg>
               <p>Sign in with Google</p>
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
+      <div class="flex justify-center">
+        <button
+          @click="submit()"
+          class="bg-[#E99F30] rounded-full px-20 py-2 text-white"
+        >
+          ลงทะเบียน
+        </button>
+      </div>
       <div class="flex justify-center items space-x-2">
-        <p class="text-[#767676]">ยังไม่เป็นสมาชิก?</p>
-        <p class="text-[#AAAAAA]">ลงทะเบียนที่นี้</p>
+        <p class="text-[#767676]">เป็นสมาชิกแล้ว?</p>
+        <p class="text-[#AAAAAA]">ลงทะเบียนที่นี่</p>
       </div>
     </div>
   </div>
@@ -151,6 +151,7 @@
 import { useVuelidate } from "@vuelidate/core";
 import { email, minLength, required, sameAs } from "@vuelidate/validators";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export function complexPassword(value) {
   if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
@@ -206,7 +207,11 @@ export default {
     submit() {
       this.v$.$touch;
       if (this.v$.$invalid) {
-        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
         return false;
       }
       const data = {
