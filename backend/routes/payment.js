@@ -38,17 +38,13 @@ router.get("/by/:user_id", async(req, res, next) => {
   }
 })
 
-const createPaymentSchema = Joi.object({
+const creditCardSchema = Joi.object({
   user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
   course:{
     id: Joi.string().required().error(new Error('ต้องกรอก course id')),
-    name: Joi.string(),
-    category: Joi.string(),
-    price: Joi.number(),
-    img: Joi.string(),
   },
   creditCard:{
-    cc_number: Joi.string().required().min(15).max(16).error(new Error('ต้องกรอก cc_number')),
+    cc_number: Joi.string().required().min(16).max(16).error(new Error('ต้องกรอก cc_number')),
     cc_cvc: Joi.string().required().min(3).max(3).error(new Error('ต้องกรอก cc_ccv')),
     cc_exp: Joi.string().required().error(new Error('ต้องกรอก cc_expiry')),
     cc_first_name: Joi.string().required().regex(/^[0-9]+$/).error(new Error('ต้องกรอก last_name')),
@@ -58,15 +54,66 @@ const createPaymentSchema = Joi.object({
     first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
     last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
     email: Joi.string().email().required().error(new Error('ต้องกรอก email')),
-    tel: Joi.string().required().min(10).max(10).error(new Error('ต้องกรอก tel')),
+    tel: Joi.string().required().min(9).max(10).error(new Error('ต้องกรอก tel')),
 },
   payment_methods: Joi.string(),
   total: Joi.number().required().error(new Error('ต้องกรอก total')),
 })
+
+const usingCCShema = Joi.object({
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
+  course:{
+    id: Joi.string().required().error(new Error('ต้องกรอก course id')),
+  },
+  usingCC: Joi.string().required().error(new Error('ต้องกรอก usingCC')),
+  customer:{
+    first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
+    last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+    email: Joi.string().email().required().error(new Error('ต้องกรอก email')),
+    tel: Joi.string().required().min(9).max(10).error(new Error('ต้องกรอก tel')),
+  },
+  payment_methods: Joi.string(),
+  total: Joi.number().required().error(new Error('ต้องกรอก total')),
+})
+
+const promtPaySchema = Joi.object({
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
+  course:{
+    id: Joi.string().required().error(new Error('ต้องกรอก course id')),
+  },
+  customer:{
+    first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
+    last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+    email: Joi.string().email().required().error(new Error('ต้องกรอก email')),
+    tel: Joi.string().required().min(9).max(10).error(new Error('ต้องกรอก tel')),
+},
+  payment_methods: Joi.string(),
+  total: Joi.number().required().error(new Error('ต้องกรอก total')),
+})
+
+
 router.post("/", async(req, res, next) => {
-  const { error, value } = createPaymentSchema.validate(req.body, { abortEarly: false })
-  if(error) {
-    return res.status(400).json({message: error.message})
+  if(req.body.usingCC){
+    console.log('usingCC');
+
+    const { error, value } = usingCCShema.validate(req.body, { abortEarly: false })
+    if(error) {
+      return res.status(400).json({message: error.message})
+    }
+  }
+  if(req.body.creditCard){
+    console.log('creditcard');
+    const { error, value } = creditCardSchema.validate(req.body, { abortEarly: false })
+    if(error) {
+      return res.status(400).json({message: error.message})
+    }
+  }
+  if(req.body.payment_methods === "PromtPay"){
+    console.log('promtpay');
+    const { error, value } = promtPaySchema.validate(req.body, { abortEarly: false })
+    if(error) {
+      return res.status(400).json({message: error.message})
+    }
   }
   const { user_id, course, creditCard, total } = req.body
   try{
@@ -84,6 +131,7 @@ router.post("/", async(req, res, next) => {
         }
       })
     }
+    
     const payment = await prisma.payment_history.create({
       data:{
         user_id: user_id, 

@@ -1,6 +1,6 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { email, maxLength, minLength, required } from "@vuelidate/validators";
+import { email, maxLength, minLength, required, requiredIf } from "@vuelidate/validators";
 
 export function isNumeric(value) {
   return /^[0-9]+$/.test(value);
@@ -38,7 +38,7 @@ export default {
         cc_first_name: null,
         cc_last_name: null,
       },
-      userCreditCard: null,
+      userCreditCard: [],
       userCCSelected: null,
       }
   },
@@ -51,11 +51,21 @@ export default {
         tel: { required, minLength: minLength(9), maxLength: maxLength(10) },
       },
       creditCard: {
-        cc_number: { required,  minLength: minLength(15), maxLength: maxLength(16), isNumeric},
-        cc_cvc: { required, minLength: minLength(3),maxLength: maxLength(3), isNumeric},
-        cc_exp: { required, isDatePattern},
-        cc_first_name: { required },
-        cc_last_name: { required },
+        cc_number: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }), minLength: minLength(16), maxLength: maxLength(16), isNumeric},
+        cc_cvc: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }), minLength: minLength(3), maxLength: maxLength(3), isNumeric },
+        cc_exp: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }), isDatePattern },
+        cc_first_name: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }) },
+        cc_last_name: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }) },
       },
     }
   },
@@ -86,21 +96,16 @@ export default {
 
       const data = {
         user_id: localStorage.getItem('user'),
-        course: this.course,
+        course: {id: this.course.id},
         customer: this.customer,
         payment_methods: this.paymentMethods,
         total: this.vat,
       }
-      if(this.paymentMethods === 'CreditCard' && this.userCCSelected === null){
+      if(this.paymentMethods === 'CreditCard' && !this.userCCSelected){
         data['creditCard'] = this.creditCard
-        console.log(data);
-
-
       }
       if(this.userCCSelected){
-          console.log(this.userCCSelected);
-          data['usingCC'] = this.userCCSelected
-          console.log(data);
+        data['usingCC'] = this.userCCSelected
       }
       
       this.axios.post(`http://localhost:3000/api/payment/`,data)
@@ -121,18 +126,10 @@ export default {
           console.log(`remove CC ${id}`);
         })
     },
-    // uncheckCC(id) {
-    //   if(this.userCCSelected === id){
-    //     this.userCCSelected = null
-    //   } else {
-    //     this.userCCSelected = id
-    //   }
-    //   console.log(this.userCCSelected, id);
-    // },
     fetchUserCC(){
       const userData = { user_id: localStorage.getItem('user')}
       this.axios
-      .get(`http://localhost:3000/api/payment/getCredit/${userData}`)
+      .get(`http://localhost:3000/api/payment/getCredit/${userData.user_id}`)
       .then((res) => {
         this.userCreditCard = res.data
       });
@@ -246,7 +243,7 @@ export default {
 
 
 
-                <div v-for="index in userCreditCard">
+                <div v-for="(index, i) in userCreditCard">
                   <label :for="index.cc_id" :class="userCCSelected === index.cc_id ? 'border-[#E99F30]' : 'not-same'" class="flex justify-between border-2 rounded-md py-5 px-10 mt-2">
                     <div class="flex">
                       <input type="radio" name="2" :id="index.cc_id" v-model="userCCSelected" :value='index.cc_id' @click.stop>
@@ -292,10 +289,10 @@ export default {
                       *กรอกข้อมูลบัตรไม่ถูกต้อง
                     </span>
                     <span v-if="!v$.creditCard.cc_cvc.minLength.$response" class="text-red-500 text-xs">
-                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                      *กรอกข้อมูลบัตรอย่างน้อย 3 ตัว
                     </span>
                     <span v-if="!v$.creditCard.cc_cvc.maxLength.$response" class="text-red-500 text-xs">
-                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                      *กรอกข้อมูลบัตร 3 ตัว
                     </span>
                   </template>
                </div>
