@@ -9,8 +9,8 @@ import Recommend_card from "../components/mini_card.vue";
 export default {
   name: "Search",
   beforeCreate() {
-    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
-      this.random_course_item = response.data;
+    this.axios.get(`http://localhost:3000/api/course/`).then((response) => {
+      this.course_item = response.data;
     });
 
     this.axios.get(`http://localhost:3000/api/category/`).then((response) => {
@@ -21,11 +21,10 @@ export default {
       this.r_category = response.data;
     });
 
-    this.axios
-      .get(`http://localhost:3000/api/category/${this.$route.params.category_id}`)
-      .then((response) => {
-        this.course_item = response.data;
-      });
+    this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
+      this.random_course_item = response.data;
+    });
+
     // if(this.user){
     //   this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
     //     .then(res => {
@@ -59,7 +58,6 @@ export default {
       lesson0To4: null,
       lesson5To15: null,
       lesson16: null,
-      page_category: [],
       course_item: [],
       category: [],
       r_category: [],
@@ -72,15 +70,18 @@ export default {
     pageAmount() {
       return Math.ceil(this.items.length / 12);
     },
+    all_course_length() {
+      return this.course_item ? this.course_item.length : 0;
+    },
     item_length() {
       return this.filteredItems ? this.filteredItems.length : 0;
     },
     filteredItems() {
       return this.searchValue
-        ? this.course_item.Course.filter((item) =>
+        ? this.course_item.filter((item) =>
             item.title.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())
           )
-        : this.course_item.Course;
+        : this.course_item;
     },
   },
   methods: {
@@ -175,9 +176,7 @@ export default {
             <span class="underline">รายวิชาใหม่ๆที่น่าสนใจ</span>
             <template v-for="item in r_category">
               <Router-link :to="{ path: `/category/${item.category_id}` }">
-                <button type="button" class="bg-[#1D1D1D]/70 hover:bg-[#1D1D1D]/90 py-2 px-8 rounded-[20px]">
-                  {{ item.category_name }}
-                </button>
+                <button type="button" class="bg-[#1D1D1D]/70 hover:bg-[#1D1D1D]/90 py-2 px-8 rounded-[20px]">{{ item.category_name }}</button>
               </Router-link>
             </template>
           </div>
@@ -187,7 +186,7 @@ export default {
   </section>
   <section>
     <div class="flex">
-      <section class="w-[18%] bg-white shadow-md shadow-black/10 mx-auto">
+      <div class="w-[18%] bg-white shadow-md shadow-black/10 mx-auto">
         <div class="flex flex-col p-8 overflow-y-auto h-full w-full scrollbar">
           <!-- upper side-bar -->
           <div class="gap-4 flex flex-col dropdown mb-[10rem]">
@@ -206,7 +205,7 @@ export default {
                   class="flex flex-col gap-2 text-normal ml-4 list-disc"
                   v-for="item in category"
                 >
-                  <Router-link :to="{ path: `/category/${item.category_id}` }">
+                  <Router-link :to="{ path: `category/${item.category_id}` }">
                     <li class="font-light hover:font-normal">{{ item.category_name }}</li>
                   </Router-link>
                 </ul>
@@ -219,9 +218,7 @@ export default {
           <div class="mt-8 mb-8">
             <div class="flex flex-col">
               <div class="flex items-center">
-                <h3 class="text-2xl font-normal">
-                  {{ course_item.category_name }} Course
-                </h3>
+                <h3 class="text-2xl font-normal">All Course</h3>
               </div>
               <p class="text-xs underline font-light text-[#676767]">
                 {{ item_length }} ผลลัพท์
@@ -242,6 +239,7 @@ export default {
                   ล้างกรอง
                 </button>
               </div>
+
               <div class="flex flex-col gap-2 dropdown">
                 <button
                   type="button"
@@ -417,9 +415,7 @@ export default {
                 </div>
               </div>
 
-              <div
-                class="flex flex-col gap-2 dropdown amount-bottom price-bottom level-bottom"
-              >
+              <div class="flex flex-col gap-2 dropdown amount-bottom price-bottom level-bottom">
                 <hr class="border-[1.2px]" />
                 <button
                   type="button"
@@ -466,9 +462,7 @@ export default {
                 </div>
               </div>
 
-              <div
-                class="flex flex-col gap-2 dropdown level-bottom price-bottom amount-bottom cer-bottom"
-              >
+              <div class="flex flex-col gap-2 dropdown level-bottom price-bottom amount-bottom cer-bottom">
                 <hr class="border-[1.2px]" />
                 <button
                   type="button"
@@ -529,16 +523,19 @@ export default {
             </div>
           </div>
         </div>
-      </section>
-      <section class="w-[82%] mb-20">
+      </div>
+      <div class="w-[82%] mb-20">
         <div class="bg-search-02 h-[650px] px-20 py-12">
           <div class="space-y-8">
             <p class="text-md text-[#EBC919]">
-              หมวดหมู่ <span class="text-black">/ {{ course_item.category_name }}</span>
+              หมวดหมู่ <span class="text-black">/ All</span>
             </p>
-            <p class="text-4xl font-medium">{{ course_item.category_name }}</p>
+            <p class="text-4xl font-medium">คอร์สเรียนทั้งหมด</p>
             <p class="text-lg">
-              {{ course_item.category_detail }}
+              แหล่งรวมคอร์สเรียนต่างๆที่เราคัดสรรมาอย่างมีคุณภาพ เพื่อให้คุณได้มาเรียนรู้
+              หรือเสริมสร้างประสบการณ์ใหม่ๆ ได้แล้วที่นี่ มีคอร์สมากกว่า
+              {{ all_course_length }} คอร์สเรียน มีอาจารย์ที่มีความรู้ จบจากสายตรง
+              การันตีคุณภาพ
             </p>
             <h1 class="text-2xl font-medium">คอร์สเรียนที่น่าสนใจ</h1>
             <div class="flex justify-start">
@@ -556,7 +553,6 @@ export default {
           class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1 mb-20"
         >
           <div v-for="item in filteredItems">
-            <!-- <Main_card :item="item" /> -->
             <Main_card :item="item" :user-log_on="userLog_on" />
           </div>
         </div>
@@ -565,7 +561,7 @@ export default {
             <span class="font-light hover:font-normal">{{ value }}</span>
           </RouterLink>
         </div> -->
-      </section>
+      </div>
     </div>
   </section>
   <Footer />

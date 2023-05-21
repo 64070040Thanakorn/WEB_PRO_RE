@@ -18,6 +18,21 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// recommend category
+router.get("/recommend/", async (req, res, next) => {
+  try {
+    const category = await prisma.category.findMany({
+      orderBy: {
+        category_id: "desc",
+      },
+      take: 5
+    });
+    res.status(200).json(category);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 // get category by id
 router.get("/:category_id", async (req, res) => {
   try {

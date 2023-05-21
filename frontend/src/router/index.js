@@ -9,6 +9,7 @@ import payment_success from '../views/PaymentSuccessView.vue'
 import payment from '../views/PaymentView.vue'
 import Quiz from '../views/QuizView.vue'
 import Search from '../views/SearchView.vue'
+import test from '../views/test.vue'
 
 import user from './user'
 
@@ -79,6 +80,11 @@ const router = createRouter({
       path: '/create',
       name: 'create_course',
       component: create_course
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test,
     },
     ...user,
   ]
