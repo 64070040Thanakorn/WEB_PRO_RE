@@ -12,16 +12,10 @@ let nav_site = [
     "path": "/"
   },
   {
-    "id": "portfolio",
-    "title": "ผลงาน",
+    "id": "location",
+    "title": "แนะนำคอร์สเรียน",
     "dropdown": false,
-    "path": "/portfolio"
-  },
-  {
-    "id": "about",
-    "title": "เกี่ยวกับเรา",
-    "dropdown": false,
-    "path": "/about"
+    "path": "/location"
   },
   {
     "id": "location",
@@ -59,6 +53,7 @@ export default {
       isActive_Register: false,
       isActive_auth: false,
       isOpen: false,
+      showDropdown: false,
     }
   },
   mounted() {
@@ -133,9 +128,9 @@ export default {
     <div class="flex justify-between items-center px-48 h-[80px]">
       <div>
         <ul class="flex">
-          <li class="nav_site flex items-center space-x-2 px-8 font-extralight" v-for="nav in nav_site">
-              <h5>{{ nav.title }}</h5>
-              <i class="pi pi-angle-down" style="font-size: 0.75rem" v-if="nav.dropdown"></i>
+          <li v-for="nav in nav_site" class="nav_site flex items-center space-x-2 px-8 font-extralight relative">
+            <h5>{{ nav.title }}</h5>
+            <i class="pi pi-angle-down" style="font-size: 0.75rem" v-if="nav.dropdown"></i>
           </li>
         </ul>
       </div>
@@ -182,5 +177,23 @@ export default {
   .navbar-brand>h1{
     font-family: 'Sansita', sans-serif;
     font-size: 40px;
+  }
+</style>
+
+<style>
+  /* ... your existing styles ... */
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    display: none;
+    background-color: #000;
+    padding: 8px;
+  }
+
+  .dropdown-menu li {
+    margin-bottom: 4px;
   }
 </style>

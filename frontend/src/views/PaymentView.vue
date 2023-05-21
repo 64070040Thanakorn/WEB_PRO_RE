@@ -1,6 +1,18 @@
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { email, maxLength, minLength, required, requiredIf } from "@vuelidate/validators";
+
+export function isNumeric(value) {
+  return /^[0-9]+$/.test(value);
+}
+export function isDatePattern(value) {
+  return /^\d{2}\/\d{2}$/.test(value);
+}
 
 export default {
+  setup(){
+    return { v$: useVuelidate() };
+  },
   name: "payment",
   data() {
     return {
@@ -26,9 +38,36 @@ export default {
         cc_first_name: null,
         cc_last_name: null,
       },
-      userCreditCard: null,
+      userCreditCard: [],
       userCCSelected: null,
       }
+  },
+  validations(){
+    return {
+      customer: {
+        first_name: { required },
+        last_name: { required },
+        email: { required, email },
+        tel: { required, minLength: minLength(9), maxLength: maxLength(10) },
+      },
+      creditCard: {
+        cc_number: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }), minLength: minLength(16), maxLength: maxLength(16), isNumeric},
+        cc_cvc: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }), minLength: minLength(3), maxLength: maxLength(3), isNumeric },
+        cc_exp: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }), isDatePattern },
+        cc_first_name: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }) },
+        cc_last_name: { required: requiredIf(function () {
+          return (this.paymentMethods === 'CreditCard' && !this.userCCSelected);
+        }) },
+      },
+    }
   },
   mounted() {
     this.axios
@@ -49,23 +88,24 @@ export default {
   },
   methods: {
     payment(){
+      this.v$.$touch;
+      if (this.v$.$invalid) {
+        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        return false;
+      }
+
       const data = {
         user_id: localStorage.getItem('user'),
-        course: this.course,
+        course: {id: this.course.id},
         customer: this.customer,
         payment_methods: this.paymentMethods,
         total: this.vat,
       }
-      if(this.paymentMethods === 'CreditCard' && this.userCCSelected === null){
+      if(this.paymentMethods === 'CreditCard' && !this.userCCSelected){
         data['creditCard'] = this.creditCard
-        console.log(data);
-
-
       }
       if(this.userCCSelected){
-          console.log(this.userCCSelected);
-          data['usingCC'] = this.userCCSelected
-          console.log(data);
+        data['usingCC'] = this.userCCSelected
       }
       
       this.axios.post(`http://localhost:3000/api/payment/`,data, {
@@ -94,18 +134,10 @@ export default {
           console.log(`remove CC ${id}`);
         })
     },
-    // uncheckCC(id) {
-    //   if(this.userCCSelected === id){
-    //     this.userCCSelected = null
-    //   } else {
-    //     this.userCCSelected = id
-    //   }
-    //   console.log(this.userCCSelected, id);
-    // },
     fetchUserCC(){
       const userData = { user_id: localStorage.getItem('user')}
       this.axios
-      .get(`http://localhost:3000/api/payment/getCredit/${userData}`)
+      .get(`http://localhost:3000/api/payment/getCredit/${userData.user_id}`)
       .then((res) => {
         this.userCreditCard = res.data
       });
@@ -168,10 +200,23 @@ export default {
               <div class="flex flex-col">
                 <label for="">อีเมล</label>
                 <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.email">
+                <template v-if="v$.customer.email.$model">
+                  <span v-if="!v$.customer.email.email.$response" class="text-red-500 text-xs">
+                    *กรอกข้อมูลไม่ถูกต้อง
+                  </span>
+                </template>
               </div>
               <div class="flex flex-col">
                 <label for="">เบอร์โทรศัพท์</label>
                 <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="customer.tel">
+                <template v-if="v$.customer.tel.$model">
+                  <span v-if="!v$.customer.tel.minLength.$response" class="text-red-500 text-xs">
+                    *กรอกข้อมูลไม่ถูกต้อง
+                  </span>
+                  <span v-if="!v$.customer.tel.maxLength.$response" class="text-red-500 text-xs">
+                    *กรอกข้อมูลไม่ถูกต้อง
+                  </span>
+                </template>
               </div>
             </div>
           </div>
@@ -210,7 +255,7 @@ export default {
 
 
 
-                <div v-for="index in userCreditCard">
+                <div v-for="(index, i) in userCreditCard">
                   <label :for="index.cc_id" :class="userCCSelected === index.cc_id ? 'border-[#E99F30]' : 'not-same'" class="flex justify-between border-2 rounded-md py-5 px-10 mt-2">
                     <div class="flex">
                       <input type="radio" name="2" :id="index.cc_id" v-model="userCCSelected" :value='index.cc_id' @click.stop>
@@ -228,7 +273,6 @@ export default {
 
 
 
-
               </div>
               <div class="border-[1px] w-full rounded-full mt-5"></div>
             </div>
@@ -237,14 +281,41 @@ export default {
                 <div class="flex flex-col">
                   <label for="">รหัสบัตรเครดิต</label>
                   <input type="text" class="border-2 w-[20em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_number">
+                  <template v-if="v$.creditCard.cc_number.$model">
+                    <span v-if="!v$.creditCard.cc_number.isNumeric.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                    <span v-if="!v$.creditCard.cc_number.minLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรอย่างน้อย 15 ตัว
+                    </span>
+                    <span v-if="!v$.creditCard.cc_number.maxLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                  </template>
                 </div>
                 <div class="flex flex-col">
                   <label label for="">CVC</label>
                   <input type="text" class="border-2 w-[5em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_cvc">
+                  <template v-if="v$.creditCard.cc_cvc.$model">
+                    <span v-if="!v$.creditCard.cc_cvc.isNumeric.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                    <span v-if="!v$.creditCard.cc_cvc.minLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรอย่างน้อย 3 ตัว
+                    </span>
+                    <span v-if="!v$.creditCard.cc_cvc.maxLength.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตร 3 ตัว
+                    </span>
+                  </template>
                </div>
                 <div class="flex flex-col">
                   <label for="">วันหมดอายุ</label>
                   <input type="text" class="border-2 w-[10em] py-1 px-2 rounded-[7px]" v-model="creditCard.cc_exp">
+                  <template v-if="v$.creditCard.cc_exp.$model">
+                    <span v-if="!v$.creditCard.cc_exp.isDatePattern.$response" class="text-red-500 text-xs">
+                      *กรอกข้อมูลบัตรไม่ถูกต้อง
+                    </span>
+                  </template>
                 </div>
               </div>
               <div class="flex justify-between mx-10">

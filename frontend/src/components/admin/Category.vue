@@ -41,8 +41,14 @@
         </tr>
       </thead>
       <tbody>
+
+        
         <tr v-for="(category, index) in filteredItems" :key="index" class="text-sm">
 
+          <!-- <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
+            <label for="">ชื่อประเภทวิชา : {{ v$.category }}</label>
+            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_name"/>
+          </td> -->
           <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
             <label for="">ชื่อประเภทวิชา :</label>
             <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_name"/>
@@ -74,23 +80,51 @@
             <button class="text-red-500 underline" @click="removingCategory(category.category_id)">Remove</button>
           </td>
         </tr>
+
+
+
+
         <tr v-if="Adding" class="text-sm">
           <td class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
-            <label for="">ชื่อประเภทวิชา :</label>
-            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_name"/>
+            <div class="flex space-x-3">
+              <label for="">ชื่อประเภทวิชา :</label>
+              <div class="flex flex-col">
+                <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_new.category_name"/>
+                <span v-if="!v$.category_new.category_name.required.$response" class="text-red-500 text-xs">
+                  *กรุณากรอกข้อมูล
+                </span>
+              </div>
+            </div>
           </td>
           <td class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
-            <label for="">รายละเอียดวิชา :</label>
-            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_detail"/>
+            <div class="flex space-x-3">
+              <label for="">รายละเอียดวิชา :</label>
+              <div class="flex flex-col">
+                <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_new.category_detail"/>
+                <span v-if="!v$.category_new.category_detail.required.$response" class="text-red-500 text-xs">
+                  *กรุณากรอกข้อมูล
+                </span>
+              </div>
+            </div>
           </td>
           <td class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
-            <label for="">สี :</label>
-            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_color"/>
+            <div class="flex space-x-3">
+              <label for="">สี :</label>
+              <div class="flex flex-col">
+                <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_new.category_color"/>
+                <span v-if="!v$.category_new.category_color.required.$response" class="text-red-500 text-xs">
+                  *กรุณากรอกข้อมูล
+                </span>
+              </div>
+            </div>
           </td>
           <td class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
             <button @click="addCategory()" class="text-green-500">Add</button>
           </td>
         </tr>
+        
+
+        
       </tbody>
     </table>
     <button @click="adding" class="mt-3">เพิ่มประเภทวิชา</button>
@@ -103,10 +137,15 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 import axios from 'axios';
 
 
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
   props: {
     category: {
       type: Object,
@@ -117,9 +156,11 @@ export default {
     return {
       searchValue: null,
       Adding: false,
-      category_name: null,
-      category_detail: null,
-      category_color: null,
+      category_new: {
+        category_name: null,
+        category_detail: null,
+        category_color: null,
+      },
       editRows: null,
       editCategory: false,
       temp: {}
@@ -130,6 +171,23 @@ export default {
     filteredItems() {
       return this.searchValue ? this.category.filter((item) => item.category_name.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())) : this.category
     },
+  },
+  validations() {
+    return {
+      category_new: {
+        category_name: { required },
+        category_detail: { required },
+        category_color: { required },
+      },
+      category: this.category.reduce((validations, item) => {
+      validations[item.category_id] = {
+        category_name: { required },
+        category_detail: { required },
+        category_color: { required },
+      };
+      return validations;
+    }, {}),
+    };
   },
   methods: {
     async removingCategory(category){
@@ -153,6 +211,10 @@ export default {
       }
     },
     async updateCategory(category){
+      if (this.v$.$invalid) {
+        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        return false;
+      }
       // API HERE
       await axios.put(`http://localhost:3000/api/category/updateCategory/${category.category_id}`, {
         category_name: category.category_name,
@@ -169,10 +231,15 @@ export default {
       })
     },
     addCategory(){
+      if (this.v$.$invalid) {
+        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+        return false;
+      }
+      
       const data = {
-        category_name: this.category_name,
-        category_detail: this.category_detail,
-        category_color: this.category_color ? this.category_color: null,
+        category_name: this.category_new.category_name,
+        category_detail: this.category_new.category_detail,
+        category_color: this.category_new.category_color ? this.category_new.category_color: null,
       }
       this.axios.post("http://localhost:3000/api/category/addCategory/", data, {
         headers: {
