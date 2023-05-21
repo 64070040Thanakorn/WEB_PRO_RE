@@ -1,4 +1,5 @@
 <script setup>
+import Register from '../components/auth/register.vue';
 import Quiz from '../components/landing/landing_quiz.vue';
 import Total from '../components/landing/landing_total.vue';
 import Landing_Card from '../components/mini_card.vue';
@@ -29,10 +30,21 @@ export default {
       this.random_course_item = response.data;
     });
   },
+  components:{
+    Register,
+  },
   data() {
     return {
-      random_course_item: []
+      random_course_item: [],
+      user: null,
+      isActive_Login: false,
+      isActive_Register: false,
+      isActive_auth: false,
+      isOpen: false,
     }
+  },
+  mounted(){
+    this.user = localStorage.getItem('user')
   },
   methods: {
     scrollToTop() {
@@ -41,12 +53,43 @@ export default {
     viewCourse() {
       this.$router.push("/search");
       window.scrollTo(0, 0);
-    }
+    },
+    closing_auth(){
+      if(this.isActive_Login){
+        this.isOpen = !this.isOpen
+        this.isActive_Login = !this.isActive_Login
+      }
+      if(this.isActive_Register){
+        this.isOpen = !this.isOpen
+        this.isActive_Register = !this.isActive_Register
+      }
+    },
+    toggleModal(el) {
+      this.isOpen = !this.isOpen
+      switch(el) {
+        case "register":
+          this.isActive_Register = !this.isActive_Register
+
+          break;
+        default:
+          return 0
+      }
+    },
+    onAuthChange(){
+      window.location.reload()
+    },
   }
 }
 </script>
 
 <template>
+  <div v-if="isOpen" class="w-full z-[50] fixed">
+    <div class="absolute left-1/2 translate-x-[-50%] w-full h-screen flex justify-center items-center">
+      <div class="bg-black w-full h-full absolute opacity-80"></div>
+      <Register v-if="isActive_Register" @auth-change="onAuthChange" @modal_close="closing_auth()"/>
+    </div>
+  </div>
+  
   <section>
     <div class="flex justify-center bg-landing-01 bg-no-repeat bg-cover w-full h-[1080px]">
       <div class="flex justify-start mt-72 space-x-36 text-white">
@@ -58,7 +101,14 @@ export default {
             เรียนรู้ไปด้วยกันกับเรา GREATER “ไม่เคยหยุดนิ่ง”<br>
             โดย สถาบันพระจอมเกล้าคุณทหารลาดกระบัง
           </p>
-          <button id="btn" class="transition-all duration-200 border-2 rounded-md hover:bg-[#EBC919]/80  border-[#EBC919] py-2 px-6 font-extralight">ลงทะเบียนเลยวันนี้</button>
+          <div v-if="!user">
+            <button @click="toggleModal('register')" id="btn" class="transition-all duration-200 border-2 rounded-md hover:bg-[#EBC919]/80  border-[#EBC919] py-2 px-6 font-extralight">ลงทะเบียนเลยวันนี้</button>
+          </div>
+          <div v-else>
+            <RouterLink to="/search">
+              <button id="btn" class="transition-all duration-200 border-2 rounded-md hover:bg-[#EBC919]/80  border-[#EBC919] py-2 px-6 font-extralight">ค้นหาคอร์สเรียนเลย!</button>
+            </RouterLink>
+          </div>
         </div>
       </div>
     </div>
