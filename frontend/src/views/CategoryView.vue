@@ -38,27 +38,25 @@ export default {
   },
   data() {
     return {
-      isActiveCate: true,
-      isActiveLevel: true,
-      isActivePrice: true,
-      isActiveAmount: true,
-      isActiveCer: true,
-      isActiveLesson: true,
+      checkSelected: [],
+      selectedOptions: {},
+      options: [
+        { id: "level1", label: "ระดับเริ่มต้น", name: "level", title: "ระดับ" },
+        { id: "level2", label: "ระดับกลาง", name: "level", title: "ระดับ"  },
+        { id: "level3", label: "ระดับสูง", name: "level", title: "ระดับ"  },
+        { id: "price1000", label: "0-1000 บาท", name: "price", title: "ราคา"  },
+        { id: "price2000", label: "0-2000 บาท", name: "price", title: "ราคา"  },
+        { id: "price3000", label: "0-3000 บาท", name: "price", title: "ราคา"  },
+        { id: "full", label: "เต็ม", name: "amount", title: "จำนวนคน"  },
+        { id: "notfull", label: "ไม่เต็ม", name: "amount", title: "จำนวนคน"  },
+        { id: "cer", label: "มี", name: "certificate", title: "ใบ Certificate"  },
+        { id: "notcer", label: "ไม่มี", name: "certificate", title: "ใบ Certificate"  },
+        { id: "lesson4", label: "0-4 บท", name: "lesson", title: "บทเรียน"  },
+        { id: "lesson16", label: "0-16 บท", name: "lesson", title: "บทเรียน"  },
+        { id: "lesson24", label: "0-24 บท", name: "lesson", title: "บทเรียน"  },
+      ],
       searchValue: null,
-      beginner: null,
-      intermediate: null,
-      advanced: null,
-      priceFree: null,
-      price1To1000: null,
-      price1001To3000: null,
-      price3000: null,
-      amountFull: null,
-      amountNotFull: null,
-      cerHave: null,
-      cerNot: null,
-      lesson0To4: null,
-      lesson5To15: null,
-      lesson16: null,
+      isActive: true,
       page_category: [],
       course_item: [],
       category: [],
@@ -69,6 +67,70 @@ export default {
     };
   },
   computed: {
+    selectedOptionsArray() {
+      return Object.keys(this.selectedOptions)
+        .map((key) => key)
+        .filter((key) => this.selectedOptions[key]);
+    },
+    filteredOptions() {
+      if (this.checkSelected.length < 1) {
+        return this.filteredItems;
+      }
+      return this.filteredItems.filter((item) => {
+        if (this.selectedOptions.level1 && item.level === "ระดับเริ่มต้น") {
+          return true;
+        }
+
+        if (this.selectedOptions.level2 && item.level === "ระดับกลาง") {
+          return true;
+        }
+
+        if (this.selectedOptions.level3 && item.level === "ระดับสูง") {
+          return true;
+        }
+
+        if (this.selectedOptions.price1000 && item.price <= 1000) {
+          return true;
+        }
+
+        if (this.selectedOptions.price2000 && item.price <= 2000) {
+          return true;
+        }
+
+        if (this.selectedOptions.price3000 && item.price <= 3000) {
+          return true;
+        }
+
+        if (this.selectedOptions.full && item.amount <= item.enrolled.length) {
+          return true;
+        }
+        if (this.selectedOptions.notfull && item.amount > item.enrolled.length) {
+          return true;
+        }
+
+        if (this.selectedOptions.cer && item.certificate) {
+          return true;
+        }
+
+        if (this.selectedOptions.notcer && !item.certificate) {
+          return true;
+        }
+
+        if (this.selectedOptions.lesson4 && item.lesson <= 4) {
+          return true;
+        }
+
+        if (this.selectedOptions.lesson16 && item.lesson <= 16) {
+          return true;
+        }
+
+        if (this.selectedOptions.lesson24 && item.lesson <= 24) {
+          return true;
+        }
+
+        return false;
+      });
+    },
     pageAmount() {
       return Math.ceil(this.items.length / 12);
     },
@@ -85,20 +147,7 @@ export default {
   },
   methods: {
     clearFilter() {
-      this.beginner = null;
-      this.intermediate = null;
-      this.advanced = null;
-      this.priceFree = null;
-      this.price1To1000 = null;
-      this.price1001To3000 = null;
-      this.price3000 = null;
-      this.amountFull = null;
-      this.amountNotFull = null;
-      this.cerHave = null;
-      this.cerNot = null;
-      this.lesson0To4 = null;
-      this.lesson5To15 = null;
-      this.lesson16 = null;
+      this.selectedOptions = {};
     },
     showHide(header, content, bottom, bool, value) {
       if (bool) {
@@ -141,6 +190,12 @@ export default {
     },
     scrollToTop() {
       window.scrollTo(0, 0);
+    },
+  },
+  watch: {
+    selectedOptionsArray(newValues) {
+      this.checkSelected = newValues;
+      console.log(this.checkSelected); // Perform any desired action with the updated array
     },
   },
 };
@@ -216,12 +271,10 @@ export default {
           </div>
 
           <!-- lower side-bar -->
-          <div class="mt-8 mb-8">
+          <div class="mt-8 mb-56">
             <div class="flex flex-col">
               <div class="flex items-center">
-                <h3 class="text-2xl font-normal">
-                  {{ course_item.category_name }} Course
-                </h3>
+                <h3 class="text-2xl font-normal">All Course</h3>
               </div>
               <p class="text-xs underline font-light text-[#676767]">
                 {{ item_length }} ผลลัพท์
@@ -242,290 +295,32 @@ export default {
                   ล้างกรอง
                 </button>
               </div>
-              <div class="flex flex-col gap-2 dropdown">
-                <button
-                  type="button"
-                  class="flex justify-between items-center"
-                  @click="
-                    showHide(
-                      '.level-icon',
-                      '.level-content',
-                      '.level-bottom',
-                      isActiveLevel,
-                      -90
-                    ),
-                      (isActiveLevel = !isActiveLevel)
-                  "
-                >
-                  <p class="text-lg font-normal">ระดับ</p>
-                  <i class="pi pi-chevron-up level-icon"></i>
-                </button>
-                <div class="level-content">
-                  <div class="ml-3 gap-2 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="beginner"
-                        type="checkbox"
-                        name="level"
-                        value="beginner"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="beginner"
-                      />
-                      <label for="beginner" class="font-light">ระดับเริ่มต้น</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="intermediate"
-                        type="checkbox"
-                        name="level"
-                        value="intermediate"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="intermediate"
-                      />
-                      <label for="intermediate" class="font-light">ระดับกลาง</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="advanced"
-                        type="checkbox"
-                        name="level"
-                        value="advanced"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="advanced"
-                      />
-                      <label for="advanced" class="font-light">ระดับสูง</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="flex flex-col gap-2 dropdown level-bottom">
-                <hr class="border-[1.2px]" />
-                <button
-                  type="button"
-                  class="flex justify-between items-center"
-                  @click="
-                    showHide(
-                      '.price-icon',
-                      '.price-content',
-                      '.price-bottom',
-                      isActivePrice,
-                      -120
-                    ),
-                      (isActivePrice = !isActivePrice)
-                  "
-                >
-                  <p class="text-lg font-normal">ราคา</p>
-                  <i class="pi pi-chevron-up price-icon"></i>
-                </button>
-                <div class="price-content">
-                  <div class="ml-3 gap-2 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="priceFree"
-                        type="checkbox"
-                        name="priceFree"
-                        value="priceFree"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="priceFree"
-                      />
-                      <label for="priceFree" class="font-light">ฟรี</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="price1To1000"
-                        type="checkbox"
-                        name="price1To1000"
-                        value="price1To1000"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="price1To1000"
-                      />
-                      <label for="price1To1000" class="font-light">1-1000 บาท</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="price1001To3000"
-                        type="checkbox"
-                        name="price1001To3000"
-                        value="price1001To3000"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="price1001To3000"
-                      />
-                      <label for="price1001To3000" class="font-light"
-                        >1001-3000 บาท</label
-                      >
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="price3000"
-                        type="checkbox"
-                        name="price3000"
-                        value="price3000"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="price3000"
-                      />
-                      <label for="price3000" class="font-light">มากกว่า 3000 บาท</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="flex flex-col gap-2 dropdown price-bottom level-bottom">
-                <hr class="border-[1.2px]" />
-                <button
-                  type="button"
-                  class="flex justify-between items-center"
-                  @click="
-                    showHide(
-                      '.amount-icon',
-                      '.amount-content',
-                      '.amount-bottom',
-                      isActiveAmount,
-                      -60
-                    ),
-                      (isActiveAmount = !isActiveAmount)
-                  "
-                >
-                  <p class="text-lg font-normal">จำนวนคน</p>
-                  <i class="pi pi-chevron-up amount-icon"></i>
-                </button>
-                <div class="amount-content">
-                  <div class="ml-3 gap-2 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="amountFull"
-                        type="checkbox"
-                        name="amountFull"
-                        value="amountFull"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="amountFull"
-                      />
-                      <label for="amountFull" class="font-light">เต็ม</label>
+              <!-- filter -->
+              <section class="flex flex-col dropdown gap-4">
+                <template v-for="(item, index) in options" :key="index">
+                    <button v-if="index === 0 || item.name != options[index-1].name"
+                      type="button"
+                      class="flex justify-between items-center"
+                      @click="showHide(`.${item.name}-icon`, `.${item.name}-content`, null, isActive), (isActive = !isActive)">
+                      <p class="text-lg font-normal">{{item.title}}</p>
+                      <i class="pi pi-chevron-up" :class="`${item.name}-icon`"></i>
+                    </button>
+                    <div :class="`${item.name}-content`">
+                      <div class="ml-3 gap-2 flex flex-col">
+                        <div class="flex items-center gap-2" >
+                            <input :id="item.id" type="checkbox" class="p-2 border-2 border-black inline-block" v-model="selectedOptions[item.id]"/>
+                            <label :for="item.id" class="font-light">{{item.label}}</label>
+                        </div>
+                      </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="amountNotFull"
-                        type="checkbox"
-                        name="amountNotFull"
-                        value="amountNotFull"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="amountNotFull"
-                      />
-                      <label for="amountNotFull" class="font-light">ไม่เต็ม</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    <template v-if="index === options.length - 1 || item.name !== options[index + 1].name">
+                      <hr class="border-[1.2px]" />
+                    </template>
+                </template>
+              </section>
 
-              <div
-                class="flex flex-col gap-2 dropdown amount-bottom price-bottom level-bottom"
-              >
-                <hr class="border-[1.2px]" />
-                <button
-                  type="button"
-                  class="flex justify-between items-center"
-                  @click="
-                    showHide(
-                      '.cer-icon',
-                      '.cer-content',
-                      '.cer-bottom',
-                      isActiveCer,
-                      -60
-                    ),
-                      (isActiveCer = !isActiveCer)
-                  "
-                >
-                  <p class="text-lg font-normal">ใบ Certificate</p>
-                  <i class="pi pi-chevron-up cer-icon"></i>
-                </button>
-                <div class="cer-content">
-                  <div class="ml-3 gap-2 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="cerHave"
-                        type="checkbox"
-                        name="cerHave"
-                        value="cerHave"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="cerHave"
-                      />
-                      <label for="cerHave" class="font-light">มี</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="cerNot"
-                        type="checkbox"
-                        name="cerNot"
-                        value="cerNot"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="cerNot"
-                      />
-                      <label for="cerNot" class="font-light">ไม่มี</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="flex flex-col gap-2 dropdown level-bottom price-bottom amount-bottom cer-bottom"
-              >
-                <hr class="border-[1.2px]" />
-                <button
-                  type="button"
-                  class="flex justify-between items-center"
-                  @click="
-                    showHide(
-                      '.lesson-icon',
-                      '.lesson-content',
-                      null,
-                      isActiveLesson,
-                      -60
-                    ),
-                      (isActiveLesson = !isActiveLesson)
-                  "
-                >
-                  <p class="text-lg font-normal">บทเรียน</p>
-                  <i class="pi pi-chevron-up lesson-icon"></i>
-                </button>
-                <div class="lesson-content">
-                  <div class="ml-3 gap-2 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="lesson0To4"
-                        type="checkbox"
-                        name="lesson0To4"
-                        value="lesson0To4"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="lesson0To4"
-                      />
-                      <label for="lesson0To4" class="font-light">0 - 4 บท</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="lesson5To15"
-                        type="checkbox"
-                        name="lesson5To15"
-                        value="lesson5To15"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="lesson5To15"
-                      />
-                      <label for="lesson5To15" class="font-light">5 - 15 บท</label>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <input
-                        id="lesson16"
-                        type="checkbox"
-                        name="lesson16"
-                        value="lesson16"
-                        class="p-2 border-2 border-black inline-block"
-                        v-model="lesson16"
-                      />
-                      <label for="lesson16" class="font-light">16+ บท</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="level-bottom price-bottom amount-bottom cer-bottom lesson-bottom"></div> -->
             </div>
           </div>
         </div>
@@ -555,7 +350,7 @@ export default {
         <div
           class="grid grid-cols-4 justify-items-center px-12 py-12 gap-y-10 gap-x-1 mb-20"
         >
-          <div v-for="item in filteredItems">
+          <div v-for="item in filteredOptions">
             <!-- <Main_card :item="item" /> -->
             <Main_card :item="item" :user-log_on="userLog_on" />
           </div>
