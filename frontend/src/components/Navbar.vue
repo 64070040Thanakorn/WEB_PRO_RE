@@ -74,37 +74,28 @@ export default {
       localStorage.removeItem('role')
       this.$router.push("/")
       this.user = null
+      window.location.reload();
     },
     closing_auth(){
-      console.log('closing auth');
       if(this.isActive_Login){
         this.isOpen = !this.isOpen
         this.isActive_Login = !this.isActive_Login
-        console.log("closing : login")
       }
       if(this.isActive_Register){
         this.isOpen = !this.isOpen
         this.isActive_Register = !this.isActive_Register
-          console.log("closing : register")
       }
     },
     toggleModal(el) {
       this.isOpen = !this.isOpen
       switch(el) {
         case "login":
-          console.log('opening : login')
           this.isActive_Login = !this.isActive_Login
-        console.log(this.isOpen, this.isActive_Login);
-
           break;
         case "register":
-          console.log('opening: register')
           this.isActive_Register = !this.isActive_Register
-          console.log(this.isOpen, this.isActive_Register);
-
           break;
         default:
-          console.log('nothing..');
           return 0
       }
     },
