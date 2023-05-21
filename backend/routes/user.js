@@ -36,6 +36,7 @@ router.get("/all", async(req, res, next) => {
 
 
 const updateUserSchema = Joi.object({
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
   first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
   last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
   phone: Joi.string().min(10).max(10).error(new Error('กรอกข้อมูลมือถือผิดพลาด')),
@@ -61,7 +62,7 @@ router.put("/", async(req, res, next) => {
     });
     user.password = undefined
 
-    res.status(200)
+    res.status(200).send('ok')
   } catch (err) {
     res.status(500).json({message: err.message})
   }
