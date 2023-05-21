@@ -42,17 +42,36 @@
       </thead>
       <tbody>
         <tr v-for="(category, index) in filteredItems" :key="index" class="text-sm">
-          <td class="border-b border-[#F4F4F4] px-4 py-3">
+
+          <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
+            <label for="">ชื่อประเภทวิชา :</label>
+            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_name"/>
+          </td>
+          <td v-else class="border-b border-[#F4F4F4] px-4 py-3">
             {{ category.category_name }}
           </td>
-          <td class="border-b border-[#F4F4F4] px-4 py-3">
+
+          <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
+            <label for="">รายละเอียดวิชา :</label>
+            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_detail"/>
+          </td>
+          <td v-else class="border-b border-[#F4F4F4] px-4 py-3">
             {{ category.category_detail }}
           </td>
-          <td class="border-b border-[#F4F4F4] px-4 py-3">
+          <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
+            <label for="">สี :</label>
+            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_color"/>
+          </td>
+          <td v-else class="border-b border-[#F4F4F4] px-4 py-3">
             {{ category.category_color }}
           </td>
-          <td class="border-b border-[#F4F4F4] px-4 py-3">
-            <button class="text-red-500" @click="removingCategory(category.category_id)">Remove</button>
+          <td v-if="editCategory && editRows === index" class="flex space-x-2 justify-center items-center border-b border-[#F4F4F4] px-4 py-3">
+            <button class="underline" @click="edit(index)">Cancel</button>
+            <button class="text-green-500 underline" @click="updateCategory(category)">Save</button>
+          </td>
+          <td v-else class="flex space-x-2 justify-center items-center border-b border-[#F4F4F4] px-4 py-3">
+            <button class="underline" @click="edit(index)">Edit</button>
+            <button class="text-red-500 underline" @click="removingCategory(category.category_id)">Remove</button>
           </td>
         </tr>
         <tr v-if="Adding" class="text-sm">
@@ -100,7 +119,9 @@ export default {
       Adding: false,
       category_name: null,
       category_detail: null,
-      category_color: null
+      category_color: null,
+      editRows: null,
+      editCategory: false,
     }
   },
   emits: ['category-change'],
@@ -115,6 +136,20 @@ export default {
         .then(res => {
           this.$emit('category-change')
         })
+    },
+    edit(index){
+      this.editCategory = !this.editCategory
+      if(this.editCategory){
+        this.editRows = index
+        console.log(this.editCategory ,this.editRows);
+      } else {
+        this.editRows = null
+        console.log(this.editCategory, this.editRows);
+      }
+    },
+    updateCategory(category){
+      console.log(category);
+      // API HERE
     },
     addCategory(){
       const data = {

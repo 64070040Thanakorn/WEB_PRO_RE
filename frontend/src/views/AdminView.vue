@@ -83,9 +83,9 @@ export default {
       userLog_on: {},
       course: [],
       category: [],
-      courseComponent: true,
+      courseComponent: false,
       userComponent: false,
-      categoryComponent: false,
+      categoryComponent: true,
     };
   },
   beforeCreate() {
