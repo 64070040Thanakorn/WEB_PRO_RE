@@ -57,6 +57,13 @@ export default {
       .then((res) => {
         this.user = res.data;
       });
+
+    this.axios
+      .get(`http://localhost:3000/api/course/getEnrolledCourse/by/?user_id=${localStorage.getItem('user')}&course_id=${this.$route.params.course_id}`, {
+      })
+      .then((res) => {
+        this.check_enrolled = res.data;
+      });
   },
   mounted() {
     this.user = localStorage.getItem("user");
@@ -70,6 +77,7 @@ export default {
       category_color: [],
       comments: [],
       enrolled: [],
+      check_enrolled: [],
       user: {},
       userLog_on: {},
     };
@@ -108,13 +116,19 @@ export default {
   <div class="px-72 pt-20 pb-40">
     <div class="mx-12 space-y-10">
       <div class="bg-white px-12 py-5 h-[328px] space-y-6">
-        <div class="flex space-x-4 text-white">
+        <div class="flex space-x-4 text-white justify-between items-center">
           <p
             class="px-4 py-2 rounded-full"
             :style="`background-color: ${category_color}`"
           >
             {{ category_name }}
           </p>
+          <div class="text-green-500 text-xl bg-black/5 px-4 py-2 rounded-md" v-if="this.user && this.check_enrolled.length > 0">
+            <span class="text-gray-01 font-light">status: </span>คุณกำลังเรียนคอร์สนี้อยู่
+          </div>
+          <div class="text-red-700 text-xl bg-black/5 px-4 py-2 rounded-md" v-if="this.user && this.check_enrolled.length < 1">
+            <span class="text-gray-01 font-light">status: </span>คุณไม่ได้เรียนคอร์สนี้
+          </div>
         </div>
         <div class="flex justify-between items-center">
           <h1 class="text-[36px]">{{ course_item.title }}</h1>
@@ -153,12 +167,19 @@ export default {
           {{ course_item.description }}
         </p>
         <div class="flex">
-          <div v-if="this.user && this.user.role !== 'Admin'">
+          <div v-if="this.user && this.user.role !== 'Admin' && this.check_enrolled.length < 1 && !(this.course_item.amount <= this.enrolled.length)">
             <RouterLink :to="`/payment/${$route.params.course_id}`">
               <div @click="payment101" class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">
                 ลงคอร์สเรียน
               </div>
             </RouterLink>
+          </div>
+          <div v-if="(this.course_item.amount <= this.enrolled.length) && this.user && this.user.role !== 'Admin'">
+            <button>
+              <div class="rounded bg-black/40 text-white px-12 py-2 hover:bg-black/30">
+                คอร์สเรียนเต็มแล้ว
+              </div>
+            </button>
           </div>
         </div>
       </div>

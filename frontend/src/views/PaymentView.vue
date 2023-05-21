@@ -125,8 +125,8 @@ export default {
           
           <div class="flex justify-between px-2 py-5">
             <div class="flex">
-              <div class="bg-gray-200 w-[230px] h-[120px] rounded-xl mr-4 overflow-hidden">
-                <img :src="course.img ? `http://localhost:3000/images/${course.img}` : 0" alt="">
+              <div class="bg-gray-200 w-[230px] h-[120px] rounded-xl mr-4 overflow-hidden flex items-center">
+                <img :src="course.img ? `http://localhost:3000/images/${course.img}` : 'https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png'" alt="">
               </div>
               <div>
                 <p>{{ course.name }}</p>

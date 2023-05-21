@@ -196,6 +196,25 @@ router.get("/getEnrolled/:user_id", async (req, res) => {
   }
 });
 
+
+// get all enrolled by student id and course_id
+router.get("/getEnrolledCourse/by/", async (req, res) => {
+  const {user_id, course_id} = req.query
+  try {
+    const getCourse = await prisma.enroll.findMany({
+      where: {
+        AND: [
+          {user_id: user_id},
+          {course_id: course_id}
+        ]
+      },
+    });
+    res.status(200).json(getCourse);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 // Delete Course
 router.delete("/deleteCourse/:course_id", async (req, res) => {
   try {

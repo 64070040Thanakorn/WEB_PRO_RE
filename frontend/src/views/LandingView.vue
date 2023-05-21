@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      random_course_item: []
+      random_course_item: [],
     }
   },
   methods: {

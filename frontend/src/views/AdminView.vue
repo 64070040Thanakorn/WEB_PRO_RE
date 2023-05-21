@@ -4,7 +4,7 @@
       <div class="flex justify-between">
         <div>
           <h1 class="text-4xl">Dashboard</h1>
-          <p class="text-gray-400">Lorem ipsum dolor sit amet.</p>
+          <p class="text-gray-400">จัดการข้อมูลต่างๆของคอร์สเรียน, รายวิชา, และผู้ใช้งาน</p>
         </div>
         <div class="flex space-x-7">
           <div class="flex flex-col space-y-5 p-2 w-[7vw]">
@@ -27,31 +27,25 @@
       <div class="flex flex-col space-y-5">
         <div class="mr-20">
           <ul class="flex">
-            <div @click="changeComponent('category')">
-              <li
-                id="user_interface"
-                :class="categoryComponent ? 'underline' : ''"
-                class="px-4 py-2 rounded"
-              >
-                รายวิชา
+            <div @click="changeComponent('course')">
+              <li id="course_interface" :class="courseComponent ? 'underline' : ''" class="px-4 py-2 rounded">
+                <div class="cursor-pointer">
+                  คอร์สเรียน
+                </div>
               </li>
             </div>
-            <div @click="changeComponent('course')">
-              <li
-                id="course_interface"
-                :class="courseComponent ? 'underline' : ''"
-                class="px-4 py-2 rounded"
-              >
-                คอร์สเรียน
+            <div @click="changeComponent('category')">
+              <li id="user_interface" :class="categoryComponent ? 'underline' : ''" class="px-4 py-2 rounded">
+                <div class="cursor-pointer">
+                  รายวิชา
+                </div>
               </li>
             </div>
             <div @click="changeComponent('user')">
-              <li
-                id="user_interface"
-                :class="userComponent ? 'underline' : ''"
-                class="px-4 py-2 rounded"
-              >
-                ข้อมูลผู้ใช้
+              <li id="user_interface" :class="userComponent ? 'underline' : ''" class="px-4 py-2 rounded">
+                <div class="cursor-pointer">
+                  ข้อมูลผู้ใช้
+                </div>
               </li>
             </div>
           </ul>
@@ -83,9 +77,9 @@ export default {
       userLog_on: {},
       course: [],
       category: [],
-      courseComponent: false,
+      courseComponent: true,
       userComponent: false,
-      categoryComponent: true,
+      categoryComponent: false,
     };
   },
   beforeCreate() {

@@ -10,7 +10,7 @@
           placeholder="ค้นหาคอร์สเรียน"
         />
       </form>
-      <div class="flex mx-2">
+      <!-- <div class="flex mx-2">
         <button
           data-dropdown-toggle="dropdown"
           class="text-black border border-gray-950 bg-white font-medium rounded-3xl text-sm w-36 px-2 py-2 text-center inline-flex justify-center items-center"
@@ -33,14 +33,8 @@
             ></path>
           </svg>
         </button>
-        <div
-          id="dropdown"
-          class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-48"
-        >
-          <ul
-            class="py-2 text-sm text-gray-700 text-center"
-            aria-labelledby="dropdownDefaultButton"
-          >
+        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-48">
+          <ul class="py-2 text-sm text-gray-700 text-center" aria-labelledby="dropdownDefaultButton">
             <li>
               <a href="#" class="block px-4 py-2 hover:bg-gray-100">A - Z</a>
             </li>
@@ -53,13 +47,11 @@
               >
             </li>
             <li>
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                >วันที่ลงเรียน : (หลัง - ก่อน)</a
-              >
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100">วันที่ลงเรียน : (หลัง - ก่อน)</a>
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div v-if="course.length > 0" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-4 mb-12 justify-items-center">

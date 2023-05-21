@@ -47,12 +47,17 @@ export default {
       paymentComponent: false,
     }
   },
-  
   mounted() {
     this.getUser();
     const token = localStorage.getItem('token')
+    const role = localStorage.getItem('role')
+
     if(!token) {
       this.$router.push('/')
+    }
+
+    if (role === 'Admin') {
+      this.$router.push('/dashboard')
     }
   },
   methods: {

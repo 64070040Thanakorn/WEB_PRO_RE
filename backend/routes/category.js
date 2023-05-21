@@ -90,12 +90,35 @@ router.post("/addCategory", async(req, res) => {
   }
 })
 
+// update category
+
+router.put("/updateCategory/:category_id", async(req, res) => {
+  const {category_name, category_detail, category_color} = req.body
+
+  try {
+    const category = await prisma.category.update({
+      where: {
+        category_id: req.params.category_id
+      },
+      data: {
+        category_name: category_name,
+        category_detail: category_detail,
+        category_color: category_color
+      }
+    })
+    res.json(category)
+  } catch (error) {
+    res.json({message: error.message})
+  }
+})
+
+
 const removeCateSchema = Joi.object({
   category_id: Joi.string().required().error(new Error('ต้องกรอก category_id'))
 })
 // delete category
 router.delete("/delete/:category_id", async (req, res, next) => {
-  const { error, value } = addCateSchema.validate(req.params)
+  const { error, value } = removeCateSchema.validate(req.params)
   if(error){
     return res.status(400).json({ message: error.message})
   }
