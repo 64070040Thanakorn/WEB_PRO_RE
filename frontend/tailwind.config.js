@@ -24,7 +24,10 @@ module.exports = {
         'orange': {
           '01': '#E99F30',
           'hover': '#cf8c29',
-        }
+        },
+        'black1': {
+          'hover': '#2E2E2E'
+        },
       }
     },
   },

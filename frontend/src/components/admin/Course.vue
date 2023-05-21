@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between">
     <label for="" class="text-4xl mx-4">คอร์สเรียน</label>
-    <div class="flex w-[ุ50%]">
+    <div class="flex w-[50%]">
       <form class="w-full">
         <input id="" type="search" class="block w-full px-4 py-2 text-sm text-gray-900 border border-gray-950 rounded-3xl" placeholder="ค้นหาคอร์สเรียน" v-model="searchValue">
       </form>
@@ -30,9 +30,9 @@
       </div>
     </div>
   </div>
-  <div v-if="1" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 mt-4 mb-12 mx-7 justify-center items-center">
+  <div v-if="course.length > 0" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 mt-4 mb-12 mx-7 justify-center items-center">
     <div v-for="item in filteredItems">
-      <Main_card :item="item" :userLog_on="userLog_on"/>
+      <Main_card :item="item" :userLog_on="userLog_on" @change-delete="changeCourse()"/>
     </div>
     <RouterLink to="/create">
       <Create_card :userLog_on="userLog_on"/>
@@ -65,6 +65,7 @@ export default {
       type: Object,
     }
   },
+  emits: ['changeCourse'],
   data() {
     return {
       searchValue: null,
@@ -76,8 +77,8 @@ export default {
     },
   },
   methods: {
-    async getCourse(){
-      await axios.get('http//localhost:3000/api/course')
+    changeCourse() {
+      this.$emit("changeCourse", "change-course")
     }
   }
 }

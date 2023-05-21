@@ -79,13 +79,22 @@ router.get("/randomCourse/:amount", async (req, res, next) => {
   }
 });
 
+const convertToBoolean = (value) => {
+  if (value === "false") {
+    return false;
+  } else {
+    return Boolean(value);
+  }
+}
+
 // create course
 router.post("/createCourse", upload.single("fileupload"), async (req, res, next) => {
-  const course_image = req.file;
+  const course_image = req.file ? req.file.filename : null
   const { title, category_id, description, info, price, level, certificate, lesson, amount, start_date, end_date } =
     req.body;
 
   try {
+
     const course = await prisma.course.create({
       data: {
         title: title,
@@ -94,14 +103,12 @@ router.post("/createCourse", upload.single("fileupload"), async (req, res, next)
         info: info,
         price: Number(price),
         level: level,
-        certificate: Boolean(certificate),
+        certificate: convertToBoolean(certificate),
         lesson: Number(lesson),
         amount: Number(amount),
         start_date: new Date(start_date),
         end_date: new Date(end_date),
-        course_image: course_image
-          ? course_image.filename
-          : "https://media.discordapp.net/attachments/1067453596351856650/1096913733281927369/no-picture-available-placeholder-thumbnail-icon-illustration-design.png",
+        course_image: course_image,
       },
     });
     res.status(201).json(course);
@@ -123,6 +130,17 @@ router.post("/enroll/:course_id", async (req, res) => {
       },
     });
     res.status(200).json(enroll);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// get all enroll
+router.get("/getEnrolled/all", async (req, res) => {
+  try {
+    const getEnroll = await prisma.enroll.findMany({
+    });
+    res.status(200).json(getEnroll);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -176,9 +194,9 @@ router.put("/updateCourse/", upload.single("fileupload"), async (req, res) => {
     data["end_date"] = new Date(data["end_date"]);
     data["price"] = Number(data["price"]);
     data["lesson"] = Number(data["lesson"]);
-    data["certificate"] = Boolean(data["lesson"]);
+    data["certificate"] = convertToBoolean(data["certificate"]);
     data["amount"] = Number(data["amount"]);
-
+    console.log(data["certificate"]);
     if (file) {
       data["course_image"] = file.filename;
     }

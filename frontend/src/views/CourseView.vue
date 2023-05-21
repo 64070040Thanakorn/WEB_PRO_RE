@@ -51,12 +51,12 @@ export default {
       .then((response) => {
         this.comments = response.data;
       });
-    if(this.user){
-      this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
-        .then(res => {
-          this.userLog_on = res.data
-        })
-    }
+
+    this.axios
+      .get(`http://localhost:3000/api/user/by/${localStorage.getItem("user")}`)
+      .then((res) => {
+        this.user = res.data;
+      });
   },
   mounted() {
     this.user = localStorage.getItem("user");
@@ -78,6 +78,13 @@ export default {
     toggleComponent() {
       this.showComponent = !this.showComponent;
     },
+    fetchComment() {
+      this.axios
+      .get(`http://localhost:3000/api/comment/${this.$route.params.course_id}`)
+      .then((response) => {
+        this.comments = response.data;
+      });
+    }
   },
 };
 </script>
@@ -142,7 +149,7 @@ export default {
           {{ course_item.description }}
         </p>
         <div class="flex">
-          <div v-if="this.user">
+          <div v-if="this.user && this.user.role !== 'Admin'">
             <RouterLink :to="`/payment/${$route.params.course_id}`">
               <div class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">
                 ลงคอร์สเรียน
@@ -212,7 +219,7 @@ export default {
           <CourseDetail :course_info="course_item.info" />
         </div>
         <div v-else>
-          <CourseReview :user="user" :comments="comments" />
+          <CourseReview :user="user" :comments="comments" @comment-change="fetchComment()"/>
         </div>
       </div>
     </div>
@@ -238,8 +245,7 @@ export default {
     <div class="flex gap-x-7 justify-center mt-8">
       <div v-for="item in random_course_item">
         <!-- <main_card :item="item" :userLog_on="user"/> -->
-        <Main_card :item="item" :user-log_on="userLog_on"/>
-
+        <Main_card :item="item" :user-log_on="userLog_on" />
       </div>
     </div>
   </div>

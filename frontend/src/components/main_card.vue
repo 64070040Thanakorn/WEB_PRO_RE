@@ -99,15 +99,20 @@
         <p class="flex justify-end text-[#467A55] py-2">{{ item.price }} บาท</p>
         <div>
           <RouterLink :to="{ name: 'course', params: { course_id: item.course_id } }" target="" @click="scrollToTop">
-            <div class="bg-black text-white py-1 rounded-[3px] text-center hover:bg-[#2E2E2E]">
+            <div class="bg-black text-white py-1 rounded-[3px] text-center hover:bg-black1-hover">
               ดูคอร์สเรียน
             </div>
           </RouterLink>
-          <RouterLink :to="`/edit/${item.course_id}`">
-            <div v-if="userLog_on.role === 'Admin'" class="bg-white py-1 rounded-[3px] text-center border-2 border-black mt-2">
+
+          <div v-if="userLog_on.role === 'Admin'" class="flex justify-between">
+            <RouterLink :to="`/edit/${item.course_id}`" class="bg-white hover:bg-gray-200 py-1 rounded-[3px] text-center border-2 border-black mt-2 w-full">
               แก้ไขคอร์เรียน
-            </div>
-          </RouterLink>
+            </RouterLink>
+            <button class="bg-red-500 hover:bg-red-700 text-white py-1 rounded-[3px] text-center border-2 border-black mt-2 w-full" @click="deleteCourse(item.course_id)">
+              ลบคอร์สเรียน
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -147,6 +152,13 @@ export default {
     scrollToTop() {
       window.scrollTo(0, 0);
     },
+    deleteCourse(id) {
+      console.log(id);
+      this.axios.delete(`http://localhost:3000/api/course/deleteCourse/${id}`).then((res) => {
+        console.log(res.data);
+        this.$emit("change-delete")
+      })
+    }
   },
 };
 </script>

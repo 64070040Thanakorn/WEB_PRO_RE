@@ -3,7 +3,7 @@
     <label for="" class="text-4xl mx-4">ข้อมูลผู้ใช้</label>
     <div class="flex w-[50%]">
       <form class="w-full">
-        <input id="" type="search" class="block w-full px-4 py-2 text-sm text-gray-900 border border-gray-950 rounded-3xl" placeholder="ค้นหาคอร์สเรียน" v-model="searchValue">
+        <input id="" type="search" class="block w-full px-4 py-2 text-sm text-gray-900 border border-gray-950 rounded-3xl" placeholder="ค้นหาผู้ใช้" v-model="searchValue">
       </form>
       <div class="flex mx-2">
         <button data-dropdown-toggle="dropdown" class="text-black border border-gray-950 bg-white font-medium rounded-3xl text-sm w-36 px-2 py-2 text-center inline-flex justify-center items-center" type="button">
@@ -30,8 +30,7 @@
       </div>
     </div>
   </div>
-
-  <div v-if="1" class="flex justify-center w-full">
+  <div v-if="user.length > 0" class="flex justify-center w-full">
     <table class="w-full mt-5 w-full">
       <thead class="">
         <tr class="">
@@ -93,7 +92,7 @@ export default {
   emits: ['user-change'],
   computed:{
     filteredItems() {
-      return this.searchValue ? this.user.filter((item) => item.title.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())) : this.user
+      return this.searchValue ? this.user.filter((item) => item.first_name.toLocaleLowerCase().includes(this.searchValue.toLocaleLowerCase())) : this.user
     },
   },
   methods: {

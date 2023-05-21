@@ -9,8 +9,8 @@ router.get("/", async (req, res, next) => {
   try {
     const category = await prisma.category.findMany({
       orderBy: {
-        "category_name": "desc"
-      }
+        category_name: "desc",
+      },
     });
     res.status(200).json(category);
   } catch (error) {
@@ -20,37 +20,55 @@ router.get("/", async (req, res, next) => {
 
 // get category by id
 router.get("/:category_id", async (req, res) => {
-    try {
-      const category = await prisma.category.findUnique({
-        where: {
-          category_id: req.params.category_id,
+  try {
+    const category = await prisma.category.findUnique({
+      where: {
+        category_id: req.params.category_id,
+      },
+      include: {
+        Course: {
+          include: {
+            category: true,
+            enrolled: true,
+          },
         },
-        include: {
-          Course: {
-            include: {
-              category: true,
-              enrolled: true
-            }
-          }
-        }
-      });
-      res.status(200).json(category);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  });
+      },
+    });
+    res.status(200).json(category);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-// delete category
-router.delete("/", async( req, res,next) => {
-  try{
-    const removing = await prisma.category.delete({
-      where:{
-        category_id: req.body
+// add category
+
+router.post("/addCategory", async(req, res) => {
+  const {category_name, category_detail, category_color} = req.body
+  try {
+    const category = await prisma.category.create({
+      data: {
+        category_name: category_name,
+        category_detail: category_detail,
+        category_color: category_color
       }
     })
-    res.send('ok')
-  } catch(err){
-    res.json(err)
+    res.status(201).json(category)
+  } catch (error) {
+    res.status(400).json({message: error.message})
   }
 })
+
+// delete category
+router.delete("/delete/:category_id", async (req, res, next) => {
+  try {
+    const removing = await prisma.category.delete({
+      where: {
+        category_id: req.params.category_id,
+      },
+    });
+    res.status(200).json(removing);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 export default router;

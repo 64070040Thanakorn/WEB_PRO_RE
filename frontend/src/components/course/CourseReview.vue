@@ -8,7 +8,7 @@ export default {
     this.user_id = localStorage.getItem("user");
   },
   props: {
-    user: String,
+    user: Object,
     comments: {
       type: Array,
       required: true,
@@ -33,7 +33,8 @@ export default {
         )
         .then((res) => {
           // console.log(res);
-          window.location.reload()
+          this.comment = null
+          this.$emit('comment-change')
         })
         .catch((err) => {
           console.log(err)
