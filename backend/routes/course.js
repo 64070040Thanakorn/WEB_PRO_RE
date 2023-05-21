@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import Joi from 'joi';
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -43,7 +44,14 @@ router.get("/:course_id", async (req, res) => {
 });
 
 // get Random Course
+const getRanSchema = Joi.object({
+  amount: Joi.string().required().regex(/^\d+$/).error(new Error('กรอกข้อมูลผิดพลาด')),
+})
 router.get("/randomCourse/:amount", async (req, res, next) => {
+  const { error, value } = getRanSchema.validate(req.params)
+  if(error){
+    return res.status(400).json({message: error.message})
+  }
   try {
     let course = [];
     const randomf = (values) => {
@@ -87,8 +95,28 @@ const convertToBoolean = (value) => {
   }
 }
 
+
 // create course
+const createCourseSchema = Joi.object({
+  title: Joi.string().required().error(new Error('ต้องกรอก title')),
+  category_id: Joi.string().required().error(new Error('ต้องกรอก category_id')),
+  description: Joi.string(),
+  info: Joi.string(),
+  price: Joi.string().required().error(new Error('ต้องกรอก price')),
+  level: Joi.string().required().error(new Error('ต้องกรอก level')),
+  certificate: Joi.boolean().required().error(new Error('ต้อวกรอก certificate')),
+  lesson: Joi.string().required().error(new Error('ต้องกรอก บทเรียน')),
+  amount: Joi.string().required().error(new Error('ต้องกรอก amount')),
+  start_date: Joi.alternatives().conditional('end_date', {
+    then: Joi.date()
+  }).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
+  end_date: Joi.date().min(Joi.ref('start_date')).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
+})
 router.post("/createCourse", upload.single("fileupload"), async (req, res, next) => {
+  const { error, value } = createCourseSchema.validate(req.body, { abortEarly: true})
+  if(error){
+    return res.status(400).json({message: error.message})
+  }
   const course_image = req.file ? req.file.filename : null
   const { title, category_id, description, info, price, level, certificate, lesson, amount, start_date, end_date } =
     req.body;
@@ -182,8 +210,27 @@ router.delete("/deleteCourse/:course_id", async (req, res) => {
   }
 });
 
+const updateCourseSchema = Joi.object({
+  title: Joi.string().required().error(new Error('ต้องกรอก title')),
+  category_id: Joi.string().required().error(new Error('ต้องกรอก category_id')),
+  description: Joi.string(),
+  info: Joi.string(),
+  price: Joi.string().required().error(new Error('ต้องกรอก price')),
+  level: Joi.string().required().error(new Error('ต้องกรอก level')),
+  certificate: Joi.boolean().required().error(new Error('ต้อวกรอก certificate')),
+  lesson: Joi.string().required().error(new Error('ต้องกรอก บทเรียน')),
+  amount: Joi.string().required().error(new Error('ต้องกรอก amount')),
+  start_date: Joi.alternatives().conditional('end_date', {
+    then: Joi.date()
+  }).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
+  end_date: Joi.date().min(Joi.ref('start_date')).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
+})
 // update course
 router.put("/updateCourse/", upload.single("fileupload"), async (req, res) => {
+  const { error, value } = createCourseSchema.validate(req.body, { abortEarly: true})
+  if(error){
+    return res.status(400).json({message: error.message})
+  }
   try {
     const data = req.body;
     const file = req.file;

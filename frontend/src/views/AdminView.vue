@@ -83,9 +83,9 @@ export default {
       userLog_on: {},
       course: [],
       category: [],
-      courseComponent: true,
+      courseComponent: false,
       userComponent: false,
-      categoryComponent: false,
+      categoryComponent: true,
     };
   },
   beforeCreate() {
@@ -99,10 +99,15 @@ export default {
       this.user = res.data;
     });
     this.axios
-      .get(`http://localhost:3000/api/user/by/${localStorage.getItem("user")}`)
+      .get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
       .then((res) => {
         this.userLog_on = res.data;
       });
+    const role = localStorage.getItem('role')
+    console.log(role);
+    if(role !== 'Admin') {
+      this.$router.push('/')
+    }
   },
   methods: {
     changeComponent(el) {

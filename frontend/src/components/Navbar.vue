@@ -71,6 +71,7 @@ export default {
     logout() {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
+      localStorage.removeItem('role')
       this.$router.push("/")
       this.user = null
     },

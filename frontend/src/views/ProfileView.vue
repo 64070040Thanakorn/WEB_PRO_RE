@@ -50,6 +50,10 @@ export default {
   
   mounted() {
     this.getUser();
+    const token = localStorage.getItem('token')
+    if(!token) {
+      this.$router.push('/')
+    }
   },
   methods: {
     getUser() {

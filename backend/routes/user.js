@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import Joi from 'joi';
 import upload from '../middleware/multer.js';
 
 const prisma = new PrismaClient();
@@ -33,7 +34,19 @@ router.get("/all", async(req, res, next) => {
   }
 });
 
+
+const updateUserSchema = Joi.object({
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
+  first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
+  last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+  phone: Joi.string().min(10).max(10).error(new Error('กรอกข้อมูลมือถือผิดพลาด')),
+  address: Joi.required().error(new Error('ต้องกรอก address'))
+})
 router.put("/", async(req, res, next) => {
+  const {error, value} = updateUserSchema.validate(req.body, { abortEarly: false })
+  if(error){
+    return res.status(400).json({ message: error.message });
+  }
   const { first_name, last_name, phone, address } = req.body
   try{
     const user = await prisma.users.update({
@@ -49,7 +62,7 @@ router.put("/", async(req, res, next) => {
     });
     user.password = undefined
 
-    res.status(200)
+    res.status(200).send('ok')
   } catch (err) {
     res.status(500).json({message: err.message})
   }

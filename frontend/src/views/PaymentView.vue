@@ -42,6 +42,10 @@ export default {
         this.vat = this.course.price+(this.course.price*0.07)
       });
     this.fetchUserCC()
+    const payment101 = localStorage.getItem('payment')
+    if(!payment101){
+      this.$router.push("/")
+    }
   },
   methods: {
     payment(){
@@ -68,6 +72,7 @@ export default {
         .then(res => {
           this.fetchEnroll()
           this.$router.push('/payment/success')
+          localStorage.removeItem('payment')
           console.log(res);
         })
         .catch(err => {
@@ -105,11 +110,6 @@ export default {
       });
     },
   },
-  computed:{
-    // userCCSelected(b,f){
-    //   console.log(f);
-    // }
-  }
 };
 
 </script>

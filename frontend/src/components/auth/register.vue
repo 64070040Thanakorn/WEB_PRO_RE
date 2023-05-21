@@ -219,7 +219,8 @@ export default {
       axios
         .post("http://localhost:3000/api/auth/register", data)
         .then((res) => {
-          localStorage.setItem("user", res.data.user);
+          localStorage.setItem('user', res.data.user);
+          localStorage.setItem('role', res.data.role);
           localStorage.setItem("token", res.data.token);
           this.$emit("auth-change");
           this.$router.push({ path: "/" });

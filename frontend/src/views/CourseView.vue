@@ -84,6 +84,10 @@ export default {
       .then((response) => {
         this.comments = response.data;
       });
+    },
+    payment101(){
+      const eiei = 'eiei'
+      localStorage.setItem('payment', eiei)
     }
   },
 };
@@ -151,7 +155,7 @@ export default {
         <div class="flex">
           <div v-if="this.user && this.user.role !== 'Admin'">
             <RouterLink :to="`/payment/${$route.params.course_id}`">
-              <div class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">
+              <div @click="payment101" class="rounded bg-black text-white px-12 py-2 hover:bg-[#2E2E2E]">
                 ลงคอร์สเรียน
               </div>
             </RouterLink>
