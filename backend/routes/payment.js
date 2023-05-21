@@ -4,12 +4,11 @@ import express from "express";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/", async(req, res, next) => {
-  const { user_id } = req.body
+router.get("/getCredit/:user_id", async(req, res, next) => {
   try{
     const userCC = await prisma.payment.findMany({
       where:{
-        user_id: user_id
+        user_id: req.params.user_id
       }
     })
     res.json(userCC)

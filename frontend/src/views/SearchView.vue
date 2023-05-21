@@ -20,12 +20,12 @@ export default {
     this.axios.get(`http://localhost:3000/api/course/randomCourse/1`).then((response) => {
       this.random_course_item = response.data;
     });
-    if(this.user){
-      this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
-        .then(res => {
-          this.userLog_on = res.data
-        })
-    }
+    // if(this.user){
+    //   this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
+    //     .then(res => {
+    //       this.userLog_on = res.data
+    //     })
+    // }
   },
   mounted(){
     this.user = localStorage.getItem('user')

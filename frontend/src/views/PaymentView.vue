@@ -90,9 +90,8 @@ export default {
     //   console.log(this.userCCSelected, id);
     // },
     fetchUserCC(){
-      const userData = { user_id: localStorage.getItem('user')}
       this.axios
-      .get(`http://localhost:3000/api/payment/`, userData)
+      .get(`http://localhost:3000/api/payment/getCredit/${localStorage.getItem('user')}`)
       .then((res) => {
         this.userCreditCard = res.data
       });

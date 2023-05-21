@@ -159,12 +159,12 @@ export default {
             <div class="px-8">
               <RouterLink :to="user.role === 'Admin' ? '/dashboard' : '/profile'" id="login" class="nav_login px-8" ref="navLogin">{{ user.first_name }}</RouterLink>
             </div>
-            <button @click="logout()" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">ออกจากระบบ</button>
+            <button @click="logout()" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] hover:bg-[#EBC919]/80 py-2 px-6 font-extralight">ออกจากระบบ</button>
           </div>
           <div v-else>
             <div class="flex">
               <button @click="toggleModal('login')" id="login" class="nav_login flex items-center px-8 font-extralight">เข้าสู่ระบบ</button>
-              <button @click="toggleModal('register')" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] py-2 px-6 font-extralight">สมัครสมาชิก</button>
+              <button @click="toggleModal('register')" id="register" class="nav_register flex items-center border-2 rounded-md border-[#EBC919] hover:bg-[#EBC919]/80 py-2 px-6 font-extralight">สมัครสมาชิก</button>
             </div>
           </div>
         </ul>
