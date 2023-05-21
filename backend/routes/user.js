@@ -129,18 +129,16 @@ router.put("/changepassword/:user_id", verifyToken, async(req,res,next) => {
   if(error){
     return res.status(400).json({ message: error.message });
   }
-  const { user_id, old_password, password } = req.body
+  const { old_password, password } = req.body
   try{
-    if(await bcrypt.compare(old_password, password)){
-      const update = await prisma.user.update({
-        where: {
-          user_id: user_id
-        },
-        data: {
-          password: await bcrypt.hash(password, 10)
-        }
-      })
-    }
+    const update = await prisma.users.update({
+      where: {
+        user_id: req.params.user_id
+      },
+      data: {
+        password: await bcrypt.hash(password, 10)
+      }
+    })
     res.send('ok')
   } catch(err) {
     res.json({message: err.message})

@@ -29,21 +29,30 @@
     <div class="flex">
       <label class="w-[20%]" for="">รหัสผ่าน</label>
       <div v-if="togglePassword" class="flex flex-col space-y-3 w-[30%]">
-        {{ v$.OldPassword.matchesCurrentPassword }}
         <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Old Password" v-model="OldPassword"/>
-        <!-- <template v-if="$v.OldPassword.$model"> -->
-          <!-- <span v-if="v$.OldPassword.matchesCurrentPassword" class="text-red-500 text-xs">
-            *กรอกรหัสไม่ถูกต้อง
-          </span> -->
-        <!-- </template> -->
-        <input class="border rounded px-3 py-1 w-full" type="password" placeholder="New Password" v-model="NewPassword"/>
-        <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Confirm Password" v-model="ConfirmPassword"/>
+        <div class="flex flex-col">
+          <input class="border rounded px-3 py-1 w-full" type="password" placeholder="New Password" v-model="NewPassword"/>
+          <template v-if="v$.NewPassword.$model">
+            <span v-if="!v$.NewPassword.complex.$response" class="text-red-500 text-xs">
+              *Password is not safe
+            </span>
+          </template>
+        </div>
+        <div class="flex flex-col">
+          <input class="border rounded px-3 py-1 w-full" type="password" placeholder="Confirm Password" v-model="ConfirmPassword"/>
+          <template v-if="v$.ConfirmPassword.$model">
+                <span
+                  v-if="!v$.ConfirmPassword.sameAsNewPassword.$response"
+                  class="text-red-500 text-xs"
+                  >*Password not match</span
+                >
+              </template>
+        </div>
       </div>
       
       <input v-else class="border bg-gray-200 text-gray-700 rounded px-3 py-1 w-[30%]" type="password" v-model="data.password" readonly/>
       <button v-if="togglePassword" class="underline ml-7 align-top flex" @click="toggle()">ยกเลิก</button>
       <button v-if="togglePassword" class="underline ml-7 align-top flex" @click="changepassword()">เปลี่ยนรหัสผ่าน</button>
-
       <button v-if="!togglePassword" class="underline ml-7 align-top flex" @click="toggle()">แก้ไขรหัสผ่าน</button>
     </div>
     <div class="h-[2px] w-full bg-[#F6F6F6] rounded"></div>
@@ -90,19 +99,14 @@
 import { useVuelidate } from "@vuelidate/core";
 import { minLength, required, sameAs } from "@vuelidate/validators";
 import axios from 'axios';
-// import bcrypt from "bcrypt";
 
 
 
 export function complexPassword(value) {
   if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
-    // if(bcrypt.compare(OldPassword, password)){
-    //   return true
-    // } else{
-      return false
-    // }
+    return false
   }
-  return true;
+  return true
 }
 
 export default {
@@ -128,21 +132,18 @@ export default {
   validations(){
     return {
       OldPassword: {
-      required: required
-      // matchesCurrentPassword: (value) => {
-      //   return bcrypt.compare(this.OldPassword, value;
-      // },
+        required: required
     },
       NewPassword: {
-      required: required,
-      minLength: minLength(8),
-      $validator: complexPassword,
+        required: required,
+        minLength: minLength(8),
+        complex: {
+          $validator: complexPassword,
+        }
     },
       ConfirmPassword: {
-      required: required,
-      sameAsNewPassword: sameAs(function () {
-        return this.NewPassword;
-      }),
+        required: required,
+        sameAsNewPassword: sameAs(this.NewPassword),
     },
 
     }
@@ -201,7 +202,7 @@ export default {
           'x-access-token': localStorage.getItem("token"),
         },
       })
-        .then( window.location.reload() )
+        // .then( window.location.reload() )
     }
   }
 }
