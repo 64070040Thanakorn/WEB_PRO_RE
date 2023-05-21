@@ -222,7 +222,7 @@ export default {
           <div class="mt-8 mb-8">
             <div class="flex flex-col">
               <div class="flex items-center">
-                <h3 class="text-2xl font-normal">Python Course</h3>
+                <h3 class="text-2xl font-normal">All Course</h3>
               </div>
               <p class="text-xs underline font-light text-[#676767]">
                 {{ item_length }} ผลลัพท์
