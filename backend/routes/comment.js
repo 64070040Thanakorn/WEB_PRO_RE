@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
-
+import Joi from 'joi';
 const prisma = new PrismaClient();
 const router = express.Router();
 
@@ -11,7 +11,6 @@ router.get("/", async(req, res, next) => {
 });
 
 // GetCommentByCourseId
-
 router.get('/:course_id', async (req, res) => {
   try {
     const response = await prisma.comments.findMany({
@@ -36,9 +35,18 @@ router.get('/:course_id', async (req, res) => {
 
 // add new comment
 
+const createComSchema = Joi.object({
+  content: Joi.string().required().error(new Error('ต้องกรอก conenet')),
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
+  course_id: Joi.string().required().error(new Error('ต้องกรอก course_id'))
+})
 router.post('/createComment/', async (req, res) => {
+  const { error, value } = createComSchema.validate(req.body, { abortEarly: true })
+  if(error) {
+    return res.status(400).json({message: error.message})
+  }
+  
   const { content, user_id, course_id } = req.body;
-
   try {
     const comment = await prisma.comments.create({
       data: {

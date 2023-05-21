@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import Joi from 'joi';
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -37,8 +38,25 @@ router.get("/by/:user_id", async(req, res, next) => {
   }
 })
 
+const createPaymentSchema = Joi.object({
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
+  course:{
+    id: Joi.string().required().error(new Error('ต้องกรอก course id'))
+  },
+  credit_card:{
+    cc_number: Joi.string().required().error(new Error('ต้องกรอก cc_number')),
+    cc_ccv: Joi.string().required().error(new Error('ต้องกรอก cc_ccv')),
+    cc_expiry: Joi.string().required().error(new Error('ต้องกรอก cc_expiry')),
+    cc_first_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+    cc_last_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
+  },
+  total: Joi.string().required().error(new Error('ต้องกรอก total')),
+})
 router.post("/", async(req, res, next) => {
-  console.log(req.body);
+  const { error, value } = createPaymentSchema.validate(req.body, { abortEarly: true })
+  if(error) {
+    return res.status(400).json({message: error.message})
+  }
   const { user_id, course, creditCard, total } = req.body
   try{
     if(creditCard){

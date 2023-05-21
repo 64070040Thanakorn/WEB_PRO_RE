@@ -1,12 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import express from "express";
+import Joi from "joi";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
+
+const getSchema = Joi.object({
+  user_id: Joi.string().required().error(new Error('ต้องกรอก user id'))
+})
 router.get("/:user_id", async (req, res, next) => {
+  const {error, value} = getSchema.validate(req.params)
+  if(error){
+    return res.status(400).json({ message: error.message });
+  }
   const { user_id } = req.params
   try{
     const exist = await prisma.users.findFirst({
@@ -14,8 +23,6 @@ router.get("/:user_id", async (req, res, next) => {
         user_id: user_id
       }
     })
-
-
     res.json(exist)
   } catch(err){
     console.log(err);
@@ -23,7 +30,17 @@ router.get("/:user_id", async (req, res, next) => {
   }
 })
 
+const registerSchema = Joi.object({
+  first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
+  last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+  email: Joi.string().email().error(new Error('กรอก email ไม่ถูกต้อง')),
+  password: Joi.required().error(new Error('ต้องกรอก password'))
+})
 router.post("/register", async (req,res,next) => {
+  const {error, value} = registerSchema.validate(req.body, { abortEarly: false })
+  if(error){
+    return res.status(400).json({ message: error.message });
+  }
   try{
     const { first_name, last_name, email, password } = req.body;
     const exist = await prisma.users.findFirst({
@@ -63,7 +80,15 @@ router.post("/register", async (req,res,next) => {
   };
 });
 
+const loginSchema = Joi.object({
+  email: Joi.string().email().error(new Error('กรอก email ไม่ถูกต้อง')),
+  password: Joi.required().error(new Error('ต้องกรอก password'))
+})
 router.post("/login", async(req, res, next) => {
+  const {error, value} = loginSchema.validate(req.body)
+  if(error){
+    return res.status(400).json({ message: error.message });
+  }
   try{
     const { email, password } = req.body
     const user = await prisma.users.findFirst({
@@ -95,6 +120,7 @@ router.post("/login", async(req, res, next) => {
   };
 });
 
+
 router.delete("/:id/deleteAcc", async(req, res, next) => {
   try{
     await prisma.$transaction(async(tx) => {
@@ -118,6 +144,7 @@ router.delete("/:id/deleteAcc", async(req, res, next) => {
     next(err)
   }
 });
+
 
 router.delete("/deleteAllAcc", async(req, res, next) => {
   try{
