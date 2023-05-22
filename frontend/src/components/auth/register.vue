@@ -227,13 +227,23 @@ export default {
           localStorage.setItem('user', res.data.user);
           localStorage.setItem('role', res.data.role);
           localStorage.setItem("token", res.data.token);
-          this.$emit("auth-change");
-          this.$router.push({ path: "/" });
+          Swal.fire(
+              'Success!',
+              'สร้างบัญชีสำเร็จ',
+              'success'
+          )
+          setTimeout(function() {
+            this.$emit("auth-change");
+            this.$router.push({ path: "/" });
+          }, 2000);
         })
         .catch((error) => {
-          this.error = error.response.data;
           console.log(error.response.data);
-          alert(error.response.data);
+          Swal.fire(
+            'Error!',
+            'โปรดตรวจสอบความถูกต้องของข้อมูล',
+            'error'
+          )
         });
     },
     modal_close() {

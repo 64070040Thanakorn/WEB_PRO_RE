@@ -122,9 +122,6 @@
             <button @click="addCategory()" class="text-green-500">Add</button>
           </td>
         </tr>
-        
-
-        
       </tbody>
     </table>
     <button @click="adding" class="mt-3">เพิ่มประเภทวิชา</button>
@@ -140,7 +137,7 @@
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import axios from 'axios';
-
+import Swal from 'sweetalert2'
 
 export default {
   setup() {
@@ -198,6 +195,18 @@ export default {
       })
         .then(res => {
           this.$emit('category-change')
+          Swal.fire(
+            'Success!',
+            'ลบข้อมูลรายวิชาสำเร็จ',
+            'warning'
+          )
+        })
+        .catch((err) => {
+          Swal.fire(
+            'Error!',
+            'ไม่สารถลบข้อมูลรายวิชานี้ได้',
+            'error'
+          )
         })
     },
     edit(index, category){
@@ -211,10 +220,6 @@ export default {
       }
     },
     async updateCategory(category){
-      if (this.v$.$invalid) {
-        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
-        return false;
-      }
       // API HERE
       await axios.put(`http://localhost:3000/api/category/updateCategory/${category.category_id}`, {
         category_name: category.category_name,
@@ -228,14 +233,22 @@ export default {
       .then( (res) => {
         this.$emit('category-change')
         this.editRows = null
+         Swal.fire(
+          'Success!',
+          'แก้ไขรายวิชาสำเร็จ',
+          'success'
+        )
       })
     },
     addCategory(){
-      if (this.v$.$invalid) {
-        alert("โปรดตรวจสอบความถูกต้องของข้อมูล")
+      if (this.v$.category_new.$invalid) {
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
         return false;
       }
-      
       const data = {
         category_name: this.category_new.category_name,
         category_detail: this.category_new.category_detail,
@@ -248,6 +261,19 @@ export default {
       }).then((res) => {
         this.$emit('category-change')
         console.log(res.data);
+        Swal.fire(
+          'Success!',
+          'เพิ่มรายวิชาสำเร็จ',
+          'success'
+        )
+      })
+      .catch((err) => {
+        console.log(err.respones.message);
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
       })
       this.Adding = false
     },

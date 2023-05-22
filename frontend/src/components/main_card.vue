@@ -133,6 +133,7 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 
 export default {
   props: {
@@ -161,7 +162,19 @@ export default {
       }).then((res) => {
         console.log(res.data);
         this.$emit("change-delete")
-      })
+        Swal.fire(
+            'Success!',
+            'ลบคอร์สเรียนสำเร็จ',
+            'warning'
+          )
+        })
+        .catch((err) => {
+          Swal.fire(
+            'Error!',
+            'ไม่สามารถลบคอร์สเรียนได้',
+            'error'
+          )
+        })
     }
   },
 };

@@ -7,13 +7,13 @@
         <div class="mr-20 w-[15%]">
           <ul>
             <div @click="changeComponent('user')" to="/dashboard/username">
-              <li id="user-interface" :class="userComponent ? 'bg-gray-100': ''" class="px-4 py-2 rounded">รายละเอียดของฉัน</li>
+              <li id="user-interface" :class="userComponent ? 'bg-gray-100': ''" class="px-4 py-2 rounded cursor-pointer">รายละเอียดของฉัน</li>
             </div>
             <div @click="changeComponent('course')" to="/dashboard/course">
-              <li id="course_interface" :class="courseComponent ? 'bg-gray-100': ''" class="px-4 py-2 rounded">คอร์สเรียน</li>
+              <li id="course_interface" :class="courseComponent ? 'bg-gray-100': ''" class="px-4 py-2 rounded cursor-pointer">คอร์สเรียน</li>
             </div>
             <div @click="changeComponent('payment')" to="/dashboard/studytable">
-              <li id="payment_interface" :class="paymentComponent ? 'bg-gray-100': ''" class="px-4 py-2 rounded">ประวัติการชำระเงิน</li>
+              <li id="payment_interface" :class="paymentComponent ? 'bg-gray-100': ''" class="px-4 py-2 rounded cursor-pointer">ประวัติการชำระเงิน</li>
             </div>
           </ul>
         </div>

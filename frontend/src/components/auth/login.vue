@@ -24,14 +24,12 @@
                   v-model="my_email"
                 />
                 <template v-if="v$.my_email.$model">
-                  <span
-                    v-if="!v$.my_email.required.$response"
-                    class="text-red-500 text-xs"
-                    >*This field is required</span
-                  >
-                  <span v-if="!v$.my_email.email.$response" class="text-red-500 text-xs"
-                    >*Invalid email</span
-                  >
+                  <span v-if="!v$.my_email.required.$response" class="text-red-500 text-xs">
+                    *This field is required
+                  </span>
+                  <span v-if="!v$.my_email.email.$response" class="text-red-500 text-xs">
+                    *Invalid email
+                  </span>
                 </template>
               </div>
               <div class="flex-col">
@@ -41,6 +39,11 @@
                   class="border w-full rounded-md py-1 px-2"
                   v-model="password"
                 />
+                <template v-if="v$.password.$model">
+                  <span v-if="!v$.password.required.$response" class="text-red-500 text-xs">
+                      *This field is required
+                  </span>
+                </template>
               </div>
               <div class="flex justify-center">
                 <button
@@ -117,6 +120,9 @@ export default {
         required,
         email,
       },
+      password: {
+        required
+      }
     };
   },
   methods: {
@@ -150,7 +156,7 @@ export default {
             )
             setTimeout(function() {
               window.location.reload()
-            }, 2000); // 2000 milliseconds (2 seconds)
+            }, 2000);
         })
         .catch((error) => {
           console.log(error);

@@ -7,6 +7,15 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 const router = express.Router();
 
+const passwordValidator = (value, helpers) => {
+  if (value.length < 8) {
+    throw new Joi.ValidationError("Password must contain at least 8 characters");
+  }
+  if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+    throw new Joi.ValidationError("Password must be harder");
+  }
+  return value;
+};
 
 router.get("/:user_id", async (req, res, next) => {
   const { user_id } = req.params
@@ -24,10 +33,10 @@ router.get("/:user_id", async (req, res, next) => {
 })
 
 const registerSchema = Joi.object({
-  first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
-  last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
-  email: Joi.string().email().error(new Error('กรอก email ไม่ถูกต้อง')),
-  password: Joi.required().error(new Error('ต้องกรอก password'))
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  email: Joi.string().required().email(),
+  password: Joi.required().custom(passwordValidator),
 })
 router.post("/register", async (req,res,next) => {
   const {error, value} = registerSchema.validate(req.body, { abortEarly: false })
@@ -74,8 +83,8 @@ router.post("/register", async (req,res,next) => {
 });
 
 const loginSchema = Joi.object({
-  email: Joi.string().email().error(new Error('กรอก email ไม่ถูกต้อง')),
-  password: Joi.required().error(new Error('ต้องกรอก password'))
+  email: Joi.string().required().email(),
+  password: Joi.required(),
 })
 router.post("/login", async(req, res, next) => {
   const {error, value} = loginSchema.validate(req.body)
@@ -117,38 +126,38 @@ router.post("/login", async(req, res, next) => {
 });
 
 
-// router.delete("/:id/deleteAcc", async(req, res, next) => {
-//   try{
-//     await prisma.$transaction(async(tx) => {
-//       const findAcc = await prisma.users.findUnique({
-//         where:{
-//           user_id: req.params.id
-//         }
-//       })
-//       if(findAcc){
-//         const user = await prisma.users.delete({
-//           where:{
-//             user_id: req.params.id
-//           }
-//         })
-//         res.send(`delete account id ${req.params.id}`)
-//       } else {
-//         res.send(`Not found`)
-//       }
-//     });
-//   } catch(err){
-//     next(err)
-//   }
-// });
+router.delete("/:id/deleteAcc", async(req, res, next) => {
+  try{
+    await prisma.$transaction(async(tx) => {
+      const findAcc = await prisma.users.findUnique({
+        where:{
+          user_id: req.params.id
+        }
+      })
+      if(findAcc){
+        const user = await prisma.users.delete({
+          where:{
+            user_id: req.params.id
+          }
+        })
+        res.send(`delete account id ${req.params.id}`)
+      } else {
+        res.send(`Not found`)
+      }
+    });
+  } catch(err){
+    next(err)
+  }
+});
 
 
-// router.delete("/deleteAllAcc", async(req, res, next) => {
-//   try{
-//     const findAcc = await prisma.users.deleteMany({})
-//     res.send("Delete all account")
-//   } catch(err){
-//     next(err)
-//   }
-// });
+router.delete("/deleteAllAcc", async(req, res, next) => {
+  try{
+    const findAcc = await prisma.users.deleteMany({})
+    res.send("Delete all account")
+  } catch(err){
+    next(err)
+  }
+});
 
 export default router

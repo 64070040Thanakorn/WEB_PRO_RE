@@ -12,18 +12,19 @@ let nav_site = [
     "path": "/"
   },
   {
-    "id": "location",
+    "id": "course",
     "title": "แนะนำคอร์สเรียน",
     "dropdown": false,
-    "path": "/location"
+    "path": `/search`
   },
   {
     "id": "location",
     "title": "ที่อยู่",
     "dropdown": false,
-    "path": "/location"
+    "path": "/"
   }
 ]
+
 const tl = gsap.timeline({repeat:0});
 
 onMounted(() => {
@@ -54,6 +55,7 @@ export default {
       isActive_auth: false,
       isOpen: false,
       showDropdown: false,
+      random_course_item: {},
     }
   },
   mounted() {
@@ -105,6 +107,15 @@ export default {
         this.user = res.data
       })
     },
+    scrollToElement(id) {
+      this.$router.push("/")
+      setTimeout(function() {
+        const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+      }, 250);
+    }
   },
   computed: {
     isActive() {
@@ -122,22 +133,24 @@ export default {
       <Login v-if="isActive_Login" @auth-change="onAuthChange" @modal_close="closing_auth()"/>
     </div>
   </div>
-  
   <div class="navbar w-full z-20 py-1" :class="{'absolute': isActive, 'bg-black': !isActive}">
     <div :class="{'absolute top-0 left-0 h-56 w-full bg-gradient-to-b from-black to-white-0% p-5': isActive} "></div>
     <div class="flex justify-between items-center px-48 h-[80px]">
       <div>
         <ul class="flex">
-          <li v-for="nav in nav_site" class="nav_site flex items-center space-x-2 px-8 font-extralight relative">
-            <h5>{{ nav.title }}</h5>
-            <i class="pi pi-angle-down" style="font-size: 0.75rem" v-if="nav.dropdown"></i>
+          <li class="nav_site flex items-center space-x-20 px-8 font-extralight relative">
+            <RouterLink class="font-extralight" to="/">หน้าหลัก</RouterLink>
+            <RouterLink class="font-extralight" to="/" @click.native="scrollToElement('hot')">คอร์สที่น่าสนใจ</RouterLink>
+            <RouterLink class="font-extralight" to="/" @click.native="scrollToElement('contract')"> ที่อยู่</RouterLink>
+            <!-- <RouterLink :to="nav.path">{{ nav.title }}</RouterLink>
+            <i class="pi pi-angle-down" style="font-size: 0.75rem" v-if="nav.dropdown"></i> -->
           </li>
         </ul>
       </div>
 
-      <RouterLink to="/" id="logo" class="nav_logo navbar-brand border-4 border-[#EBC919] px-8">
+      <div id="logo" class="nav_logo navbar-brand border-4 border-[#EBC919] px-8">
         <h1>GRATERER</h1>
-      </RouterLink>
+      </div>
 
       <div>
         <ul class="flex">

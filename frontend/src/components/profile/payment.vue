@@ -54,7 +54,7 @@ export default {
       course: [],
       payment: [],
     }
-  },  
+  },
   mounted(){
     this.axios.get(`http://localhost:3000/api/user/by/${localStorage.getItem('user')}`)
       .then(res => {

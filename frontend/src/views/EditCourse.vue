@@ -13,6 +13,9 @@
           <div class="flex flex-col space-y-1">
             <label class="" for="">ชื่อ</label>
             <input class="border rounded px-3 py-1 w-[50vw]" type="text" v-model="course.title"/>
+            <span v-if="!v$.course.title.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">ประเภทวิชา</label>
@@ -23,18 +26,42 @@
                 </option>
               </template>
             </select>
+            <span v-if="!v$.course.category_id.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">ข้อมูลเพิ่มเติม</label>
             <input class="border rounded px-3 py-1 w-[50vw]" type="text" v-model="course.description"/>
+            <span v-if="!v$.course.description.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
+            <span v-if="!v$.course.description.minLength.$response" class="text-red-500 text-xs">
+                *ต้องมีอย่างน้อย 10 ตัวอักษร
+            </span>
+            <span v-if="!v$.course.description.maxLength.$response" class="text-red-500 text-xs">
+                *ต้องมีไม่มากกว่า 200 ตัวอักษร
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">ข้อมูลคอร์สเรียน</label>
             <textarea class="border rounded px-3 py-1 w-[50vw]" type="text" v-model="course.info"></textarea>
+            <span v-if="!v$.course.info.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
+            <span v-if="!v$.course.info.minLength.$response" class="text-red-500 text-xs">
+                *ต้องมีอย่างน้อย 80 ตัวอักษร
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">ราคา</label>
-            <input class="border rounded px-3 py-1 w-[50vw]" type="text" v-model="course.price"/>
+            <input class="border rounded px-3 py-1 w-[50vw]" type="number" v-model="course.price"/>
+            <span v-if="!v$.course.price.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
+            <span v-if="!v$.course.price.numeric.$response" class="text-red-500 text-xs">
+              *ข้อมูลต้องเป็นตัวเลข
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">ระดับ</label>
@@ -43,6 +70,9 @@
               <option value="ระดับกลาง">ระดับกลาง</option>
               <option value="ระดับสูง">ระดับสูง</option>
             </select>
+            <span v-if="!v$.course.level.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
           </div>
           <div class="flex space-x-2">
             <input id="certificate" class="border rounded px-3 py-1" type="checkbox" v-model="course.certificate"/>
@@ -50,19 +80,37 @@
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">คาบเรียน</label>
-            <input class="border rounded px-3 py-1 w-[50vw]" type="text" v-model="course.lesson"/>
+            <input class="border rounded px-3 py-1 w-[50vw]" type="number" v-model="course.lesson"/>
+            <span v-if="!v$.course.lesson.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
+            <span v-if="!v$.course.lesson.numeric.$response" class="text-red-500 text-xs">
+              *ข้อมูลต้องเป็นตัวเลข
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">จำนวนคนที่รับ</label>
-            <input class="border rounded px-3 py-1 w-[50vw]" type="text" v-model="course.amount"/>
+            <input class="border rounded px-3 py-1 w-[50vw]" type="number" v-model="course.amount"/>
+            <span v-if="!v$.course.amount.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
+            <span v-if="!v$.course.amount.numeric.$response" class="text-red-500 text-xs">
+              *ข้อมูลต้องเป็นตัวเลข
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">เริ่มเรียน</label>
             <input class="border rounded px-3 py-1 w-[50vw]" type="datetime-local" v-model="course.start_date"/>
+            <span v-if="!v$.course.start_date.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
           </div>
           <div class="flex flex-col space-y-1">
             <label class="" for="">จบเรียน</label>
             <input class="border rounded px-3 py-1 w-[50vw]" type="datetime-local" v-model="course.end_date"/>
+            <span v-if="!v$.course.end_date.required.$response" class="text-red-500 text-xs">
+              *กรุณากรอกข้อมูล
+            </span>
           </div>
           <div class="flex flex-col">
             <div class="flex justify-center">
@@ -94,12 +142,17 @@ import course from '../components/admin/Course.vue';
 import user from '../components/admin/User.vue';
 import moment from 'moment';
 import Swal from 'sweetalert2'
+import { useVuelidate } from "@vuelidate/core";
+import { minLength, maxLength, required, numeric, minValue } from "@vuelidate/validators";
 
 
 export default {
   components:{
     user,
     course,
+  },
+  setup() {
+    return { v$: useVuelidate() };
   },
   data() {
     return {
@@ -133,6 +186,50 @@ export default {
       this.$router.push('/')
     }
   },
+  validations() {
+    return {
+      course: {
+        title: {
+          required,
+        },
+        category_id: {
+          required,
+        },
+        description: {
+          required,
+          minLength: minLength(10),
+          maxLength: maxLength(200),
+        },
+        info: {
+          required,
+          minLength: minLength(80),
+        },
+        price: {
+          required,
+          numeric,
+        },
+        level: {
+          required,
+        },
+        certificate: {
+        },
+        lesson: {
+          required,
+          numeric,
+        },
+        amount: {
+          required,
+          numeric,
+        },
+        start_date: {
+          required,
+        },
+        end_date: {
+          required,
+        },
+      }
+    }
+  },
   methods: {
     onFileSelected(event) {
       const selectedFile = event.target.files[0];
@@ -147,6 +244,15 @@ export default {
       this.$router.push("/dashboard")
     },
     updateData() {
+      this.v$.$touch;
+      if (this.v$.$invalid) {
+        Swal.fire(
+          'Error!',
+          'โปรดตรวจสอบความถูกต้องของข้อมูล',
+          'error'
+        )
+        return false;
+      }
       const formData = new FormData();
       if (this.file) {
         formData.append("fileupload", this.file);
@@ -171,10 +277,20 @@ export default {
         })
         .then((respones) => {
           console.log(respones);
+          Swal.fire(
+            'Success!',
+            'แก้ไขคอร์สเรียนสำเร็จ',
+            'success'
+          )
           this.$router.push("/dashboard")
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire(
+            'Error!',
+            'โปรดตรวจสอบความถูกต้องของข้อมูล',
+            'error'
+          )
         });
     },
   },

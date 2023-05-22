@@ -119,7 +119,7 @@ export default {
   <section>
     <div id="hot" class="bg-pattern-01 w-full h-[950px]">
       <div class="py-6 mx-6">
-        <h1>คอร์สเรียนน่าสนใจ</h1>
+        <h1>คอร์สเรียนที่น่าสนใจ</h1>
         <p class="w-[710px]">พบกับคอร์สเรียนมากมายที่ทางเราจัดหามาให้ มีทั้ง Python, JS, JAVA, C, C# และอื่นๆอีกมากมายพร้อมให้คุณมาเรียนรู้ได้แล้ววันนี้!</p>
       </div>
       <div class="flex justify-center">
@@ -130,7 +130,7 @@ export default {
         </div>
       </div>
       <div class="flex justify-center my-8">
-        <button class="bg-black text-white py-2 px-8 rounded-md" @click="viewCourse()">ดูคอร์สเรียนเพิ่มเติม</button>
+        <button class="bg-black hover:bg-black1-hover text-white py-2 px-8 rounded-md" @click="viewCourse()">ดูคอร์สเรียนเพิ่มเติม</button>
       </div>
     </div>
   </section>
@@ -138,14 +138,14 @@ export default {
   <Quiz />
 
   <section>
-    <div class="bg-white w-full h-[835px]">
+    <div id="contract" class="bg-white w-full h-[835px]">
       <div class="flex justify-center">
         <h1 class="text-[64px] text-black my-12">ติดต่อเรา</h1>
       </div>
       <div class="flex justify-center space-x-32">
         <div class="mapouter">
           <div class="gmap_canvas">
-            <!-- <iframe width="830" height="480" id="gmap_canvas" src="https://maps.google.com/maps?q=kmitl&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
+            <iframe width="830" height="480" id="gmap_canvas" src="https://maps.google.com/maps?q=kmitl&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
           </div>
         </div>
         <div class="space-y-10">
@@ -162,7 +162,7 @@ export default {
               <label for="" class="text-black">ข้อความ</label>
               <textarea class="border rounded-md px-5 py-3" name="" id="" cols="30" rows="10"></textarea>
             </div>
-            <button class="flex justify-center items-center rounded-md bg-black text-white border w-[126px] h-[35px]">ติดต่อ</button>
+            <button class="flex justify-center items-center rounded-md bg-black hover:bg-black1-hover text-white border w-[126px] h-[35px]">ติดต่อ</button>
           </form>
         </div>
       </div>
