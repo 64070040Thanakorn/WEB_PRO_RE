@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 22, 2023 at 02:45 AM
+-- Generation Time: May 22, 2023 at 09:41 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `Category` (
   `category_id` varchar(191) NOT NULL,
   `category_name` varchar(191) NOT NULL,
-  `category_detail` varchar(191) NOT NULL DEFAULT 'No detail',
+  `category_detail` text NOT NULL DEFAULT 'No detail',
   `category_color` varchar(191) NOT NULL DEFAULT '#E99F30'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -39,12 +39,14 @@ CREATE TABLE `Category` (
 --
 
 INSERT INTO `Category` (`category_id`, `category_name`, `category_detail`, `category_color`) VALUES
-('311a8428-70bc-4085-87bb-745af7283ddf', 'Java', 'No detail', '#5484a4'),
-('3eae8093-14e8-42f8-9eb1-30590fbdfd35', 'Python', 'No detail', '#3672a4'),
-('8fccd513-93f7-4056-b83d-ae48feaeddc2', 'HTML & CSS', 'No detail', '#e85325'),
-('9144682f-a79c-4fd5-9c6b-9528b948e92c', 'JavaScript', 'No detail', '#FBBF24'),
-('93b932c2-11c3-415a-99d8-6df547021da4', 'PHP', 'PHP is not hard if you know', '#4287f5'),
-('aaa930e4-f2b1-444f-b2ce-bbc949451b95', 'SQL', 'SQL easy', '#626270');
+('311a8428-70bc-4085-87bb-745af7283ddf', 'Java', 'Java เป็นหนึ่งในภาษาโปรแกรมที่ได้รับความนิยมสูงสุด เปิดตัวในปี 1995 และยังคงใช้กันอย่างแพร่หลายในปัจจุบัน Java มีแอปพลิเคชันมากมาย รวมถึงการพัฒนาซอฟต์แวร์ แอปพลิเคชันมือถือ และการพัฒนาระบบขนาดใหญ่ การรู้จัก Java เปิดโอกาสมากมายสำหรับคุณในฐานะนักพัฒนา', '#5484a4'),
+('3eae8093-14e8-42f8-9eb1-30590fbdfd35', 'Python', 'Python เป็นภาษาโปรแกรมที่ใช้งานทั่วไป อเนกประสงค์ และมีประสิทธิภาพ เป็นภาษาแรกที่ยอดเยี่ยมเพราะโค้ด Python กระชับและอ่านง่าย สิ่งที่คุณต้องการทำ python สามารถทำได้ Python คือภาษาสำหรับคุณ ตั้งแต่การพัฒนาเว็บไปจนถึงการเรียนรู้ของเครื่องไปจนถึงวิทยาศาสตร์ข้อมูล', '#3672a4'),
+('8fccd513-93f7-4056-b83d-ae48feaeddc2', 'HTML & CSS', ' HTML เป็นรากฐานของหน้าเว็บทั้งหมด กำหนดโครงสร้างของหน้าในขณะที่ CSS กำหนดรูปแบบ HTML และ CSS เป็นจุดเริ่มต้นของทุกสิ่งที่คุณต้องรู้เพื่อสร้างเว็บเพจแรกของคุณ! เรียนรู้ทั้งสองอย่างและเริ่มสร้างเว็บไซต์ที่น่าทึ่ง', '#e85325'),
+('9144682f-a79c-4fd5-9c6b-9528b948e92c', 'JavaScript', 'ภาษาการเขียนโปรแกรม JavaScript นั้นสนุกและยืดหยุ่น เป็นหนึ่งในเทคโนโลยีหลักของการพัฒนาเว็บและสามารถใช้ได้ทั้งส่วนหน้าและส่วนหลัง', '#FBBF24'),
+('93b932c2-11c3-415a-99d8-6df547021da4', 'PHP', 'PHP เป็นภาษาสคริปต์สำหรับวัตถุประสงค์ทั่วไปที่ใช้กันอย่างแพร่หลายในฐานะภาษาฝั่งเซิร์ฟเวอร์สำหรับการสร้างไดนามิกเว็บเพจ แม้ว่าชื่อเสียงของมันจะไม่หลากหลาย แต่ PHP ก็ยังได้รับความนิยมอย่างมากและถูกใช้ในกว่า 75% ของเว็บไซต์ทั้งหมดที่รู้จักภาษาโปรแกรมฝั่งเซิร์ฟเวอร์', '#4287f5'),
+('aaa930e4-f2b1-444f-b2ce-bbc949451b95', 'SQL', 'SQL เป็นภาษาการจัดการข้อมูลเชิงสัมพันธ์มาตรฐาน เราอยู่ในโลกที่ขับเคลื่อนด้วยข้อมูล และมีธุรกิจมากมายที่จัดเก็บข้อมูลของตนไว้ในฐานข้อมูลเชิงสัมพันธ์ขนาดใหญ่ สิ่งนี้ทำให้ SQL เป็นทักษะที่ยอดเยี่ยมไม่เพียงแต่สำหรับนักวิทยาศาสตร์ข้อมูลและวิศวกรเท่านั้น แต่สำหรับใครก็ตามที่ต้องการมีความรู้ด้านข้อมูล', '#626270'),
+('e939819a-e3e1-4792-8a62-a85a843e606f', 'C++', 'C++ เป็นภาษาที่ได้รับความนิยมอย่างมากสำหรับแอปพลิเคชันที่เน้นประสิทธิภาพซึ่งอาศัยความเร็วและการจัดการหน่วยความจำที่มีประสิทธิภาพ มีการใช้ในอุตสาหกรรมต่างๆ มากมาย เช่น การพัฒนาซอฟต์แวร์และเกม VR วิทยาการหุ่นยนต์ และการคำนวณทางวิทยาศาสตร์', '#045ca4'),
+('eaf6fced-a34b-4546-b55c-414ff9943db9', 'C', 'C เป็นภาษาที่มีมานานแล้วและเป็นหนึ่งในภาษาพื้นฐานของวิทยาการคอมพิวเตอร์ ระบบปฏิบัติการส่วนใหญ่ในปัจจุบัน รวมถึง Linux Kernel นั้นใช้งานด้วยรหัส C เวอร์ชันหลักของภาษาโปรแกรม Python มีชื่อว่า CPython เนื่องจากใช้งานโดยใช้ภาษา C ภาษาโปรแกรม C มีอยู่ทั่วไป การเรียนรู้ภาษานี้จะช่วยให้คุณกลายเป็นโปรแกรมเมอร์ที่ดีขึ้นพร้อมสำหรับความท้าทายต่อไปในสาขาวิทยาการคอมพิวเตอร์!', '#549cd3');
 
 -- --------------------------------------------------------
 
@@ -87,7 +89,7 @@ INSERT INTO `Comments` (`comment_id`, `content`, `user_id`, `course_id`, `commen
 CREATE TABLE `Course` (
   `course_id` varchar(191) NOT NULL,
   `title` varchar(191) NOT NULL,
-  `description` varchar(191) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `info` text DEFAULT NULL,
   `price` int(11) NOT NULL,
   `level` varchar(191) NOT NULL,
@@ -106,13 +108,18 @@ CREATE TABLE `Course` (
 --
 
 INSERT INTO `Course` (`course_id`, `title`, `description`, `info`, `price`, `level`, `end_date`, `start_date`, `category_id`, `certificate`, `course_image`, `createAt`, `lesson`, `amount`) VALUES
+('0e7d9757-2ce6-4f08-8a9f-bc1c9cd72a86', 'JAVA JAVA JAVA', 'JAVA is easy', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1400, 'ระดับกลาง', '2023-06-10 07:27:00.000', '2023-05-15 07:27:00.000', '311a8428-70bc-4085-87bb-745af7283ddf', 1, 'fileupload-1684740450101.jpg', '2023-05-22 07:20:47.252', 10, 40),
 ('1110b7d9-ee68-4482-9b3e-5088062ae55d', 'Basic HTML', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.', 800, 'ระดับกลาง', '1970-01-01 00:00:00.000', '1970-01-01 00:00:00.000', '8fccd513-93f7-4056-b83d-ae48feaeddc2', 0, NULL, '2023-05-16 10:12:12.439', 15, 100),
+('2e039da8-6d23-45f1-a2d2-34ed5b0aedf5', 'Basic C++ for game development', 'c++ for beginner', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1200, 'ระดับเริ่มต้น', '2023-05-24 07:16:00.000', '2023-05-22 07:16:00.000', 'e939819a-e3e1-4792-8a62-a85a843e606f', 1, 'fileupload-1684739883391.jpg', '2023-05-22 07:18:03.405', 7, 11),
 ('3938cf9b-ff4a-48a7-a688-d2a6a4543242', 'PHP very hard', 'dsdsdsdsdssd', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1, 'ระดับสูง', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', '3eae8093-14e8-42f8-9eb1-30590fbdfd35', 1, 'fileupload-1684714386750.jpg', '2023-05-22 00:13:06.833', 20, 100),
 ('434ab3b7-007d-45a6-b9bc-eff4db6f9d61', 'Easy PHP', 'pat1 is easy if you know', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1200, 'ระดับเริ่มต้น', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', '93b932c2-11c3-415a-99d8-6df547021da4', 0, 'fileupload-1684633250422.png', '2023-05-16 11:33:37.871', 20, 80),
+('4a4ea784-db6b-4a98-8f83-7275113228bc', 'SQL very hard eiei', 'dsdsdsdsdssd', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 4000, 'ระดับสูง', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', 'aaa930e4-f2b1-444f-b2ce-bbc949451b95', 0, 'fileupload-1684740233942.jpg', '2023-05-22 07:20:52.895', 12, 3),
 ('50bce8cf-f61e-4626-8751-ad850609f28b', 'JS For Beginner', 'JS is not hard if you know', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1200, 'ระดับเริ่มต้น', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', '9144682f-a79c-4fd5-9c6b-9528b948e92c', 1, 'fileupload-1684633392237.jpg', '2023-05-16 11:33:38.727', 20, 2),
 ('5af5bfcf-f1cc-4c74-aea5-48c6d6fa67e0', 'Easy pat1', 'pat1 is easy if you know', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1200, 'ระดับเริ่มต้น', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', '3eae8093-14e8-42f8-9eb1-30590fbdfd35', 1, 'fileupload-1684236402158.jpg', '2023-05-16 11:26:42.177', 20, 1),
 ('6a22609e-3df2-4569-b477-5f809de16401', 'Easy for every one', 'New course for newbie', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 2400, 'ระดับสูง', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', '311a8428-70bc-4085-87bb-745af7283ddf', 1, 'fileupload-1684340747516.jpg', '2023-05-17 16:18:59.380', 30, 50),
 ('7ac778d0-32bb-4450-802a-53cbd6065d20', 'JS very hard', 'Hard js for big brain', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 2400, 'ระดับสูง', '2022-01-05 03:34:23.550', '2022-01-04 03:34:23.550', '9144682f-a79c-4fd5-9c6b-9528b948e92c', 1, 'fileupload-1684633370402.webp', '2023-05-16 11:59:55.507', 20, 100),
+('9031fb97-1515-483b-9d1f-ba0dc4eec637', 'C for beginner', 'c for beginner', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 500, 'ระดับสูง', '2023-05-26 07:26:00.000', '2023-05-21 07:26:00.000', 'eaf6fced-a34b-4546-b55c-414ff9943db9', 0, 'fileupload-1684740384963.webp', '2023-05-22 07:20:52.033', 30, 40),
+('9364fc70-8513-4d34-b4e5-8300fd379ec6', 'Python all again', 'this is python course', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 200, 'ระดับกลาง', '2023-05-24 07:24:00.000', '2023-05-14 07:24:00.000', '3eae8093-14e8-42f8-9eb1-30590fbdfd35', 0, 'fileupload-1684740312667.webp', '2023-05-22 07:20:52.451', 5, 5),
 ('a3d5b4cd-6973-4de7-9fd2-997a12d60d34', 'Learning PHP', 'php for every one', 'this course is all abount php Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', 12, 'ระดับกลาง', '2023-05-24 19:43:00.000', '2023-05-21 19:43:00.000', '93b932c2-11c3-415a-99d8-6df547021da4', 1, NULL, '2023-05-21 19:43:41.206', 323, 32);
 
 -- --------------------------------------------------------
@@ -180,21 +187,25 @@ CREATE TABLE `Payment_history` (
   `user_id` varchar(191) NOT NULL,
   `course_id` varchar(191) NOT NULL,
   `summary` int(11) NOT NULL,
-  `createdAt` datetime(3) NOT NULL DEFAULT current_timestamp(3)
+  `createdAt` datetime(3) NOT NULL DEFAULT current_timestamp(3),
+  `email` varchar(191) NOT NULL,
+  `first_name` varchar(191) NOT NULL,
+  `last_name` varchar(191) NOT NULL,
+  `phone` varchar(191) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `Payment_history`
 --
 
-INSERT INTO `Payment_history` (`payment_history_id`, `user_id`, `course_id`, `summary`, `createdAt`) VALUES
-('1703960f-4055-417f-9070-df0aaccb0d22', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '1110b7d9-ee68-4482-9b3e-5088062ae55d', 856, '2023-05-21 18:58:15.315'),
-('1f2c2274-cca0-42a6-81fc-4c494d6f9d9d', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '7ac778d0-32bb-4450-802a-53cbd6065d20', 2568, '2023-05-21 08:17:43.280'),
-('20a2d49e-217b-458f-80a4-6d9ceb3e9b03', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '6a22609e-3df2-4569-b477-5f809de16401', 2568, '2023-05-21 18:57:43.351'),
-('226a14a9-5b64-4444-b2e0-c6df26b128b4', 'a7a7251e-9727-4991-a1da-47b79def5abe', '7ac778d0-32bb-4450-802a-53cbd6065d20', 2568, '2023-05-21 19:33:49.029'),
-('567ecc24-bf53-4088-bc79-9e109a76e897', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '6a22609e-3df2-4569-b477-5f809de16401', 2568, '2023-05-21 18:54:56.666'),
-('b5caf433-a35e-4e47-aebb-22575307c91d', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '1110b7d9-ee68-4482-9b3e-5088062ae55d', 856, '2023-05-21 18:45:38.299'),
-('ef2475dc-c5fa-4cea-8db9-ca71a3ec6995', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '7ac778d0-32bb-4450-802a-53cbd6065d20', 2568, '2023-05-21 07:40:42.868');
+INSERT INTO `Payment_history` (`payment_history_id`, `user_id`, `course_id`, `summary`, `createdAt`, `email`, `first_name`, `last_name`, `phone`) VALUES
+('1703960f-4055-417f-9070-df0aaccb0d22', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '1110b7d9-ee68-4482-9b3e-5088062ae55d', 856, '2023-05-21 18:58:15.315', '', '', '', ''),
+('1f2c2274-cca0-42a6-81fc-4c494d6f9d9d', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '7ac778d0-32bb-4450-802a-53cbd6065d20', 2568, '2023-05-21 08:17:43.280', '', '', '', ''),
+('20a2d49e-217b-458f-80a4-6d9ceb3e9b03', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '6a22609e-3df2-4569-b477-5f809de16401', 2568, '2023-05-21 18:57:43.351', '', '', '', ''),
+('226a14a9-5b64-4444-b2e0-c6df26b128b4', 'a7a7251e-9727-4991-a1da-47b79def5abe', '7ac778d0-32bb-4450-802a-53cbd6065d20', 2568, '2023-05-21 19:33:49.029', '', '', '', ''),
+('567ecc24-bf53-4088-bc79-9e109a76e897', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '6a22609e-3df2-4569-b477-5f809de16401', 2568, '2023-05-21 18:54:56.666', '', '', '', ''),
+('b5caf433-a35e-4e47-aebb-22575307c91d', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '1110b7d9-ee68-4482-9b3e-5088062ae55d', 856, '2023-05-21 18:45:38.299', '', '', '', ''),
+('ef2475dc-c5fa-4cea-8db9-ca71a3ec6995', '1efca52a-60b6-46e6-97ed-b0a6565ccf2f', '7ac778d0-32bb-4450-802a-53cbd6065d20', 2568, '2023-05-21 07:40:42.868', '', '', '', '');
 
 -- --------------------------------------------------------
 

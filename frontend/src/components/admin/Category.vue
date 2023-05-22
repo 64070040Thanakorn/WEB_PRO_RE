@@ -57,9 +57,9 @@
             {{ category.category_name }}
           </td>
 
-          <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
-            <label for="">รายละเอียดวิชา :</label>
-            <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category.category_detail"/>
+          <td v-if="editCategory && editRows === index" class="border-b border-[#F4F4F4] px-4 py-3 space-x-3 flex">
+            <label class="flex flex-col justify-start" for="">รายละเอียดวิชา :</label>
+            <textarea class="border rounded px-3 py-1 w-[20vw]" type="text" v-model="category.category_detail"> </textarea>
           </td>
           <td v-else class="border-b border-[#F4F4F4] px-4 py-3">
             {{ category.category_detail }}
@@ -98,9 +98,9 @@
           </td>
           <td class="border-b border-[#F4F4F4] px-4 py-3 space-x-3">
             <div class="flex space-x-3">
-              <label for="">รายละเอียดวิชา :</label>
+              <label class="flex flex-col justify-start" for="">รายละเอียดวิชา :</label>
               <div class="flex flex-col">
-                <input class="border rounded px-3 py-1 w-[15vw]" type="text" v-model="category_new.category_detail"/>
+                <textarea class="border rounded px-3 py-1 w-[20vw]" type="text" v-model="category_new.category_detail"></textarea>
                 <span v-if="!v$.category_new.category_detail.required.$response" class="text-red-500 text-xs">
                   *กรุณากรอกข้อมูล
                 </span>
@@ -210,13 +210,18 @@ export default {
         })
     },
     edit(index, category){
+      this.temp = null
+      // if (this.editCategory) {
+      //    this.editCategory = !this.editCategory
+      // }
       this.editCategory = !this.editCategory
       if(this.editCategory){
         this.editRows = index
         this.temp  = JSON.parse(JSON.stringify(this.filteredItems[index]))
       } else {
         this.editRows = null
-        this.filteredItems[index] = this.temp
+        // this.filteredItems[index] = this.temp
+        this.temp = null
       }
     },
     async updateCategory(category){
@@ -260,6 +265,9 @@ export default {
         },
       }).then((res) => {
         this.$emit('category-change')
+        this.category_new.category_name = null
+        this.category_new.category_detail = null
+        this.category_new.category_color = null
         console.log(res.data);
         Swal.fire(
           'Success!',
