@@ -286,6 +286,11 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire(
+            'Error!',
+            'โปรดตรวจสอบความถูกต้องของข้อมูล',
+            'error'
+          )
         });
     },
   },

@@ -10,6 +10,16 @@ import verifyToken from '../middleware/token.js';
 const prisma = new PrismaClient();
 const router = express.Router();
 
+const passwordValidator = (value, helpers) => {
+  if (value.length < 8) {
+    throw new Joi.ValidationError("Password must contain at least 8 characters");
+  }
+  if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+    throw new Joi.ValidationError("Password must be harder");
+  }
+  return value;
+};
+
 
 router.get("/by/:user_id", async(req, res, next) => {
   try{
@@ -62,16 +72,16 @@ router.get("/all", async(req, res, next) => {
 
 
 const updateUserSchema = Joi.object({
-  user_id: Joi.string().required().error(new Error('ต้องกรอก user_id')),
-  first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
-  last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
-  phone: Joi.string().allow(null).min(10).max(10),
-  address: Joi.string().allow(null),
-  password: Joi.string().optional(),
-  email: Joi.string().optional(),
-  user_image: Joi.string().optional().allow(null),
-  info: Joi.string().optional().allow(null),
-  role: Joi.string().optional().allow(null),
+  user_id: Joi.string().required(),
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  phone: Joi.string().optional().allow(null).allow("").min(9).max(10),
+  address: Joi.string().optional().allow(null).allow(""),
+  password: Joi.string().optional().allow(""),
+  email: Joi.string().optional().allow(""),
+  user_image: Joi.string().optional().allow(null).allow(""),
+  info: Joi.string().optional().allow(null).allow(""),
+  role: Joi.string().optional().allow(null).allow(""),
 })
 
 // update user
@@ -95,7 +105,7 @@ router.put("/", verifyToken ,async(req, res, next) => {
     });
     user.password = undefined
 
-    res.status(200).send('ok')
+    res.status(200).json(user)
   } catch (err) {
     res.status(500).json({message: err.message})
   }
@@ -115,7 +125,7 @@ router.put("/updateImage", verifyToken, upload.single('fileupload'), async(req, 
         user_image: file ? file.filename : "https://media.discordapp.net/attachments/1067453596351856650/1096914677780451378/Portrait_Placeholder.png?width=1200&height=1200",
       }
     })
-    res.send('ok')
+    res.json(user)
     
   } catch (err) {
     res.status(400).send(err)
@@ -125,8 +135,7 @@ router.put("/updateImage", verifyToken, upload.single('fileupload'), async(req, 
 
 const passwordSchema = Joi.object({
   user_id: Joi.string().required(),
-  // old_password: Joi.string().alphanum().min(8),
-  password: Joi.string().alphanum().min(8)
+  password: Joi.string().custom(passwordValidator)
 })
 
 router.put("/changepassword/:user_id", verifyToken, async(req,res,next) => {

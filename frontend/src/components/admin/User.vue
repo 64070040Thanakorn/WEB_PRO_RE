@@ -75,7 +75,7 @@
 
 <script>
 import axios from 'axios';
-
+import Swal from 'sweetalert2'
 
 export default {
   props: {
@@ -104,6 +104,18 @@ export default {
       })
         .then(res => {
           this.$emit('user-change')
+          Swal.fire(
+            'Success!',
+            'ลบข้อมูลผู้ใช้สำเร็จ',
+            'warning'
+          )
+        })
+        .catch((err) => {
+          Swal.fire(
+            'Error!',
+            'ไม่สามารถลบข้อมูลผู้ใช้ได้',
+            'error'
+          )
         })
     }
   }

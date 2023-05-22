@@ -100,19 +100,19 @@ const convertToBoolean = (value) => {
 
 // create course
 const createCourseSchema = Joi.object({
-  title: Joi.string().required().error(new Error('ต้องกรอก title')),
-  category_id: Joi.string().required().error(new Error('ต้องกรอก category_id')),
-  description: Joi.string(),
-  info: Joi.string(),
-  price: Joi.string().required().error(new Error('ต้องกรอก price')),
-  level: Joi.string().required().error(new Error('ต้องกรอก level')),
-  certificate: Joi.boolean().required().error(new Error('ต้อวกรอก certificate')),
-  lesson: Joi.string().required().error(new Error('ต้องกรอก บทเรียน')),
-  amount: Joi.string().required().error(new Error('ต้องกรอก amount')),
+  title: Joi.string().required(),
+  category_id: Joi.string().required(),
+  description: Joi.string().required().min(10).max(200),
+  info: Joi.string().required().min(80),
+  price: Joi.number().required(),
+  level: Joi.string().required(),
+  certificate: Joi.boolean().required(),
+  lesson: Joi.number().required(),
+  amount: Joi.number().required(),
   start_date: Joi.alternatives().conditional('end_date', {
     then: Joi.date()
-  }).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
-  end_date: Joi.date().min(Joi.ref('start_date')).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
+  }),
+  end_date: Joi.date().min(Joi.ref('start_date')),
 })
 router.post("/createCourse", verifyToken, upload.single("fileupload"), async (req, res, next) => {
   const { error, value } = createCourseSchema.validate(req.body, { abortEarly: true})
@@ -233,19 +233,19 @@ router.delete("/deleteCourse/:course_id", verifyToken, async (req, res) => {
 
 const updateCourseSchema = Joi.object({
   course_id: Joi.string().required(),
-  title: Joi.string().required().error(new Error('ต้องกรอก title')),
-  category_id: Joi.string().required().error(new Error('ต้องกรอก category_id')),
-  description: Joi.string(),
-  info: Joi.string(),
-  price: Joi.string().required().error(new Error('ต้องกรอก price')),
-  level: Joi.string().required().error(new Error('ต้องกรอก level')),
-  certificate: Joi.boolean().required().error(new Error('ต้อวกรอก certificate')),
-  lesson: Joi.string().required().error(new Error('ต้องกรอก บทเรียน')),
-  amount: Joi.string().required().error(new Error('ต้องกรอก amount')),
+  title: Joi.string().required(),
+  category_id: Joi.string().required(),
+  description: Joi.string().required().min(10).max(200),
+  info: Joi.string().required().min(80),
+  price: Joi.number().required(),
+  level: Joi.string().required(),
+  certificate: Joi.boolean().required(),
+  lesson: Joi.number().required(),
+  amount: Joi.number().required(),
   start_date: Joi.alternatives().conditional('end_date', {
     then: Joi.date()
-  }).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
-  end_date: Joi.date().min(Joi.ref('start_date')).error(new Error('กรอกวันที่ไม่ถูกต้อง')),
+  }),
+  end_date: Joi.date().min(Joi.ref('start_date')),
 })
 // update course
 router.put("/updateCourse/", verifyToken, upload.single("fileupload"), async (req, res) => {
