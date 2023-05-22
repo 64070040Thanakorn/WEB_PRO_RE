@@ -28,7 +28,7 @@ model Course {
   course_id    String            @id @default(uuid())
   title        String
   category_id  String
-  description  String?
+  description  String?           @db.Text
   info         String?           @db.Text
   price        Int
   level        String
@@ -48,7 +48,7 @@ model Course {
 model Category {
   category_id     String   @id @default(uuid())
   category_name   String
-  category_detail String   @default("No detail")
+  category_detail String   @default("No detail") @db.Text
   category_color  String   @default("#E99F30")
   Course          Course[]
 }
@@ -94,6 +94,10 @@ model Payment_history {
   user_id            String
   course_id          String
   summary            Int
+  first_name         String
+  last_name          String
+  phone              String
+  email              String
   createdAt          DateTime @default(now())
   users              Users    @relation("payment_history", fields: [user_id], references: [user_id], onDelete: Cascade)
   course             Course   @relation("payment_course", fields: [course_id], references: [course_id], onDelete: Cascade)
