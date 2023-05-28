@@ -48,8 +48,8 @@ const creditCardSchema = Joi.object({
     cc_number: Joi.string().required().min(16).max(16).error(new Error('ต้องกรอก cc_number')),
     cc_cvc: Joi.string().required().min(3).max(3).error(new Error('ต้องกรอก cc_ccv')),
     cc_exp: Joi.string().required().error(new Error('ต้องกรอก cc_expiry')),
-    cc_first_name: Joi.string().required().regex(/^[0-9]+$/).error(new Error('ต้องกรอก last_name')),
-    cc_last_name: Joi.string().required().regex(/^[0-9]+$/).error(new Error('ต้องกรอก first_name')),
+    cc_first_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+    cc_last_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
   },
   customer:{
     first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
@@ -84,7 +84,7 @@ const promtPaySchema = Joi.object({
   },
   customer:{
     first_name: Joi.string().required().error(new Error('ต้องกรอก first_name')),
-    last_name: Joi.string().required().error(new Error('ต้องกรอก last_name')),
+    last_name: Joi.string().required().error,
     email: Joi.string().email().required().error(new Error('ต้องกรอก email')),
     tel: Joi.string().required().min(9).max(10).error(new Error('ต้องกรอก tel')),
 },
@@ -116,7 +116,8 @@ router.post("/", verifyToken, async(req, res, next) => {
       return res.status(400).json({message: error.message})
     }
   }
-  const { user_id, course, creditCard, total } = req.body
+  const { user_id, course, creditCard, total, customer } = req.body
+  console.log(req.body);
   try{
     if(creditCard){
       const credit_card = await prisma.payment.create({
@@ -132,15 +133,17 @@ router.post("/", verifyToken, async(req, res, next) => {
         }
       })
     }
-    
     const payment = await prisma.payment_history.create({
       data:{
-        user_id: user_id, 
+        user_id: user_id,
         course_id: course.id,
-        summary: total
+        summary: total,
+        first_name: customer.first_name,
+        last_name: customer.last_name,
+        phone: customer.tel,
+        email: customer.email
       }
     })
-    
     const payment_get = await prisma.payment.create({
       where:{
         user_id: user_id,
